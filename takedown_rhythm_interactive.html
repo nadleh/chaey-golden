@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Down ⚔️ 박자 맞춤 놀이 가사 배우기 - 채이(Chloe) 공주님 전용</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower:wght@400&family=Poor+Story:wght@400&family=Cute+Font:wght@400&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&family=Dokdo:wght@400&family=Hi+Melody:wght@400&display=swap');
+        
+        .cute-korean {
+            font-family: 'Hi Melody', 'Gaegu', 'Gamja Flower', 'Poor Story', cursive;
+            font-weight: 400;
+        }
+        
+        .title-font {
+            font-family: 'Dokdo', 'Hi Melody', cursive;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            font-family: 'Hi Melody', 'Gaegu', cursive;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .main-title {
+            font-family: 'Dokdo', cursive;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #5a67d8;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .photo-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .chaey-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .rhythm-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+        }
+        
+        .rhythm-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-family: 'Hi Melody', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .rhythm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .rhythm-btn:active {
+            transform: translateY(0);
+        }
+        
+        .rhythm-btn.active {
+            background: linear-gradient(45deg, #48bb78, #38a169);
+        }
+        
+        .beat-button {
+            background: linear-gradient(45deg, #ed8936, #dd6b20);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .beat-button:active {
+            transform: scale(0.95);
+            background: linear-gradient(45deg, #dd6b20, #c05621);
+        }
+        
+        .countdown {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        
+        .lyrics-section {
+            margin: 25px 0;
+        }
+        
+        .verse {
+            background: rgba(102, 126, 234, 0.05);
+            margin: 12px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .lyrics-line {
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 6px 0;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            letter-spacing: -0.5px;
+        }
+        
+        .lyrics-line.english {
+            color: #2d3748;
+        }
+        
+        .lyrics-line.korean {
+            color: #5a67d8;
+        }
+        
+        .lyrics-line.highlight {
+            color: #ed8936;
+            font-weight: 900;
+        }
+        
+        .lyrics-line:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(8px);
+        }
+        
+        .lyrics-line.clicked.english {
+            color: #ffffff !important;
+            background: linear-gradient(45deg, #667eea, #764ba2) !important;
+        }
+        
+        .lyrics-line.clicked.korean {
+            color: #ffffff !important;
+            background: linear-gradient(45deg, #5a67d8, #667eea) !important;
+        }
+        
+        .lyrics-line.clicked.highlight {
+            color: #ffffff !important;
+            background: linear-gradient(45deg, #ed8936, #dd6b20) !important;
+        }
+        
+        .lyrics-line.auto-highlight {
+            background: linear-gradient(45deg, #48bb78, #38a169) !important;
+            color: #ffffff !important;
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+        }
+        
+        .lyrics-line.beat-highlight {
+            background: linear-gradient(45deg, #ed8936, #dd6b20) !important;
+            color: #ffffff !important;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.4);
+        }
+        
+        .youtube-section {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 0, 0, 0.05));
+            border-radius: 15px;
+            border: 2px solid rgba(255, 0, 0, 0.2);
+        }
+        
+        .youtube-btn {
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-family: 'Hi Melody', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .youtube-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        .progress-section {
+            background: rgba(72, 187, 120, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .score-display {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 5px;
+            }
+            
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .lyrics-line {
+                font-size: 1.4rem;
+            }
+            
+            .chaey-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .rhythm-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .beat-button {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Take Down ⚔️<br>박자 맞춤 놀이 가사 배우기</h1>
+        <div class="subtitle">채이(Chloe) 공주님을 위한 특별한 리듬 학습기 🎵</div>
+        
+        <div class="photo-section">
+            <img id="chaeyPhoto" class="chaey-photo" src="" alt="채이 사진">
+        </div>
+        
+        <div class="rhythm-controls">
+            <button class="rhythm-btn" onclick="startAutoMode()">
+                <i class="fas fa-play"></i> 자동 타이밍 모드
+            </button>
+            <button class="rhythm-btn" onclick="startBeatMode()">
+                <i class="fas fa-drum"></i> 박자 맞추기 게임
+            </button>
+            <button class="rhythm-btn" onclick="stopAllModes()">
+                <i class="fas fa-stop"></i> 멈추기
+            </button>
+            <button class="beat-button" onclick="beatHit()" style="display: none;" id="beatButton">
+                🥁
+            </button>
+        </div>
+        
+        <div class="countdown" id="countdown" style="display: none;"></div>
+        
+        <div class="youtube-section">
+            <p style="margin-bottom: 15px; font-size: 1.1rem; color: #667eea;">
+                <i class="fab fa-youtube"></i> Take Down 들으며 박자 맞추기!
+            </p>
+            <a href="https://www.youtube.com/watch?v=7XRcflf_E0c" target="_blank" class="youtube-btn">
+                <i class="fab fa-youtube"></i> YouTube에서 노래 듣기
+            </a>
+        </div>
+        
+        <div class="progress-section">
+            <div class="score-display">
+                <span>학습 진행률: <span id="progressText">0%</span></span>
+                <span style="margin-left: 20px;">리듬 점수: <span id="rhythmScore">0</span></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="lyrics-section">
+            <div class="verse">
+                <div class="lyrics-line highlight group" data-group="takedown-intro" onclick="toggleLine(this)">
+                    Takedown, takedown<br>
+                    Takedown, down, down, down
+                </div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">(HUNTR/X girls to the world)</div>
+                <div class="lyrics-line highlight group" data-group="takedown-intro2" onclick="toggleLine(this)">
+                    Takedown, down, down, down (It's a takedown)
+                </div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">So sweet, so easy on the eyes, but hideous on the inside</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Whole life spreading lies, but you can't hide, baby, nice try</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">I'm 'bout to switch up these vibes, I finally opened my eyes</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">It's time to kick you straight back into the night</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">'Cause I see your real face and it's ugly as sin</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Time to put you in your place 'cause you're rotten within</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">When your patterns start to show</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">It makes the hatred wanna grow outta my veins</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">I don't think you're ready for the takedown</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Break you into pieces in a world of pain</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">'cause you're all the same</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Yeah, it's a takedown</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">A demon with no feelings, don't deserve to live, it's so obvious</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">I'ma gear up and take you down</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight group" data-group="da-da-da" onclick="toggleLine(this)">
+                    (Oh) Da-da-da, down<br>
+                    It's a takedown (Oh) Da-da-da, down<br>
+                    I'ma take it down (Oh) Da-da-da, down<br>
+                    It's a takedown (Oh) Da-da-da, down
+                </div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">It's a takedown, I'ma take you out, you break down like, "What?"</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">It's a takedown, I'ma take you out and I ain't gonna stop</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">정신을 놓고 널 짓밟고 칼을 새겨놔</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">You'll be beggin' and cryin', all of you dyin', never miss my shot</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">When your patterns start to show</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">It makes the hatred wanna grow out of my veins</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">I don't think you're ready for the takedown</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">당당하게 어둠 앞에 다가서 다 무너뜨려</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Yeah, it's a takedown</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">A demon with no feelings, don't deserve to live, it's so obvious</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">I'ma gear up and take you down</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight group" data-group="da-da-da-2" onclick="toggleLine(this)">
+                    (Oh) Da-da-da, down<br>
+                    It's a takedown (Oh) Da-da-da, down<br>
+                    I'ma take it down (Oh, watch me do it, yeah) Da-da-da, down<br>
+                    It's a takedown (Oh) Da-da-da, down
+                </div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">Oh, you're the master of illusion</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">나를 속이려 하지마</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Look at all the masses that you're foolin'</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">But they'll turn on you soon, so how?</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">How can you sleep or live with yourself?</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">A broken soul trapped in a nastiest shell</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">영혼 없는 네 목숨을 끊으러 and watch you die</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">You can try but you can't hide</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">It's a takedown, I'ma take you out, you break down like, "What?"</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">It's a takedown, I'ma take you out and I ain't gonna stop</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">I'ma cut you open, lose control, then rip out your heart</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">You'll be beggin' and cryin', all of you dyin'</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">I'ma gear up and take you down</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight group" data-group="da-da-da-final" onclick="toggleLine(this)">
+                    (Oh) Da-da-da, down (Ah)<br>
+                    It's a takedown (Oh) Da-da-da, down<br>
+                    I'ma take it down (Oh) Da-da-da, down<br>
+                    It's a takedown (Oh) Da-da-da, down<br>
+                    Take it down
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 랜덤 채이 사진 기능
+        const photos = [
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi1.jpg',
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi2.jpg',
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi3.jpg',
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi4.jpg'
+        ];
+        
+        let currentPhotoIndex = Math.floor(Math.random() * photos.length);
+        
+        function loadRandomPhoto() {
+            const photoElement = document.getElementById('chaeyPhoto');
+            photoElement.src = photos[currentPhotoIndex];
+        }
+        
+        // 리듬 게임 변수들
+        let autoMode = false;
+        let beatMode = false;
+        let currentLyricIndex = 0;
+        let rhythmScore = 0;
+        let autoTimer;
+        let countdownInterval;
+        
+        // Take Down 가사 타이밍 (초 단위)
+        const lyricTimings = [
+            0.5,   // Takedown, takedown
+            2.0,   // (HUNTR/X girls to the world)
+            3.5,   // Takedown, down, down, down
+            5.0,   // So sweet, so easy on the eyes
+            7.5,   // Whole life spreading lies
+            10.0,  // I'm 'bout to switch up these vibes
+            12.5,  // It's time to kick you straight back
+            15.0,  // 'Cause I see your real face
+            17.5,  // Time to put you in your place
+            20.0,  // When your patterns start to show
+            22.5,  // It makes the hatred wanna grow
+            25.0,  // I don't think you're ready
+            27.5,  // Break you into pieces
+            30.0,  // 'cause you're all the same
+            32.0,  // Yeah, it's a takedown
+            35.0,  // A demon with no feelings
+            37.5,  // I'ma gear up and take you down
+            40.0,  // Da-da-da, down (첫 번째)
+            50.0,  // It's a takedown, I'ma take you out (첫 번째)
+            52.5,  // It's a takedown, I'ma take you out and I ain't gonna stop
+            55.0,  // 정신을 놓고 널 짓밟고
+            57.5,  // You'll be beggin' and cryin'
+            60.0,  // When your patterns start to show (두 번째)
+            62.5,  // It makes the hatred wanna grow (두 번째)
+            65.0,  // I don't think you're ready (두 번째)
+            67.5,  // 당당하게 어둠 앞에
+            70.0,  // Yeah, it's a takedown (두 번째)
+            72.5,  // A demon with no feelings (두 번째)
+            75.0,  // I'ma gear up and take you down (두 번째)
+            77.5,  // Da-da-da, down (두 번째)
+            87.5,  // Oh, you're the master of illusion
+            90.0,  // 나를 속이려 하지마
+            92.5,  // Look at all the masses
+            95.0,  // But they'll turn on you soon
+            97.5,  // How can you sleep
+            100.0, // A broken soul trapped
+            102.5, // 영혼 없는 네 목숨을
+            105.0, // You can try but you can't hide
+            107.5, // It's a takedown, I'ma take you out (마지막)
+            110.0, // It's a takedown, I'ma take you out and I ain't gonna stop (마지막)
+            112.5, // I'ma cut you open
+            115.0, // You'll be beggin' and cryin' (마지막)
+            117.5, // I'ma gear up and take you down (마지막)
+            120.0  // Da-da-da, down (마지막)
+        ];
+        
+        function startAutoMode() {
+            stopAllModes();
+            autoMode = true;
+            
+            // 버튼 상태 업데이트
+            document.querySelectorAll('.rhythm-btn')[0].classList.add('active');
+            
+            startCountdown(3, () => {
+                currentLyricIndex = 0;
+                autoHighlightNext();
+            });
+        }
+        
+        function startBeatMode() {
+            stopAllModes();
+            beatMode = true;
+            
+            // 버튼 상태 업데이트
+            document.querySelectorAll('.rhythm-btn')[1].classList.add('active');
+            document.getElementById('beatButton').style.display = 'flex';
+            
+            startCountdown(3, () => {
+                currentLyricIndex = 0;
+                // 박자 게임 시작 준비
+            });
+        }
+        
+        function stopAllModes() {
+            autoMode = false;
+            beatMode = false;
+            currentLyricIndex = 0;
+            
+            if (autoTimer) {
+                clearTimeout(autoTimer);
+            }
+            
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
+            // 모든 하이라이트 제거
+            document.querySelectorAll('.lyrics-line').forEach(line => {
+                line.classList.remove('auto-highlight', 'beat-highlight');
+            });
+            
+            // 버튼 상태 리셋
+            document.querySelectorAll('.rhythm-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById('beatButton').style.display = 'none';
+            document.getElementById('countdown').style.display = 'none';
+        }
+        
+        function startCountdown(seconds, callback) {
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.style.display = 'block';
+            
+            let count = seconds;
+            countdownElement.textContent = count;
+            
+            countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownElement.textContent = count;
+                } else {
+                    countdownElement.textContent = 'START!';
+                    setTimeout(() => {
+                        countdownElement.style.display = 'none';
+                        callback();
+                    }, 500);
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+        
+        function autoHighlightNext() {
+            if (!autoMode || currentLyricIndex >= lyricTimings.length) {
+                return;
+            }
+            
+            const lyrics = document.querySelectorAll('.lyrics-line');
+            
+            // 이전 하이라이트 제거
+            lyrics.forEach(line => line.classList.remove('auto-highlight'));
+            
+            // 현재 가사 하이라이트
+            if (lyrics[currentLyricIndex]) {
+                lyrics[currentLyricIndex].classList.add('auto-highlight');
+                
+                // 그룹 처리
+                const group = lyrics[currentLyricIndex].dataset.group;
+                if (group) {
+                    document.querySelectorAll(`[data-group="${group}"]`).forEach(line => {
+                        line.classList.add('auto-highlight');
+                    });
+                }
+            }
+            
+            currentLyricIndex++;
+            
+            // 다음 타이밍 설정
+            if (currentLyricIndex < lyricTimings.length) {
+                const nextDelay = (lyricTimings[currentLyricIndex] - lyricTimings[currentLyricIndex - 1]) * 1000;
+                autoTimer = setTimeout(autoHighlightNext, nextDelay);
+            }
+        }
+        
+        function beatHit() {
+            if (!beatMode) return;
+            
+            const lyrics = document.querySelectorAll('.lyrics-line');
+            
+            // 이전 하이라이트 제거
+            lyrics.forEach(line => line.classList.remove('beat-highlight'));
+            
+            // 현재 가사 하이라이트
+            if (currentLyricIndex < lyrics.length) {
+                lyrics[currentLyricIndex].classList.add('beat-highlight');
+                
+                // 그룹 처리
+                const group = lyrics[currentLyricIndex].dataset.group;
+                if (group) {
+                    document.querySelectorAll(`[data-group="${group}"]`).forEach(line => {
+                        line.classList.add('beat-highlight');
+                    });
+                }
+                
+                // 점수 증가
+                rhythmScore += 10;
+                document.getElementById('rhythmScore').textContent = rhythmScore;
+                
+                // 다음 가사로 이동
+                currentLyricIndex++;
+                
+                // 하이라이트 제거 (1초 후)
+                setTimeout(() => {
+                    lyrics.forEach(line => line.classList.remove('beat-highlight'));
+                }, 1000);
+            }
+        }
+        
+        function toggleLine(element) {
+            element.classList.toggle('clicked');
+            
+            // 그룹 처리
+            const group = element.dataset.group;
+            if (group) {
+                document.querySelectorAll(`[data-group="${group}"]`).forEach(line => {
+                    line.classList.toggle('clicked');
+                });
+            }
+            
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const allLines = document.querySelectorAll('.lyrics-line');
+            const clickedLines = document.querySelectorAll('.lyrics-line.clicked');
+            const progress = Math.round((clickedLines.length / allLines.length) * 100);
+            
+            document.getElementById('progressText').textContent = progress + '%';
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        // 페이지 로드 시 초기화
+        window.addEventListener('load', () => {
+            loadRandomPhoto();
+        });
+        
+        // 키보드 단축키 (스페이스바로 박자 치기)
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && beatMode) {
+                e.preventDefault();
+                beatHit();
+            }
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDv3eFoMp7L72SWqe0mCO4vDUAFQOsBtK87qoT7lyNagnj47aIb6IvUWiRCIzwQaq4fBU%2FVqRZNb3WDfpn7SkyE7CSci30fveBRhr2hQsdtBczsEpTGB9Oy%2FVdjCGiX260KG1hMdwR7lZ%2Bj2qnXg9OjI5Uazvpf4RyRDS8pIuzXhg%2FNbtMzCIlsu9tjXr82ktP6jlK4zDSZ%2Bs%2FZGt5w61gsDDxxlMMNHw5tV4Gf%2BtmrMjc4vFTr%2FYpA%2BOQ%2Flvn8L9VO6i%2F8iMKsUW0Yt7Ay%2FLBROE6Ub0L8nYFq%2FWjGY9h%2FEh9lCYaM8b%2FtvsmB2wQDiBG116dJTtZPDEYgGPA9P0UfcrUcm0Ac0kNvdno8tOFtrfBrsWfs2iai6UdDh%2B2EbV9oFCNtucbCKCLBpKWmfRDMeOayGUuRM6lJSM%2BMtNvfPvaEyZJu54Kk9muBLvfglJl%2BQ0vXo9yjOQw5uVI4NeqSfKlvpxRDoy2DgBPY2TXbNks8yGCxkMo5UKONwBuoZJ81ziLBy9tbNBedV2ZkCDbKs%3D";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDv3eFoMp7L72SWqe0mCO4vDUAFQOsBtK87qoT7lyNagnj47aIb6IvUWiRCIzwQaq4fBU/VqRZNb3WDfpn7SkyE7CSci30fveBRhr2hQsdtBczsEpTGB9Oy/VdjCGiX260KG1hMdwR7lZ+j2qnXg9OjI5Uazvpf4RyRDS8pIuzXhg/NbtMzCIlsu9tjXr82ktP6jlK4zDSZ+s/ZGt5w61gsDDxxlMMNHw5tV4Gf+tmrMjc4vFTr/YpA+OQ/lvn8L9VO6i/8iMKsUW0Yt7Ay/LBROE6Ub0L8nYFq/WjGY9h/Eh9lCYaM8b/tvsmB2wQDiBG116dJTtZPDEYgGPA9P0UfcrUcm0Ac0kNvdno8tOFtrfBrsWfs2iai6UdDh+2EbV9oFCNtucbCKCLBpKWmfRDMeOayGUuRM6lJSM+MtNvfPvaEyZJu54Kk9muBLvfglJl+Q0vXo9yjOQw5uVI4NeqSfKlvpxRDoy2DgBPY2TXbNks8yGCxkMo5UKONwBuoZJ81ziLBy9tbNBedV2ZkCDbKs=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
