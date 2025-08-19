@@ -4,490 +4,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Golden 🌟 놀이 가사 배우기 - 채이(Chloe) 공주님 전용</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower:wght@400&family=Poor+Story:wght@400&family=Cute+Font:wght@400&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&family=Dokdo:wght@400&family=Hi+Melody:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Gamja+Flower&display=swap');
         
-        .cute-korean {
-            font-family: 'Hi Melody', 'Gaegu', 'Gamja Flower', 'Poor Story', cursive;
-            font-weight: 400;
+        body {
+            font-family: 'Cute Font', 'Gamja Flower', cursive;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
         }
         
-        .title-font {
-            font-family: 'Dokdo', 'Hi Melody', cursive;
-            font-weight: 400;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .lyrics-font {
-            font-family: 'Gaegu', 'Hi Melody', sans-serif;
-            font-weight: 700;
+        h1 {
+            font-family: 'Cute Font', cursive;
+            text-align: center;
+            color: #ff6b9d;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
-        .clickable-line {
-            transition: all 0.3s ease;
+        .subtitle {
+            text-align: center;
+            color: #8e44ad;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .photo-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 182, 193, 0.3);
+            border-radius: 15px;
+        }
+        
+        .chaey-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ff6b9d;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+        }
+        
+        .photo-button {
+            background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-family: 'Cute Font', cursive;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 12px;
-            margin: 4px 0;
+            transition: transform 0.2s;
         }
         
-        .clickable-line:hover {
-            color: #7c3aed !important;
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        .photo-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .lyrics-section {
+            margin: 30px 0;
+        }
+        
+        .verse {
+            background: rgba(255, 182, 193, 0.2);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #ff6b9d;
+        }
+        
+        .lyrics-line {
+            font-size: 1.3em;
+            font-weight: bold;
+            line-height: 1.8;
+            margin: 8px 0;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .lyrics-line.english {
+            color: #2c3e50;
+        }
+        
+        .lyrics-line.korean {
+            color: #8e44ad;
+        }
+        
+        .lyrics-line.highlight {
+            color: #e74c3c;
+        }
+        
+        .lyrics-line:hover {
+            background: rgba(255, 182, 193, 0.3);
+            transform: translateX(10px);
+        }
+        
+        .lyrics-line.clicked.english {
+            color: #ffffff !important;
+            background: #3498db !important;
+        }
+        
+        .lyrics-line.clicked.korean {
+            color: #ffffff !important;
+            background: #9b59b6 !important;
+        }
+        
+        .lyrics-line.clicked.highlight {
+            color: #ffffff !important;
+            background: #e74c3c !important;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #ff6b9d;
+            text-align: center;
+            margin: 25px 0 15px 0;
             font-weight: bold;
         }
         
-        .clicked {
-            background: linear-gradient(45deg, #d1fae5, #a7f3d0);
-            color: #059669 !important;
-            font-weight: bold;
-        }
-        
-        .clicked:hover {
-            color: #065f46 !important;
+        .progress-section {
+            background: rgba(116, 185, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
         }
         
         .progress-bar {
+            background: #ddd;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+            height: 100%;
+            width: 0%;
             transition: width 0.5s ease;
         }
         
-        .floating-heart {
-            animation: float 2s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .bounce-in {
-            animation: bounceIn 0.6s ease;
-        }
-        
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #fef7ff, #f3e8ff, #e0e7ff, #dbeafe);
-        }
-        
-        .photo-upload-area {
-            border: 3px dashed #d1d5db;
-            transition: all 0.3s ease;
-        }
-        
-        .photo-upload-area:hover {
-            border-color: #f59e0b;
-            background: #fef3c7;
-        }
-        
-        .achievement-badge {
-            background: linear-gradient(45deg, #fbbf24, #f59e0b);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            display: inline-block;
-            margin: 2px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .lyrics-line {
+                font-size: 1.1em;
+            }
+            
+            .chaey-photo {
+                width: 150px;
+                height: 150px;
+            }
         }
     </style>
 </head>
-<body class="gradient-bg min-h-screen">
-    <div class="container mx-auto p-4 max-w-4xl">
-        <!-- Header -->
-        <div class="text-center mb-8 bounce-in">
-            <h1 class="title-font text-6xl mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-500">
-                Golden 🌟
-            </h1>
-            <h2 class="cute-korean text-4xl text-purple-600 mb-2">
-                놀이 가사 배우기
-            </h2>
-            <h3 class="cute-korean text-3xl text-pink-500">
-                채이(Chloe) 공주님 전용 💕
-            </h3>
-            <div class="mt-4">
-                <span class="achievement-badge">🎵 K-Pop Star 채이</span>
-                <span class="achievement-badge">✨ Golden Princess</span>
-                <span class="achievement-badge">🎤 Future Singer</span>
+<body>
+    <div class="container">
+        <h1>Golden 🌟<br>놀이 가사 배우기</h1>
+        <div class="subtitle">채이(Chloe) 공주님을 위한 특별한 학습기 💕</div>
+        
+        <div class="photo-section">
+            <img id="chaeyPhoto" class="chaey-photo" src="" alt="채이 사진">
+            <br>
+            <button class="photo-button" onclick="changePhoto()">채이 사진 바꾸기 🎲</button>
+        </div>
+        
+        <div class="section-title">🎵 Golden - HUNTR/X 🎵</div>
+        
+        <div class="progress-section">
+            <div>학습 진행률: <span id="progressText">0%</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
         </div>
-
-        <!-- Photo Upload Section -->
-        <div class="bg-white rounded-3xl p-6 mb-6 shadow-lg">
-            <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">📸 채이 사진 추가하기</h3>
-            <div class="photo-upload-area rounded-2xl p-8 text-center">
-                <input type="file" id="photoInput" accept="image/*" class="hidden">
-                <button onclick="document.getElementById('photoInput').click()" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-6 py-3 rounded-full cute-korean text-xl hover:scale-105 transition-all">
-                    <i class="fas fa-camera mr-2"></i>사진 선택하기
-                </button>
-                <div id="photoPreview" class="mt-4"></div>
+        
+        <div class="lyrics-section">
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">I was a ghost, I was alone</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">어두워진 앞길속에</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Given the throne, I didn't know how to believe</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">I was the queen that I'm meant to be</div>
             </div>
-        </div>
-
-        <!-- Progress Section -->
-        <div class="bg-white rounded-3xl p-6 mb-6 shadow-lg">
-            <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">🏆 채이의 학습 진도</h3>
-            <div class="bg-gray-200 rounded-full h-6 mb-4">
-                <div id="progressBar" class="progress-bar bg-gradient-to-r from-pink-400 to-purple-400 h-6 rounded-full" style="width: 0%"></div>
-            </div>
-            <div class="text-center">
-                <span id="progressText" class="cute-korean text-xl text-gray-600">시작해보자! 💪</span>
-            </div>
-        </div>
-
-        <!-- Interactive Controls -->
-        <div class="bg-white rounded-3xl p-6 mb-6 shadow-lg">
-            <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">🎮 놀이 기능</h3>
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="resetProgress()" class="bg-gradient-to-r from-red-400 to-pink-400 text-white px-4 py-3 rounded-2xl cute-korean text-lg hover:scale-105 transition-all">
-                    <i class="fas fa-redo mr-2"></i>다시 시작
-                </button>
-                <button onclick="showAchievements()" class="bg-gradient-to-r from-green-400 to-blue-400 text-white px-4 py-3 rounded-2xl cute-korean text-lg hover:scale-105 transition-all">
-                    <i class="fas fa-trophy mr-2"></i>성취도
-                </button>
-                <button onclick="playRandomLine()" class="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-4 py-3 rounded-2xl cute-korean text-lg hover:scale-105 transition-all">
-                    <i class="fas fa-random mr-2"></i>랜덤 가사
-                </button>
-                <button onclick="toggleKaraoke()" class="bg-gradient-to-r from-purple-400 to-indigo-400 text-white px-4 py-3 rounded-2xl cute-korean text-lg hover:scale-105 transition-all">
-                    <i class="fas fa-microphone mr-2"></i>노래방 모드
-                </button>
-            </div>
-        </div>
-
-        <!-- Lyrics Section -->
-        <div class="bg-white rounded-3xl p-8 shadow-lg">
-            <h2 class="cute-korean text-3xl text-center mb-8 text-purple-600">🎵 Golden 가사 전체 🎵</h2>
             
-            <div class="space-y-4" id="lyricsContainer">
-                <!-- Verse 1 -->
-                <div class="mb-8">
-                    <h3 class="cute-korean text-2xl text-pink-500 mb-4">🎤 첫 번째 파트</h3>
-                    <div class="lyrics-font text-xl space-y-2">
-                        <div class="clickable-line" data-line="1">I was a ghost, I was alone, hah</div>
-                        <div class="clickable-line" data-line="2">어두워진, hah, 앞길속에 (Ah)</div>
-                        <div class="clickable-line" data-line="3">Given the throne, I didn't know how to believe</div>
-                        <div class="clickable-line" data-line="4">I was the queen that I'm meant to be</div>
-                        <div class="clickable-line" data-line="5">I lived two lives, tried to play both sides</div>
-                        <div class="clickable-line" data-line="6">But I couldn't find my own place</div>
-                        <div class="clickable-line" data-line="7">Called a problem child 'cause I got too wild</div>
-                        <div class="clickable-line" data-line="8">But now that's how I'm getting paid, 끝없이 on stage</div>
-                    </div>
-                </div>
-
-                <!-- Pre-Chorus -->
-                <div class="mb-8">
-                    <h3 class="cute-korean text-2xl text-blue-500 mb-4">✨ 준비 파트</h3>
-                    <div class="lyrics-font text-xl space-y-2">
-                        <div class="clickable-line" data-line="9">I'm done hidin', now I'm shinin' like I'm born to be</div>
-                        <div class="clickable-line" data-line="10">We dreamin' hard, we came so far, now I believe</div>
-                    </div>
-                </div>
-
-                <!-- Chorus -->
-                <div class="mb-8">
-                    <h3 class="cute-korean text-2xl text-yellow-500 mb-4">🌟 후렴구 (제일 중요!)</h3>
-                    <div class="lyrics-font text-xl space-y-2 bg-yellow-50 p-4 rounded-2xl">
-                        <div class="clickable-line font-bold text-2xl" data-line="11">We're goin' up, up, up, it's our moment</div>
-                        <div class="clickable-line font-bold text-2xl" data-line="12">You know together we're glowing</div>
-                        <div class="clickable-line font-bold text-2xl text-golden" data-line="13">Gonna be, gonna be golden</div>
-                        <div class="clickable-line" data-line="14">Oh, up, up, up with our voices</div>
-                        <div class="clickable-line" data-line="15">영원히 깨질 수 없는</div>
-                        <div class="clickable-line font-bold text-2xl text-golden" data-line="16">Gonna be, gonna be golden</div>
-                    </div>
-                </div>
-
-                <!-- Post-Chorus -->
-                <div class="mb-8">
-                    <h3 class="cute-korean text-2xl text-green-500 mb-4">💫 반복 파트</h3>
-                    <div class="lyrics-font text-xl space-y-2">
-                        <div class="clickable-line" data-line="17">Oh, I'm done hidin' now I'm shinin' like I'm born to be</div>
-                        <div class="clickable-line" data-line="18">Oh, our time, no fear, no lies</div>
-                        <div class="clickable-line" data-line="19">That's who we're born to be</div>
-                    </div>
-                </div>
-
-                <!-- Verse 2 -->
-                <div class="mb-8">
-                    <h3 class="cute-korean text-2xl text-red-500 mb-4">🎤 두 번째 파트</h3>
-                    <div class="lyrics-font text-xl space-y-2">
-                        <div class="clickable-line" data-line="20">Waited so long to break these walls down</div>
-                        <div class="clickable-line" data-line="21">To wake up and feel like me</div>
-                        <div class="clickable-line" data-line="22">Put these patterns all in the past now</div>
-                        <div class="clickable-line" data-line="23">And finally live like the girl they all see</div>
-                        <div class="clickable-line" data-line="24">No more hiding, I'll be shining like I'm born to be</div>
-                        <div class="clickable-line" data-line="25">'Cause we are hunters, voices strong, and I know I believe</div>
-                    </div>
-                </div>
-
-                <!-- Final Chorus & Outro -->
-                <div class="mb-8">
-                    <h3 class="cute-korean text-2xl text-purple-500 mb-4">🎉 마지막 파트</h3>
-                    <div class="lyrics-font text-xl space-y-2 bg-purple-50 p-4 rounded-2xl">
-                        <div class="clickable-line font-bold" data-line="26">You know we're gonna be, gonna be golden</div>
-                        <div class="clickable-line font-bold" data-line="27">We're gonna be, gonna be</div>
-                        <div class="clickable-line font-bold" data-line="28">Born to be, born to be glowin'</div>
-                        <div class="clickable-line" data-line="29">밝게 빛나는 우린</div>
-                        <div class="clickable-line font-bold text-2xl" data-line="30">You know that it's our time, no fears, no lies</div>
-                        <div class="clickable-line font-bold text-2xl text-golden" data-line="31">That's who we're born to be</div>
-                    </div>
-                </div>
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">I lived two lives, tried to play both sides</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">But I couldn't find my own place</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Called a problem child 'cause I got too wild</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">But now that's how I'm getting paid, 끝없이 on stage</div>
             </div>
-
-            <!-- Learning Tips -->
-            <div class="mt-8 bg-gradient-to-r from-pink-100 to-purple-100 p-6 rounded-2xl">
-                <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">💡 채이를 위한 학습 팁</h3>
-                <div class="cute-korean text-lg space-y-2">
-                    <p>🌟 <strong>"Up, up, up"</strong> 부분부터 시작해보자!</p>
-                    <p>💕 <strong>"Golden"</strong> 단어를 크게 소리내서 말해보자!</p>
-                    <p>🎵 <strong>가사를 터치</strong>하면 색깔이 바뀌어요!</p>
-                    <p>🏆 <strong>다 외우면</strong> 채이가 진짜 K-Pop 스타!</p>
-                </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">I'm done hidin', now I'm shinin' like I'm born to be</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">We dreamin' hard, we came so far, now I believe</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">We're goin' up, up, up, it's our moment</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">You know together we're glowing</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Gonna be, gonna be golden</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Oh, up, up, up with our voices</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">영원히 깨질 수 없는</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Gonna be, gonna be golden</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">Oh, I'm done hidin' now I'm shinin' like I'm born to be</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Oh, our time, no fear, no lies</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">That's who we're born to be</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">Waited so long to break these walls down</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">To wake up and feel like me</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Put these patterns all in the past now</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">And finally live like the girl they all see</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">No more hiding, I'll be shining like I'm born to be</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">'Cause we are hunters, voices strong, and I know I believe</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">We're goin' up, up, up, it's our moment</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">You know together we're glowing</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Gonna be, gonna be golden</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Oh, up, up, up, with our voices</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">영원히 깨질 수 없는</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Gonna be, gonna be golden</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line english" onclick="toggleLine(this)">Oh, I'm done hidin', now I'm shining like I'm born to be</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">Oh, our time, no fears, no lies</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">That's who we're born to be</div>
+            </div>
+            
+            <div class="verse">
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">You know we're gonna be, gonna be golden</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">We're gonna be, gonna be</div>
+                <div class="lyrics-line highlight" onclick="toggleLine(this)">Born to be, born to be glowin'</div>
+                <div class="lyrics-line korean" onclick="toggleLine(this)">밝게 빛나는 우린</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">You know that it's our time, no fears, no lies</div>
+                <div class="lyrics-line english" onclick="toggleLine(this)">That's who we're born to be</div>
             </div>
         </div>
-
-        <!-- Achievement Modal -->
-        <div id="achievementModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-3xl p-8 m-4 max-w-md">
-                <h3 class="cute-korean text-3xl text-center mb-4 text-purple-600">🏆 채이의 성취도</h3>
-                <div id="achievementList" class="space-y-2"></div>
-                <button onclick="closeModal()" class="w-full mt-6 bg-gradient-to-r from-pink-400 to-purple-400 text-white py-3 rounded-2xl cute-korean text-xl">
-                    닫기
-                </button>
-            </div>
-        </div>
-
-        <!-- Floating Elements -->
-        <div class="fixed top-4 right-4 floating-heart text-4xl">💖</div>
-        <div class="fixed bottom-4 left-4 floating-heart text-4xl" style="animation-delay: 1s;">✨</div>
     </div>
 
     <script>
-        let clickedLines = new Set();
-        let totalLines = 31;
-        let achievements = [];
-        let karaokeMode = false;
-
-        // Photo upload functionality
-        document.getElementById('photoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('photoPreview');
-                    preview.innerHTML = `
-                        <div class="relative inline-block">
-                            <img src="${e.target.result}" class="w-32 h-32 object-cover rounded-full border-4 border-pink-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">👑</div>
-                        </div>
-                        <p class="cute-korean text-lg mt-2 text-purple-600">우와! 채이 공주님이다! 💕</p>
-                    `;
-                    addAchievement("📸 사진 업로드 완료!");
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Line click functionality
-        document.querySelectorAll('.clickable-line').forEach(line => {
-            line.addEventListener('click', function() {
-                const lineNumber = this.dataset.line;
-                
-                if (!clickedLines.has(lineNumber)) {
-                    clickedLines.add(lineNumber);
-                    this.classList.add('clicked');
-                    
-                    // Add celebration effect
-                    const celebration = document.createElement('span');
-                    celebration.innerHTML = '✨';
-                    celebration.style.cssText = 'position: absolute; font-size: 2em; pointer-events: none; animation: bounce 1s ease-out forwards;';
-                    this.style.position = 'relative';
-                    this.appendChild(celebration);
-                    
-                    updateProgress();
-                    checkAchievements();
-                    
-                    setTimeout(() => {
-                        if (celebration.parentNode) {
-                            celebration.remove();
-                        }
-                    }, 1000);
-                }
-            });
-        });
-
-        function updateProgress() {
-            const progress = (clickedLines.size / totalLines) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            
-            let message = '';
-            if (progress === 0) message = '시작해보자! 💪';
-            else if (progress < 25) message = '좋아! 계속 해보자! 🌟';
-            else if (progress < 50) message = '와! 채이 정말 잘하고 있어! 🎵';
-            else if (progress < 75) message = '대단해! 거의 다 왔어! 🚀';
-            else if (progress < 100) message = '와우! 조금만 더! 🏆';
-            else message = '완벽해! 채이는 Golden 마스터! 👑';
-            
-            document.getElementById('progressText').textContent = message;
+        const photos = [
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi1.jpg',
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi2.jpg',
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi3.jpg',
+            'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi4.jpg'
+        ];
+        
+        let currentPhotoIndex = Math.floor(Math.random() * photos.length);
+        
+        function loadRandomPhoto() {
+            const photoElement = document.getElementById('chaeyPhoto');
+            photoElement.src = photos[currentPhotoIndex];
         }
-
-        function checkAchievements() {
-            const progress = clickedLines.size;
-            
-            if (progress === 5 && !achievements.includes('첫 걸음')) {
-                addAchievement('🌟 첫 걸음 - 5줄 완료!');
-                achievements.push('첫 걸음');
-            }
-            
-            if (progress === 10 && !achievements.includes('열심히')) {
-                addAchievement('🔥 열심히 - 10줄 완료!');
-                achievements.push('열심히');
-            }
-            
-            if (progress === 20 && !achievements.includes('거의 다!')) {
-                addAchievement('🚀 거의 다! - 20줄 완료!');
-                achievements.push('거의 다!');
-            }
-            
-            if (progress === totalLines && !achievements.includes('Golden Master')) {
-                addAchievement('👑 Golden Master - 전체 완료!');
-                achievements.push('Golden Master');
-                celebrate();
-            }
+        
+        function changePhoto() {
+            currentPhotoIndex = Math.floor(Math.random() * photos.length);
+            loadRandomPhoto();
         }
-
-        function addAchievement(text) {
-            const achievement = document.createElement('div');
-            achievement.className = 'achievement-badge bounce-in';
-            achievement.textContent = text;
-            document.querySelector('.achievement-badge').parentNode.appendChild(achievement);
-        }
-
-        function celebrate() {
-            // Create celebration animation
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const emoji = document.createElement('div');
-                    emoji.innerHTML = ['🎉', '✨', '🌟', '💖', '🏆'][Math.floor(Math.random() * 5)];
-                    emoji.style.cssText = `
-                        position: fixed;
-                        top: ${Math.random() * 100}vh;
-                        left: ${Math.random() * 100}vw;
-                        font-size: 3em;
-                        pointer-events: none;
-                        z-index: 1000;
-                        animation: celebrate 3s ease-out forwards;
-                    `;
-                    document.body.appendChild(emoji);
-                    
-                    setTimeout(() => emoji.remove(), 3000);
-                }, i * 100);
-            }
-        }
-
-        function resetProgress() {
-            clickedLines.clear();
-            document.querySelectorAll('.clickable-line').forEach(line => {
-                line.classList.remove('clicked');
-            });
+        
+        function toggleLine(element) {
+            element.classList.toggle('clicked');
             updateProgress();
         }
-
-        function showAchievements() {
-            const modal = document.getElementById('achievementModal');
-            const list = document.getElementById('achievementList');
+        
+        function updateProgress() {
+            const allLines = document.querySelectorAll('.lyrics-line');
+            const clickedLines = document.querySelectorAll('.lyrics-line.clicked');
+            const progress = Math.round((clickedLines.length / allLines.length) * 100);
             
-            if (achievements.length === 0) {
-                list.innerHTML = '<p class="cute-korean text-lg text-center text-gray-500">아직 성취가 없어요! 가사를 클릭해보세요! 🌟</p>';
-            } else {
-                list.innerHTML = achievements.map(achievement => 
-                    `<div class="achievement-badge">${achievement}</div>`
-                ).join('');
-            }
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('progressText').textContent = progress + '%';
+            document.getElementById('progressFill').style.width = progress + '%';
         }
-
-        function closeModal() {
-            document.getElementById('achievementModal').classList.add('hidden');
-            document.getElementById('achievementModal').classList.remove('flex');
-        }
-
-        function playRandomLine() {
-            const lines = document.querySelectorAll('.clickable-line');
-            const randomLine = lines[Math.floor(Math.random() * lines.length)];
-            randomLine.style.background = 'linear-gradient(45deg, #fbbf24, #f59e0b)';
-            randomLine.style.color = 'white';
-            randomLine.style.transform = 'scale(1.05)';
-            
-            setTimeout(() => {
-                randomLine.style.background = '';
-                randomLine.style.color = '';
-                randomLine.style.transform = '';
-            }, 2000);
-        }
-
-        function toggleKaraoke() {
-            karaokeMode = !karaokeMode;
-            const lines = document.querySelectorAll('.clickable-line');
-            
-            if (karaokeMode) {
-                lines.forEach((line, index) => {
-                    setTimeout(() => {
-                        line.style.background = 'linear-gradient(45deg, #8b5cf6, #a78bfa)';
-                        line.style.color = 'white';
-                        line.style.transform = 'scale(1.02)';
-                        
-                        setTimeout(() => {
-                            line.style.background = '';
-                            line.style.color = '';
-                            line.style.transform = '';
-                        }, 1000);
-                    }, index * 300);
-                });
-            }
-        }
-
-        // Add CSS for celebrate animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes celebrate {
-                0% { opacity: 1; transform: scale(1) rotate(0deg); }
-                100% { opacity: 0; transform: scale(2) rotate(360deg); }
-            }
-            
-            .text-golden {
-                background: linear-gradient(45deg, #fbbf24, #f59e0b);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Initialize
-        updateProgress();
+        
+        // 페이지 로드 시 랜덤 사진 표시
+        window.addEventListener('load', loadRandomPhoto);
     </script>
 </body>
 </html>
-    <script id="html_badge_script1">
-        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDlpSzhhcu7WVC%2B19LyTMkqMSX1Npjl3T9Zr%2Fvs6hh55HSNKy37Tq2b%2BLZP%2FnMEXUtyJNtQhEGScWHKMBN7CviaiPCkY9xSqNdrYMtwHmpEPR0tbAKSPe1egu0ejvNGOWf7EXuVjj11TXiZbTPZ0P4N%2FI0P2Tjf46w81GN442BEQL85Tu0XP40Iv6Zge%2FRqAJUuVtl42R8%2BoRx16r%2BEe3H8%2BLmTOrm9RZ7Rkgr4bSzbBdx67LcnIUOv7Qk4C2ZwiFiX2NfOxVFy6k09310qgz8Nkx0Q%2FoUyZ5NeY4SJyIEt7jHbp6eP3kgCQHGAOrGp2A5Fhz2tUvZRz%2FLgDeUeHDXezg6kdUhDTryCibrLj0sF%2BGPLSXUbEOejwb43oyK5pCN5q5rKUHXDtXr8vHZsyeIE6NfUslDtNenvXT3QPyJCJqA9I%2B%2BVwAakMuuiwUXfk4UbxlU51w4AYvjVv2PNkSM0PXEMnIQCZOUlWGur7lncRTUwxqwsMLl71YPMqXQITdtdz5mcsIa013KEw6XjxXK%2FA%3D";
-        window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDlpSzhhcu7WVC+19LyTMkqMSX1Npjl3T9Zr/vs6hh55HSNKy37Tq2b+LZP/nMEXUtyJNtQhEGScWHKMBN7CviaiPCkY9xSqNdrYMtwHmpEPR0tbAKSPe1egu0ejvNGOWf7EXuVjj11TXiZbTPZ0P4N/I0P2Tjf46w81GN442BEQL85Tu0XP40Iv6Zge/RqAJUuVtl42R8+oRx16r+Ee3H8+LmTOrm9RZ7Rkgr4bSzbBdx67LcnIUOv7Qk4C2ZwiFiX2NfOxVFy6k09310qgz8Nkx0Q/oUyZ5NeY4SJyIEt7jHbp6eP3kgCQHGAOrGp2A5Fhz2tUvZRz/LgDeUeHDXezg6kdUhDTryCibrLj0sF+GPLSXUbEOejwb43oyK5pCN5q5rKUHXDtXr8vHZsyeIE6NfUslDtNenvXT3QPyJCJqA9I++VwAakMuuiwUXfk4UbxlU51w4AYvjVv2PNkSM0PXEMnIQCZOUlWGur7lncRTUwxqwsMLl71YPMqXQITdtdz5mcsIa013KEw6XjxXK/A=";
-    </script>
-    
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    
