@@ -22,7 +22,7 @@
         
         .lyrics-font {
             font-family: 'Gaegu', 'Hi Melody', sans-serif;
-            font-weight: 400;
+            font-weight: 700;
         }
         
         .clickable-line {
@@ -34,15 +34,20 @@
         }
         
         .clickable-line:hover {
-            background: linear-gradient(45deg, #fef3c7, #fde68a);
+            color: #7c3aed !important;
             transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+            font-weight: bold;
         }
         
         .clicked {
             background: linear-gradient(45deg, #d1fae5, #a7f3d0);
-            color: #059669;
+            color: #059669 !important;
             font-weight: bold;
+        }
+        
+        .clicked:hover {
+            color: #065f46 !important;
         }
         
         .progress-bar {
@@ -72,16 +77,6 @@
             background: linear-gradient(135deg, #fef7ff, #f3e8ff, #e0e7ff, #dbeafe);
         }
         
-        .photo-upload-area {
-            border: 3px dashed #d1d5db;
-            transition: all 0.3s ease;
-        }
-        
-        .photo-upload-area:hover {
-            border-color: #f59e0b;
-            background: #fef3c7;
-        }
-        
         .achievement-badge {
             background: linear-gradient(45deg, #fbbf24, #f59e0b);
             color: white;
@@ -97,36 +92,14 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
-        
-        .random-photo-container {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .chaey-random-photo {
-            width: 200px;
-            height: 200px;
+
+        .chaey-photo {
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #ff6b9d;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            margin-bottom: 15px;
-        }
-        
-        .photo-change-btn {
-            background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: transform 0.2s;
-            font-family: 'Hi Melody', cursive;
-        }
-        
-        .photo-change-btn:hover {
-            transform: scale(1.05);
+            border: 4px solid #f472b6;
+            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.3);
         }
     </style>
 </head>
@@ -152,23 +125,10 @@
 
         <!-- Random Photo Section -->
         <div class="bg-white rounded-3xl p-6 mb-6 shadow-lg">
-            <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">📸 채이 랜덤 사진</h3>
-            <div class="random-photo-container">
-                <img id="chaeyRandomPhoto" class="chaey-random-photo" src="" alt="채이 사진">
-                <br>
-                <button class="photo-change-btn" onclick="changeRandomPhoto()">채이 사진 바꾸기 🎲</button>
-            </div>
-        </div>
-
-        <!-- Photo Upload Section -->
-        <div class="bg-white rounded-3xl p-6 mb-6 shadow-lg">
-            <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">📸 채이 사진 추가하기</h3>
-            <div class="photo-upload-area rounded-2xl p-8 text-center">
-                <input type="file" id="photoInput" accept="image/*" class="hidden">
-                <button onclick="document.getElementById('photoInput').click()" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-6 py-3 rounded-full cute-korean text-xl hover:scale-105 transition-all">
-                    <i class="fas fa-camera mr-2"></i>사진 선택하기
-                </button>
-                <div id="photoPreview" class="mt-4"></div>
+            <h3 class="cute-korean text-2xl text-center mb-4 text-purple-600">📸 채이 공주님</h3>
+            <div class="text-center">
+                <img id="chaeyRandomPhoto" class="chaey-photo mx-auto" src="" alt="채이 사진">
+                <p class="cute-korean text-lg mt-2 text-purple-600">우와! 채이 공주님이다! 💕</p>
             </div>
         </div>
 
@@ -316,44 +276,21 @@
         let karaokeMode = false;
 
         // Random photo functionality
-        const chaeyPhotos = [
+        const photos = [
             'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi1.jpg',
             'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi2.jpg',
             'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi3.jpg',
             'https://raw.githubusercontent.com/nadleh/chaey-golden/main/photos/chaeyi4.jpg'
         ];
-        
-        let currentPhotoIndex = Math.floor(Math.random() * chaeyPhotos.length);
-        
+
         function loadRandomPhoto() {
+            const randomIndex = Math.floor(Math.random() * photos.length);
             const photoElement = document.getElementById('chaeyRandomPhoto');
-            photoElement.src = chaeyPhotos[currentPhotoIndex];
-        }
-        
-        function changeRandomPhoto() {
-            currentPhotoIndex = Math.floor(Math.random() * chaeyPhotos.length);
-            loadRandomPhoto();
+            photoElement.src = photos[randomIndex];
         }
 
-        // Photo upload functionality
-        document.getElementById('photoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('photoPreview');
-                    preview.innerHTML = `
-                        <div class="relative inline-block">
-                            <img src="${e.target.result}" class="w-32 h-32 object-cover rounded-full border-4 border-pink-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 bg-yellow-400 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">👑</div>
-                        </div>
-                        <p class="cute-korean text-lg mt-2 text-purple-600">우와! 채이 공주님이다! 💕</p>
-                    `;
-                    addAchievement("📸 사진 업로드 완료!");
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        // Load random photo on page load
+        window.addEventListener('load', loadRandomPhoto);
 
         // Line click functionality
         document.querySelectorAll('.clickable-line').forEach(line => {
@@ -533,17 +470,16 @@
         `;
         document.head.appendChild(style);
 
-        // Initialize - Load random photo on page load
-        window.addEventListener('load', loadRandomPhoto);
+        // Initialize
         updateProgress();
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDhXkpC2KhfXHEO9cGouhubn4rZGktU20Auv1fI1nhNkDVM%2FCREniU4lWhKOSu0k6MP4GGkn1hmH4jxxZ65kHWZW78XwVMbpp%2FSbM6d8Z9QDWZYXhD14tc%2BTuhmePapIZc%2FTQOZanzwAwz6qYXMwJIrAbBqOSMwjgz1ScO89Ss4zZff0RUa3baZQCeDmpwkSff3ZZGMYIvuCGxEpXUMsT9LDB31rfYvFYRVb5jaqz%2FIsSvyd5MMPP3EQFFGAK5o6c1LDX%2BsHw%2FRK4Mr4go6j%2F5bmXfiBK9dKYo0nNXDtMYNXLi1Btu8QCoWubAc6sszaF%2FEowKL3N9hzGy4E9Izgr7SLpRL2kjSE85g9B9UEai1JHBe5PPqD4kAl77D%2FPFqLIYkJa1rQKZfb0SURRNxY%2FOirMYyPWqhebkhjVd3KFtWXbDWC305eGr%2F5KXjNrhvty1ZZ95jSeeOlxHN20XKAVOrytOzxW4cw931DmMqV9N9%2FmFAIf4U7sbsa5AlVnvYOxTiyb9np0prGTdGfLJpibge5o3cbY8SjCSYYfaX%2FM4ifM";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDqQMuY1jBEr3sAHW9s9CDWMYf5jydvNaCw5xWuDfePncNP5C4A9K2CKc4pXbinLZVk%2BpAdUnGiax5TcaBEMZxKavq3DDXKP5gGW%2FYjV6zVOs%2B0LwuYkmMJeUxfe4Bqly1XE8Gh0YXlsHKnMyQdoaKoKIX1HvHou6y%2FKAdCHZx%2FfmBTPW5JmKI2nw8n9Kfmzfo17wvD%2F8RJmqT5r7dLS3LHbfSIQYgDK87E%2BPgueMQ8KQUaCCrL4Y0ViFSwYVx%2BkxoD%2FFoB3OkWsxKUo2LeV%2BJZSv%2FO565Gj9PomJIFXWnyVKyfJ97w1MB5LJP%2FvPGzmoIU9l58CsQYL5ZPD4uY6B%2BFcr6IF4yniQATyoeNeZiUA56e2hO5xehW4OOrejrwxlTK8%2F0P92D0K57nFzPjbg4P2cLp%2FS%2FqXeNAZuMPNulKNLzsb6G4DI2%2FNfQoVOU7N5qhLh9i5HgPyMy27mJ%2BSnNtlHi2jZD%2FJf%2FAK6Ooo2teM0RDgPTvMHeMmlRVNB6eP7mTgTUiF8uhqHhzRq1UOZUAM%3D";
         window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDhXkpC2KhfXHEO9cGouhubn4rZGktU20Auv1fI1nhNkDVM/CREniU4lWhKOSu0k6MP4GGkn1hmH4jxxZ65kHWZW78XwVMbpp/SbM6d8Z9QDWZYXhD14tc+TuhmePapIZc/TQOZanzwAwz6qYXMwJIrAbBqOSMwjgz1ScO89Ss4zZff0RUa3baZQCeDmpwkSff3ZZGMYIvuCGxEpXUMsT9LDB31rfYvFYRVb5jaqz/IsSvyd5MMPP3EQFFGAK5o6c1LDX+sHw/RK4Mr4go6j/5bmXfiBK9dKYo0nNXDtMYNXLi1Btu8QCoWubAc6sszaF/EowKL3N9hzGy4E9Izgr7SLpRL2kjSE85g9B9UEai1JHBe5PPqD4kAl77D/PFqLIYkJa1rQKZfb0SURRNxY/OirMYyPWqhebkhjVd3KFtWXbDWC305eGr/5KXjNrhvty1ZZ95jSeeOlxHN20XKAVOrytOzxW4cw931DmMqV9N9/mFAIf4U7sbsa5AlVnvYOxTiyb9np0prGTdGfLJpibge5o3cbY8SjCSYYfaX/M4ifM";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDqQMuY1jBEr3sAHW9s9CDWMYf5jydvNaCw5xWuDfePncNP5C4A9K2CKc4pXbinLZVk+pAdUnGiax5TcaBEMZxKavq3DDXKP5gGW/YjV6zVOs+0LwuYkmMJeUxfe4Bqly1XE8Gh0YXlsHKnMyQdoaKoKIX1HvHou6y/KAdCHZx/fmBTPW5JmKI2nw8n9Kfmzfo17wvD/8RJmqT5r7dLS3LHbfSIQYgDK87E+PgueMQ8KQUaCCrL4Y0ViFSwYVx+kxoD/FoB3OkWsxKUo2LeV+JZSv/O565Gj9PomJIFXWnyVKyfJ97w1MB5LJP/vPGzmoIU9l58CsQYL5ZPD4uY6B+Fcr6IF4yniQATyoeNeZiUA56e2hO5xehW4OOrejrwxlTK8/0P92D0K57nFzPjbg4P2cLp/S/qXeNAZuMPNulKNLzsb6G4DI2/NfQoVOU7N5qhLh9i5HgPyMy27mJ+SnNtlHi2jZD/Jf/AK6Ooo2teM0RDgPTvMHeMmlRVNB6eP7mTgTUiF8uhqHhzRq1UOZUAM=";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
