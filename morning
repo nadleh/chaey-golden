@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채이 등원 준비 & 하원 시간표</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Fredoka:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+         {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #fef7ff 0%, #f0f9ff 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 15mm;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fbbf24;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+        
+        .title {
+            font-family: 'Fredoka', 'Noto Sans KR', sans-serif;
+            font-weight: 600;
+            color: #7c3aed;
+        }
+        
+        .checklist-item {
+            background: linear-gradient(135deg, #fef3c7 0%, #fef7cd 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+        }
+        
+        .checkbox {
+            width: 25px;
+            height: 25px;
+            border: 3px solid #f59e0b;
+            border-radius: 8px;
+            margin-right: 15px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .checkbox:checked {
+            background-color: #10b981;
+            border-color: #10b981;
+            position: relative;
+        }
+        
+        .checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .schedule-table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 2px solid #ec4899;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.1);
+        }
+        
+        .schedule-table th {
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .schedule-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #fce7f3;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .schedule-table tr:nth-child(even) {
+            background-color: #fdf2f8;
+        }
+        
+        .day-cell {
+            font-weight: 600;
+            color: #be185d;
+        }
+        
+        .time-cell {
+            color: #1f2937;
+            font-weight: 500;
+        }
+        
+        .bus-cell {
+            background: linear-gradient(135deg, #ddd6fe 0%, #e0e7ff 100%);
+            color: #5b21b6;
+            font-weight: 600;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+        }
+        
+        .icon {
+            font-size: 20px;
+            margin-right: 10px;
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 프로필 섹션 -->
+        <div class="text-center mb-8">
+            <img src="https://page.gensparksite.com/jupyter/tooluse_c1u4SqFLRHi-Y9S_ABg6Ww/output/chaey_circular_white_bg.jpg" 
+                 alt="채이 프로필" class="profile-img mx-auto mb-4">
+            <h1 class="title text-4xl mb-2">🌟 채이의 등원 준비 🌟</h1>
+            <p class="text-gray-600 text-lg font-medium">매일 아침 함께 체크해요!</p>
+        </div>
+
+        <!-- 등원 준비 체크리스트 -->
+        <div class="mb-10">
+            <h2 class="title text-2xl mb-6 flex items-center">
+                <i class="fas fa-list-check icon"></i>
+                아침 등원 준비 체크리스트
+            </h2>
+            
+            <div class="checklist-item flex items-center">
+                <input type="checkbox" class="checkbox" id="breakfast">
+                <label for="breakfast" class="flex-1 cursor-pointer">
+                    <i class="fas fa-utensils icon"></i>
+                    아침 챙겨주기 (준비해놓고감)
+                </label>
+            </div>
+            
+            <div class="checklist-item flex items-center">
+                <input type="checkbox" class="checkbox" id="clothes">
+                <label for="clothes" class="flex-1 cursor-pointer">
+                    <i class="fas fa-tshirt icon"></i>
+                    꺼낸 옷 / 양말 환복
+                </label>
+            </div>
+            
+            <div class="checklist-item flex items-center">
+                <input type="checkbox" class="checkbox" id="hair">
+                <label for="hair" class="flex-1 cursor-pointer">
+                    <i class="fas fa-crown icon"></i>
+                    머리묶기
+                </label>
+            </div>
+            
+            <div class="checklist-item flex items-center">
+                <input type="checkbox" class="checkbox" id="wash">
+                <label for="wash" class="flex-1 cursor-pointer">
+                    <i class="fas fa-hands-wash icon"></i>
+                    세수 양치 로션 바르기
+                </label>
+            </div>
+            
+            <div class="checklist-item flex items-center">
+                <input type="checkbox" class="checkbox" id="bag">
+                <label for="bag" class="flex-1 cursor-pointer">
+                    <i class="fas fa-backpack icon"></i>
+                    가방 챙기기 + 준비물 (식판, 물통, 수저통)
+                </label>
+            </div>
+        </div>
+
+        <!-- 9월 하원 시간표 -->
+        <div class="mb-8">
+            <h2 class="title text-2xl mb-6 flex items-center">
+                <i class="fas fa-clock icon"></i>
+                9월 하원 시간표
+            </h2>
+            
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">요일</th>
+                        <th style="width: 35%;">하원 시간</th>
+                        <th style="width: 25%;">버스</th>
+                        <th style="width: 15%;">체크</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-cell">
+                            월요일<br>
+                            <span class="text-sm text-gray-500 font-normal">MON</span>
+                        </td>
+                        <td class="time-cell">15시 43분</td>
+                        <td class="bus-cell">5호차</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="w-5 h-5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">
+                            화요일<br>
+                            <span class="text-sm text-gray-500 font-normal">TUE</span>
+                        </td>
+                        <td class="time-cell">15시 43분</td>
+                        <td class="bus-cell">5호차</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="w-5 h-5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">
+                            수요일<br>
+                            <span class="text-sm text-gray-500 font-normal">WED</span>
+                        </td>
+                        <td class="time-cell">15시 37분</td>
+                        <td class="bus-cell">5호차</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="w-5 h-5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">
+                            목요일<br>
+                            <span class="text-sm text-gray-500 font-normal">THU</span>
+                        </td>
+                        <td class="time-cell">16시 58분</td>
+                        <td class="bus-cell">3호차</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="w-5 h-5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">
+                            금요일<br>
+                            <span class="text-sm text-gray-500 font-normal">FRI</span>
+                        </td>
+                        <td class="time-cell">15시 43분</td>
+                        <td class="bus-cell">5호차</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="w-5 h-5">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="text-center text-gray-500 text-sm mt-8">
+            <i class="fas fa-heart text-pink-400"></i>
+            채이의 즐거운 하루를 응원해요!
+            <i class="fas fa-heart text-pink-400"></i>
+        </div>
+    </div>
+
+    <!-- 축하 메시지 -->
+    <div id="celebration" class="celebration">
+        <i class="fas fa-star"></i>
+        모든 준비 완료! 잘했어요 채이! 
+        <i class="fas fa-star"></i>
+    </div>
+
+    <script>
+        // 체크리스트 완료 확인
+        function checkCompletion() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const checkedBoxes = document.querySelectorAll('.checkbox:checked');
+            const celebration = document.getElementById('celebration');
+            
+            if (checkboxes.length === checkedBoxes.length && checkboxes.length > 0) {
+                celebration.style.display = 'block';
+                setTimeout(() => {
+                    celebration.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // 체크박스 이벤트 리스너
+        document.querySelectorAll('.checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', checkCompletion);
+        });
+
+        // 리셋 기능 (더블클릭으로 모든 체크 해제)
+        document.addEventListener('dblclick', () => {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDgZ6gUPnjCDZmfUMmXQ%2FtJFCfosrD%2BIsN339g%2BoRWNCVs1L6WTHINNbmWOm8O9Y1H8r7r0Vm2v4NTHmkjH6zSdhr4IPoQjgTrveIQoFtH%2FPNFwCW7Trb%2FoZf7PTu2f9pm%2B4%2F8Q9xg06ZGLCM955RSMF0KO3dB3AtkIpuU2%2BDrkbA5wQIXIetKj5USPDenHfrzzSBx9I0lX2PatIy49Sis%2FCC7RAhv8Yyssl2Pw95i37BNjYlC4qPQVtIi%2BUyF%2F2KfvgZQtjRfJjZZTo3yiwoP49L6Rzcd2X2Z5GV9vWguOeslzoIeXQPnOpm8v3xbW4WksS2%2Fzn6hHussgRj7JzoeS9jvKsKQc4KiEdt2FZEKo6HB0hczOisZoepLT7Aqc2%2B%2FBVu0fOcpbncmdLT1lUjTSt6gWwYK0o0N9c6WF2MDC4Kac7uU0Sb7Uo%2FoO6mj3OmrZdx3KKo145ITngsqVBijF6n9tpCnJdN2HeX8TV014Yzh2DTw8F6ZO%2BMTS2lMPBrbajZbL61nzaim7luZaR2kyU%3D";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDgZ6gUPnjCDZmfUMmXQ/tJFCfosrD+IsN339g+oRWNCVs1L6WTHINNbmWOm8O9Y1H8r7r0Vm2v4NTHmkjH6zSdhr4IPoQjgTrveIQoFtH/PNFwCW7Trb/oZf7PTu2f9pm+4/8Q9xg06ZGLCM955RSMF0KO3dB3AtkIpuU2+DrkbA5wQIXIetKj5USPDenHfrzzSBx9I0lX2PatIy49Sis/CC7RAhv8Yyssl2Pw95i37BNjYlC4qPQVtIi+UyF/2KfvgZQtjRfJjZZTo3yiwoP49L6Rzcd2X2Z5GV9vWguOeslzoIeXQPnOpm8v3xbW4WksS2/zn6hHussgRj7JzoeS9jvKsKQc4KiEdt2FZEKo6HB0hczOisZoepLT7Aqc2+/BVu0fOcpbncmdLT1lUjTSt6gWwYK0o0N9c6WF2MDC4Kac7uU0Sb7Uo/oO6mj3OmrZdx3KKo145ITngsqVBijF6n9tpCnJdN2HeX8TV014Yzh2DTw8F6ZO+MTS2lMPBrbajZbL61nzaim7luZaR2kyU=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
