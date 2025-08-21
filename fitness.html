@@ -3,1554 +3,715 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025년 운동 목표 달력</title>
+    <title>2025년 영어 회화 대화 학습 달력</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
-         {
-            .no-print { display: none; }
-            .page-break { page-break-before: always; }
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            background: #e5e7eb;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .day-cell {
-            background: white;
-            min-height: 120px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .day-number {
-            font-weight: bold;
-            font-size: 16px;
-            color: #374151;
-        }
-        
-        .other-month {
-            color: #d1d5db;
-            background-color: #f9fafb;
-        }
-        
-        .weekend {
-            background-color: #fef2f2;
-        }
-        
-        .today {
-            background-color: #dbeafe;
-            border: 2px solid #3b82f6;
-        }
-        
-        .weight-input {
-            width: 60px;
-            padding: 2px 4px;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-        
-        .exercise-checkbox {
-            margin-right: 4px;
-        }
-        
-        @media (max-width: 768px) {
-            .day-cell {
-                min-height: 80px;
-                padding: 4px;
+        @print {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
-            .day-number {
-                font-size: 14px;
-            }
-            .weight-input {
-                width: 50px;
-                font-size: 11px;
-            }
+        }
+        .calendar-day {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .calendar-day:hover {
+            transform: scale(1.05);
+        }
+        .completed-day {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        .quiz-completed {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        .modal {
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-6xl mx-auto">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
         <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">
-                <i class="fas fa-dumbbell text-blue-500"></i>
-                2025년 운동 목표 달력
+            <h1 class="text-4xl font-bold text-indigo-900 mb-2">
+                <i class="fas fa-comments mr-3"></i>2025년 영어 회화 학습 달력
             </h1>
-            <p class="text-gray-600">운동 체크와 체중 기록으로 건강한 습관을 만들어보세요!</p>
+            <p class="text-gray-600 text-lg">매일 새로운 대화를 배우고 일요일마다 복습 퀴즈에 도전하세요!</p>
+            <div class="mt-4 flex justify-center space-x-6 text-sm">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                    <span>학습 완료</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-purple-500 rounded mr-2"></div>
+                    <span>퀴즈 완료</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-gray-200 rounded mr-2"></div>
+                    <span>미완료</span>
+                </div>
+            </div>
         </header>
 
-        <!-- 8월 -->
-        <div class="mb-12 bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">2025년 8월</h2>
-            <div class="calendar-grid">
-                <div class="day-cell bg-gray-50 font-semibold text-center">일</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">월</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">화</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">수</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">목</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">금</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">토</div>
-                
-                <!-- 8월 달력 데이터 -->
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">27</div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <!-- August 2025 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-indigo-800 mb-4">
+                    <i class="fas fa-calendar-alt mr-2"></i>8월 2025
+                </h2>
+                <div class="grid grid-cols-7 gap-1 text-center">
+                    <div class="font-semibold text-gray-500 p-2">일</div>
+                    <div class="font-semibold text-gray-500 p-2">월</div>
+                    <div class="font-semibold text-gray-500 p-2">화</div>
+                    <div class="font-semibold text-gray-500 p-2">수</div>
+                    <div class="font-semibold text-gray-500 p-2">목</div>
+                    <div class="font-semibold text-gray-500 p-2">금</div>
+                    <div class="font-semibold text-gray-500 p-2">토</div>
+                    
+                    <div class="p-2"></div><div class="p-2"></div><div class="p-2"></div><div class="p-2"></div><div class="p-2"></div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-01" data-type="conversation">1</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-02" data-type="conversation">2</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-08-03" data-type="quiz" data-week="1">3</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-04" data-type="conversation">4</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-05" data-type="conversation">5</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-06" data-type="conversation">6</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-07" data-type="conversation">7</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-08" data-type="conversation">8</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-09" data-type="conversation">9</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-08-10" data-type="quiz" data-week="2">10</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-11" data-type="conversation">11</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-12" data-type="conversation">12</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-13" data-type="conversation">13</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-14" data-type="conversation">14</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-15" data-type="conversation">15</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-16" data-type="conversation">16</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-08-17" data-type="quiz" data-week="3">17</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-18" data-type="conversation">18</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-19" data-type="conversation">19</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-20" data-type="conversation">20</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-21" data-type="conversation">21</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-22" data-type="conversation">22</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-23" data-type="conversation">23</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-08-24" data-type="quiz" data-week="4">24</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-25" data-type="conversation">25</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-26" data-type="conversation">26</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-27" data-type="conversation">27</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-28" data-type="conversation">28</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-29" data-type="conversation">29</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-08-30" data-type="conversation">30</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-08-31" data-type="quiz" data-week="5">31</div>
                 </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">28</div>
+            </div>
+
+            <!-- September 2025 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-indigo-800 mb-4">
+                    <i class="fas fa-calendar-alt mr-2"></i>9월 2025
+                </h2>
+                <div class="grid grid-cols-7 gap-1 text-center">
+                    <div class="font-semibold text-gray-500 p-2">일</div>
+                    <div class="font-semibold text-gray-500 p-2">월</div>
+                    <div class="font-semibold text-gray-500 p-2">화</div>
+                    <div class="font-semibold text-gray-500 p-2">수</div>
+                    <div class="font-semibold text-gray-500 p-2">목</div>
+                    <div class="font-semibold text-gray-500 p-2">금</div>
+                    <div class="font-semibold text-gray-500 p-2">토</div>
+                    
+                    <div class="p-2"></div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-01" data-type="conversation">1</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-02" data-type="conversation">2</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-03" data-type="conversation">3</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-04" data-type="conversation">4</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-05" data-type="conversation">5</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-06" data-type="conversation">6</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-09-07" data-type="quiz" data-week="6">7</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-08" data-type="conversation">8</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-09" data-type="conversation">9</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-10" data-type="conversation">10</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-11" data-type="conversation">11</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-12" data-type="conversation">12</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-13" data-type="conversation">13</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-09-14" data-type="quiz" data-week="7">14</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-15" data-type="conversation">15</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-16" data-type="conversation">16</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-17" data-type="conversation">17</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-18" data-type="conversation">18</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-19" data-type="conversation">19</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-20" data-type="conversation">20</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-09-21" data-type="quiz" data-week="8">21</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-22" data-type="conversation">22</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-23" data-type="conversation">23</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-24" data-type="conversation">24</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-25" data-type="conversation">25</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-26" data-type="conversation">26</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-27" data-type="conversation">27</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-09-28" data-type="quiz" data-week="9">28</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-29" data-type="conversation">29</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-09-30" data-type="conversation">30</div>
                 </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">29</div>
+            </div>
+
+            <!-- October 2025 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-indigo-800 mb-4">
+                    <i class="fas fa-calendar-alt mr-2"></i>10월 2025
+                </h2>
+                <div class="grid grid-cols-7 gap-1 text-center">
+                    <div class="font-semibold text-gray-500 p-2">일</div>
+                    <div class="font-semibold text-gray-500 p-2">월</div>
+                    <div class="font-semibold text-gray-500 p-2">화</div>
+                    <div class="font-semibold text-gray-500 p-2">수</div>
+                    <div class="font-semibold text-gray-500 p-2">목</div>
+                    <div class="font-semibold text-gray-500 p-2">금</div>
+                    <div class="font-semibold text-gray-500 p-2">토</div>
+                    
+                    <div class="p-2"></div><div class="p-2"></div><div class="p-2"></div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-01" data-type="conversation">1</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-02" data-type="conversation">2</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-03" data-type="conversation">3</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-04" data-type="conversation">4</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-10-05" data-type="quiz" data-week="10">5</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-06" data-type="conversation">6</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-07" data-type="conversation">7</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-08" data-type="conversation">8</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-09" data-type="conversation">9</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-10" data-type="conversation">10</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-11" data-type="conversation">11</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-10-12" data-type="quiz" data-week="11">12</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-13" data-type="conversation">13</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-14" data-type="conversation">14</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-15" data-type="conversation">15</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-16" data-type="conversation">16</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-17" data-type="conversation">17</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-18" data-type="conversation">18</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-10-19" data-type="quiz" data-week="12">19</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-20" data-type="conversation">20</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-21" data-type="conversation">21</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-22" data-type="conversation">22</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-23" data-type="conversation">23</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-24" data-type="conversation">24</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-25" data-type="conversation">25</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-10-26" data-type="quiz" data-week="13">26</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-27" data-type="conversation">27</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-28" data-type="conversation">28</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-29" data-type="conversation">29</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-30" data-type="conversation">30</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-10-31" data-type="conversation">31</div>
                 </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">30</div>
+            </div>
+
+            <!-- November 2025 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-indigo-800 mb-4">
+                    <i class="fas fa-calendar-alt mr-2"></i>11월 2025
+                </h2>
+                <div class="grid grid-cols-7 gap-1 text-center">
+                    <div class="font-semibold text-gray-500 p-2">일</div>
+                    <div class="font-semibold text-gray-500 p-2">월</div>
+                    <div class="font-semibold text-gray-500 p-2">화</div>
+                    <div class="font-semibold text-gray-500 p-2">수</div>
+                    <div class="font-semibold text-gray-500 p-2">목</div>
+                    <div class="font-semibold text-gray-500 p-2">금</div>
+                    <div class="font-semibold text-gray-500 p-2">토</div>
+                    
+                    <div class="p-2"></div><div class="p-2"></div><div class="p-2"></div><div class="p-2"></div><div class="p-2"></div><div class="p-2"></div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-01" data-type="conversation">1</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-11-02" data-type="quiz" data-week="14">2</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-03" data-type="conversation">3</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-04" data-type="conversation">4</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-05" data-type="conversation">5</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-06" data-type="conversation">6</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-07" data-type="conversation">7</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-08" data-type="conversation">8</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-11-09" data-type="quiz" data-week="15">9</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-10" data-type="conversation">10</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-11" data-type="conversation">11</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-12" data-type="conversation">12</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-13" data-type="conversation">13</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-14" data-type="conversation">14</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-15" data-type="conversation">15</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-11-16" data-type="quiz" data-week="16">16</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-17" data-type="conversation">17</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-18" data-type="conversation">18</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-19" data-type="conversation">19</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-20" data-type="conversation">20</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-21" data-type="conversation">21</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-22" data-type="conversation">22</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-11-23" data-type="quiz" data-week="17">23</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-24" data-type="conversation">24</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-25" data-type="conversation">25</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-26" data-type="conversation">26</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-27" data-type="conversation">27</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-28" data-type="conversation">28</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-11-29" data-type="conversation">29</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-11-30" data-type="quiz" data-week="18">30</div>
                 </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">31</div>
-                </div>
-                <div class="day-cell" data-date="2025-08-01">
-                    <div class="day-number">1</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-08-02">
-                    <div class="day-number">2</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 8월 1주차 -->
-                <div class="day-cell weekend" data-date="2025-08-03">
-                    <div class="day-number">3</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-04">
-                    <div class="day-number">4</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-05">
-                    <div class="day-number">5</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-06">
-                    <div class="day-number">6</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-07">
-                    <div class="day-number">7</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-08">
-                    <div class="day-number">8</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-08-09">
-                    <div class="day-number">9</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 8월 2주차 -->
-                <div class="day-cell weekend" data-date="2025-08-10">
-                    <div class="day-number">10</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-11">
-                    <div class="day-number">11</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-12">
-                    <div class="day-number">12</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-13">
-                    <div class="day-number">13</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-14">
-                    <div class="day-number">14</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-08-15">
-                    <div class="day-number text-red-700">15</div>
-                    <div class="text-xs text-red-600 mb-1">광복절</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-08-16">
-                    <div class="day-number">16</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 8월 3주차 -->
-                <div class="day-cell weekend" data-date="2025-08-17">
-                    <div class="day-number">17</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-18">
-                    <div class="day-number">18</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-19">
-                    <div class="day-number">19</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-20">
-                    <div class="day-number">20</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-21">
-                    <div class="day-number">21</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-22">
-                    <div class="day-number">22</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-08-23">
-                    <div class="day-number">23</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 8월 4주차 -->
-                <div class="day-cell weekend" data-date="2025-08-24">
-                    <div class="day-number">24</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-25">
-                    <div class="day-number">25</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-26">
-                    <div class="day-number">26</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-27">
-                    <div class="day-number">27</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-28">
-                    <div class="day-number">28</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-08-29">
-                    <div class="day-number">29</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-08-30">
-                    <div class="day-number">30</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 8월 5주차 -->
-                <div class="day-cell weekend" data-date="2025-08-31">
-                    <div class="day-number">31</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">1</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">2</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">3</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">4</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">5</div>
-                </div>
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">6</div>
+            </div>
+
+            <!-- December 2025 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-indigo-800 mb-4">
+                    <i class="fas fa-calendar-alt mr-2"></i>12월 2025
+                </h2>
+                <div class="grid grid-cols-7 gap-1 text-center">
+                    <div class="font-semibold text-gray-500 p-2">일</div>
+                    <div class="font-semibold text-gray-500 p-2">월</div>
+                    <div class="font-semibold text-gray-500 p-2">화</div>
+                    <div class="font-semibold text-gray-500 p-2">수</div>
+                    <div class="font-semibold text-gray-500 p-2">목</div>
+                    <div class="font-semibold text-gray-500 p-2">금</div>
+                    <div class="font-semibold text-gray-500 p-2">토</div>
+                    
+                    <div class="p-2"></div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-01" data-type="conversation">1</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-02" data-type="conversation">2</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-03" data-type="conversation">3</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-04" data-type="conversation">4</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-05" data-type="conversation">5</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-06" data-type="conversation">6</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-12-07" data-type="quiz" data-week="19">7</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-08" data-type="conversation">8</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-09" data-type="conversation">9</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-10" data-type="conversation">10</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-11" data-type="conversation">11</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-12" data-type="conversation">12</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-13" data-type="conversation">13</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-12-14" data-type="quiz" data-week="20">14</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-15" data-type="conversation">15</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-16" data-type="conversation">16</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-17" data-type="conversation">17</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-18" data-type="conversation">18</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-19" data-type="conversation">19</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-20" data-type="conversation">20</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-12-21" data-type="quiz" data-week="21">21</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-22" data-type="conversation">22</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-23" data-type="conversation">23</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-24" data-type="conversation">24</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-25" data-type="conversation">25</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-26" data-type="conversation">26</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-27" data-type="conversation">27</div>
+                    
+                    <div class="calendar-day bg-red-100 p-3 rounded-lg" data-date="2025-12-28" data-type="quiz" data-week="22">28</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-29" data-type="conversation">29</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-30" data-type="conversation">30</div>
+                    <div class="calendar-day bg-gray-100 p-3 rounded-lg" data-date="2025-12-31" data-type="conversation">31</div>
                 </div>
             </div>
         </div>
 
-        <!-- 9월 -->
-        <div class="mb-12 bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">2025년 9월</h2>
-            <div class="calendar-grid">
-                <div class="day-cell bg-gray-50 font-semibold text-center">일</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">월</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">화</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">수</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">목</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">금</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">토</div>
-                
-                <!-- 9월 1주차 -->
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">31</div>
+        <!-- Progress Stats -->
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-indigo-800 mb-4">
+                <i class="fas fa-chart-bar mr-2"></i>학습 진행 현황
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gradient-to-r from-green-400 to-green-500 p-4 rounded-lg text-white">
+                    <div class="text-2xl font-bold" id="completedConversations">0</div>
+                    <div class="text-sm">완료한 회화</div>
                 </div>
-                <div class="day-cell" data-date="2025-09-01">
-                    <div class="day-number">1</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
+                <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-4 rounded-lg text-white">
+                    <div class="text-2xl font-bold" id="completedQuizzes">0</div>
+                    <div class="text-sm">완료한 퀴즈</div>
                 </div>
-                <div class="day-cell" data-date="2025-09-02">
-                    <div class="day-number">2</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-09-03">
-                    <div class="day-number text-red-700">3</div>
-                    <div class="text-xs text-red-600 mb-1">개천절</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-04">
-                    <div class="day-number">4</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-05">
-                    <div class="day-number">5</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend bg-red-100" data-date="2025-09-06">
-                    <div class="day-number text-red-700">6</div>
-                    <div class="text-xs text-red-600 mb-1">추석</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 9월 2주차 -->
-                <div class="day-cell weekend bg-red-100" data-date="2025-09-07">
-                    <div class="day-number text-red-700">7</div>
-                    <div class="text-xs text-red-600 mb-1">추석</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-09-08">
-                    <div class="day-number text-red-700">8</div>
-                    <div class="text-xs text-red-600 mb-1">추석</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-09-09">
-                    <div class="day-number text-red-700">9</div>
-                    <div class="text-xs text-red-600 mb-1">추석</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-10">
-                    <div class="day-number">10</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-11">
-                    <div class="day-number">11</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-12">
-                    <div class="day-number">12</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-09-13">
-                    <div class="day-number">13</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 9월 3주차 -->
-                <div class="day-cell weekend" data-date="2025-09-14">
-                    <div class="day-number">14</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-15">
-                    <div class="day-number">15</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-16">
-                    <div class="day-number">16</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-17">
-                    <div class="day-number">17</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-18">
-                    <div class="day-number">18</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-19">
-                    <div class="day-number">19</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-09-20">
-                    <div class="day-number">20</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 9월 4주차 -->
-                <div class="day-cell weekend" data-date="2025-09-21">
-                    <div class="day-number">21</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-22">
-                    <div class="day-number">22</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-23">
-                    <div class="day-number">23</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-24">
-                    <div class="day-number">24</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-25">
-                    <div class="day-number">25</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-26">
-                    <div class="day-number">26</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-09-27">
-                    <div class="day-number">27</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 9월 5주차 -->
-                <div class="day-cell weekend" data-date="2025-09-28">
-                    <div class="day-number">28</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-29">
-                    <div class="day-number">29</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-09-30">
-                    <div class="day-number">30</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">1</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">2</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">3</div>
-                </div>
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">4</div>
+                <div class="bg-gradient-to-r from-blue-400 to-blue-500 p-4 rounded-lg text-white">
+                    <div class="text-2xl font-bold" id="averageScore">0%</div>
+                    <div class="text-sm">평균 퀴즈 점수</div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- 10월 -->
-        <div class="mb-12 bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">2025년 10월</h2>
-            <div class="calendar-grid">
-                <div class="day-cell bg-gray-50 font-semibold text-center">일</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">월</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">화</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">수</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">목</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">금</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">토</div>
-                
-                <!-- 10월 1주차 -->
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">28</div>
+    <!-- Modal -->
+    <div id="contentModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-indigo-800"></h3>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">29</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">30</div>
-                </div>
-                <div class="day-cell" data-date="2025-10-01">
-                    <div class="day-number">1</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-02">
-                    <div class="day-number">2</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-10-03">
-                    <div class="day-number text-red-700">3</div>
-                    <div class="text-xs text-red-600 mb-1">개천절</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-10-04">
-                    <div class="day-number">4</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 10월 2주차 -->
-                <div class="day-cell weekend" data-date="2025-10-05">
-                    <div class="day-number">5</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-06">
-                    <div class="day-number">6</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-07">
-                    <div class="day-number">7</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-08">
-                    <div class="day-number">8</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-10-09">
-                    <div class="day-number text-red-700">9</div>
-                    <div class="text-xs text-red-600 mb-1">한글날</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-10">
-                    <div class="day-number">10</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-10-11">
-                    <div class="day-number">11</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 10월 3주차부터 계속... -->
-                <div class="day-cell weekend" data-date="2025-10-12">
-                    <div class="day-number">12</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-13">
-                    <div class="day-number">13</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-14">
-                    <div class="day-number">14</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-15">
-                    <div class="day-number">15</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-16">
-                    <div class="day-number">16</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-17">
-                    <div class="day-number">17</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-10-18">
-                    <div class="day-number">18</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 10월 4주차 -->
-                <div class="day-cell weekend" data-date="2025-10-19">
-                    <div class="day-number">19</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-20">
-                    <div class="day-number">20</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-21">
-                    <div class="day-number">21</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-22">
-                    <div class="day-number">22</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-23">
-                    <div class="day-number">23</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-24">
-                    <div class="day-number">24</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-10-25">
-                    <div class="day-number">25</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 10월 5주차 -->
-                <div class="day-cell weekend" data-date="2025-10-26">
-                    <div class="day-number">26</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-27">
-                    <div class="day-number">27</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-28">
-                    <div class="day-number">28</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-29">
-                    <div class="day-number">29</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-10-30">
-                    <div class="day-number">30</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-orange-100" data-date="2025-10-31">
-                    <div class="day-number text-orange-700">31</div>
-                    <div class="text-xs text-orange-600 mb-1">할로윈</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">1</div>
+                <div id="modalContent" class="space-y-4"></div>
+                <div class="mt-6 flex justify-between">
+                    <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg">
+                        닫기
+                    </button>
+                    <button id="completeBtn" onclick="markComplete()" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg">
+                        완료 표시
+                    </button>
                 </div>
             </div>
         </div>
-
-        <!-- 11월 -->
-        <div class="mb-12 bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">2025년 11월</h2>
-            <div class="calendar-grid">
-                <div class="day-cell bg-gray-50 font-semibold text-center">일</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">월</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">화</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">수</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">목</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">금</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">토</div>
-                
-                <!-- 11월 1주차 -->
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">26</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">27</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">28</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">29</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">30</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">31</div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-11-01">
-                    <div class="day-number">1</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 11월 2주차 -->
-                <div class="day-cell weekend" data-date="2025-11-02">
-                    <div class="day-number">2</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-03">
-                    <div class="day-number">3</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-04">
-                    <div class="day-number">4</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-05">
-                    <div class="day-number">5</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-06">
-                    <div class="day-number">6</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-07">
-                    <div class="day-number">7</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-11-08">
-                    <div class="day-number">8</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 11월 3주차 -->
-                <div class="day-cell weekend" data-date="2025-11-09">
-                    <div class="day-number">9</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-10">
-                    <div class="day-number">10</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-11">
-                    <div class="day-number">11</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-12">
-                    <div class="day-number">12</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-13">
-                    <div class="day-number">13</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-14">
-                    <div class="day-number">14</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-11-15">
-                    <div class="day-number">15</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 11월 4주차 -->
-                <div class="day-cell weekend" data-date="2025-11-16">
-                    <div class="day-number">16</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-17">
-                    <div class="day-number">17</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-18">
-                    <div class="day-number">18</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-19">
-                    <div class="day-number">19</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-20">
-                    <div class="day-number">20</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-21">
-                    <div class="day-number">21</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-11-22">
-                    <div class="day-number">22</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 11월 5주차 -->
-                <div class="day-cell weekend" data-date="2025-11-23">
-                    <div class="day-number">23</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-24">
-                    <div class="day-number">24</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-25">
-                    <div class="day-number">25</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-26">
-                    <div class="day-number">26</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-orange-100" data-date="2025-11-27">
-                    <div class="day-number text-orange-700">27</div>
-                    <div class="text-xs text-orange-600 mb-1">추수감사절</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-11-28">
-                    <div class="day-number">28</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-11-29">
-                    <div class="day-number">29</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 11월 6주차 -->
-                <div class="day-cell weekend" data-date="2025-11-30">
-                    <div class="day-number">30</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">1</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">2</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">3</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">4</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">5</div>
-                </div>
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">6</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 12월 -->
-        <div class="mb-12 bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">2025년 12월</h2>
-            <div class="calendar-grid">
-                <div class="day-cell bg-gray-50 font-semibold text-center">일</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">월</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">화</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">수</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">목</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">금</div>
-                <div class="day-cell bg-gray-50 font-semibold text-center">토</div>
-                
-                <!-- 12월 1주차 -->
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">30</div>
-                </div>
-                <div class="day-cell" data-date="2025-12-01">
-                    <div class="day-number">1</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-02">
-                    <div class="day-number">2</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-03">
-                    <div class="day-number">3</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-04">
-                    <div class="day-number">4</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-05">
-                    <div class="day-number">5</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-12-06">
-                    <div class="day-number">6</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 12월 2주차 -->
-                <div class="day-cell weekend" data-date="2025-12-07">
-                    <div class="day-number">7</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-08">
-                    <div class="day-number">8</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-09">
-                    <div class="day-number">9</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-10">
-                    <div class="day-number">10</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-11">
-                    <div class="day-number">11</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-12">
-                    <div class="day-number">12</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-12-13">
-                    <div class="day-number">13</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 12월 3주차 -->
-                <div class="day-cell weekend" data-date="2025-12-14">
-                    <div class="day-number">14</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-15">
-                    <div class="day-number">15</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-16">
-                    <div class="day-number">16</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-17">
-                    <div class="day-number">17</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-18">
-                    <div class="day-number">18</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-19">
-                    <div class="day-number">19</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-12-20">
-                    <div class="day-number">20</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 12월 4주차 -->
-                <div class="day-cell weekend" data-date="2025-12-21">
-                    <div class="day-number">21</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-22">
-                    <div class="day-number">22</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-23">
-                    <div class="day-number">23</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-24">
-                    <div class="day-number">24</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell bg-red-100" data-date="2025-12-25">
-                    <div class="day-number text-red-700">25</div>
-                    <div class="text-xs text-red-600 mb-1">성탄절</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-26">
-                    <div class="day-number">26</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell weekend" data-date="2025-12-27">
-                    <div class="day-number">27</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                
-                <!-- 12월 5주차 -->
-                <div class="day-cell weekend" data-date="2025-12-28">
-                    <div class="day-number">28</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-29">
-                    <div class="day-number">29</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-30">
-                    <div class="day-number">30</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell" data-date="2025-12-31">
-                    <div class="day-number">31</div>
-                    <div>
-                        <label class="text-xs"><input type="checkbox" class="exercise-checkbox" data-type="exercise">운동</label>
-                        <input type="text" class="weight-input" placeholder="체중" data-type="weight">
-                    </div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">1</div>
-                </div>
-                <div class="day-cell other-month">
-                    <div class="day-number">2</div>
-                </div>
-                <div class="day-cell other-month weekend">
-                    <div class="day-number">3</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 통계 요약 -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
-            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">
-                <i class="fas fa-chart-line text-green-500"></i>
-                운동 목표 현황
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="text-center p-4 bg-blue-50 rounded-lg">
-                    <div class="text-3xl font-bold text-blue-600" id="total-days">0</div>
-                    <div class="text-gray-600">총 운동일</div>
-                </div>
-                <div class="text-center p-4 bg-green-50 rounded-lg">
-                    <div class="text-3xl font-bold text-green-600" id="success-rate">0%</div>
-                    <div class="text-gray-600">달성률</div>
-                </div>
-                <div class="text-center p-4 bg-purple-50 rounded-lg">
-                    <div class="text-3xl font-bold text-purple-600" id="current-streak">0</div>
-                    <div class="text-gray-600">연속 운동</div>
-                </div>
-            </div>
-        </div>
-
-        <footer class="text-center mt-8 text-gray-500">
-            <p><i class="fas fa-heart text-red-400"></i> 건강한 습관으로 더 나은 내일을 만들어보세요!</p>
-        </footer>
     </div>
 
     <script>
-        // 로컬 스토리지 키
-        const STORAGE_KEY = 'fitness-calendar-2025';
-        
-        // 데이터 불러오기
-        function loadData() {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : {};
-        }
-        
-        // 데이터 저장하기
-        function saveData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        }
-        
-        // 초기 데이터 로드 및 적용
-        function initializeCalendar() {
-            const savedData = loadData();
-            
-            // 모든 날짜 셀에 대해 저장된 데이터 적용
-            document.querySelectorAll('[data-date]').forEach(cell => {
-                const date = cell.getAttribute('data-date');
-                const checkbox = cell.querySelector('.exercise-checkbox');
-                const weightInput = cell.querySelector('.weight-input');
-                
-                if (savedData[date]) {
-                    if (savedData[date].exercise) {
-                        checkbox.checked = true;
-                    }
-                    if (savedData[date].weight) {
-                        weightInput.value = savedData[date].weight;
-                    }
-                }
-            });
-            
-            updateStatistics();
-        }
-        
-        // 체크박스 및 입력 이벤트 처리
-        function setupEventListeners() {
-            document.addEventListener('change', function(e) {
-                if (e.target.matches('.exercise-checkbox') || e.target.matches('.weight-input')) {
-                    const cell = e.target.closest('[data-date]');
-                    const date = cell.getAttribute('data-date');
-                    
-                    const savedData = loadData();
-                    if (!savedData[date]) {
-                        savedData[date] = {};
-                    }
-                    
-                    if (e.target.classList.contains('exercise-checkbox')) {
-                        savedData[date].exercise = e.target.checked;
-                    } else if (e.target.classList.contains('weight-input')) {
-                        savedData[date].weight = e.target.value;
-                    }
-                    
-                    saveData(savedData);
-                    updateStatistics();
-                }
-            });
-        }
-        
-        // 통계 업데이트
-        function updateStatistics() {
-            const savedData = loadData();
-            let totalDays = 0;
-            let exerciseDays = 0;
-            let currentStreak = 0;
-            
-            // 현재 날짜부터 역순으로 계산
-            const today = new Date();
-            let streakBroken = false;
-            
-            document.querySelectorAll('[data-date]').forEach(cell => {
-                const date = cell.getAttribute('data-date');
-                const cellDate = new Date(date);
-                
-                if (savedData[date] && savedData[date].exercise) {
-                    exerciseDays++;
-                    
-                    // 연속 운동 계산
-                    if (!streakBroken && cellDate <= today) {
-                        currentStreak++;
-                    }
-                } else if (cellDate <= today) {
-                    streakBroken = true;
-                }
-                
-                if (cellDate <= today) {
-                    totalDays++;
-                }
-            });
-            
-            const successRate = totalDays > 0 ? Math.round((exerciseDays / totalDays) * 100) : 0;
-            
-            document.getElementById('total-days').textContent = exerciseDays;
-            document.getElementById('success-rate').textContent = successRate + '%';
-            document.getElementById('current-streak').textContent = streakBroken ? 0 : currentStreak;
-        }
-        
-        // 페이지 로드 시 초기화
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeCalendar();
-            setupEventListeners();
-            
-            // 오늘 날짜 하이라이트
-            const today = new Date();
-            const todayString = today.getFullYear() + '-' + 
-                              String(today.getMonth() + 1).padStart(2, '0') + '-' + 
-                              String(today.getDate()).padStart(2, '0');
-            
-            const todayCell = document.querySelector(`[data-date="${todayString}"]`);
-            if (todayCell) {
-                todayCell.classList.add('today');
+        // Conversation data
+        const conversationData = {
+            "2025-08-01": {
+                title: "카페에서 주문하기",
+                situation: "Alex가 새로 오픈한 카페에서 커피를 주문하는 상황",
+                dialogue: [
+                    { speaker: "A (Alex)", text: "Excuse me, could I see the menu, please?", korean: "실례합니다, 메뉴를 볼 수 있을까요?" },
+                    { speaker: "B (Barista)", text: "Of course! Here you go. Our specialty is the caramel macchiato.", korean: "물론이죠! 여기 있습니다. 저희 특선은 카라멜 마키아토예요." },
+                    { speaker: "A (Alex)", text: "That sounds delicious. I'll have a large caramel macchiato, please.", korean: "맛있을 것 같네요. 라지 카라멜 마키아토로 주세요." },
+                    { speaker: "B (Barista)", text: "Would you like that hot or iced?", korean: "따뜻한 것으로 드릴까요, 아니면 차가운 것으로 드릴까요?" },
+                    { speaker: "A (Alex)", text: "Iced, please. And could I also get a blueberry muffin?", korean: "아이스로 주세요. 그리고 블루베리 머핀도 하나 주실 수 있나요?" },
+                    { speaker: "B (Barista)", text: "Absolutely! That'll be $8.50. Will that be for here or to go?", korean: "네! 총 8달러 50센트입니다. 매장에서 드실 건가요, 아니면 가져가실 건가요?" }
+                ],
+                keyPhrases: [
+                    "Could I see the menu? - 메뉴를 볼 수 있을까요?",
+                    "Our specialty is... - 저희 특선은...입니다",
+                    "I'll have... - ...로 주세요",
+                    "Hot or iced? - 따뜻한 것 또는 차가운 것?",
+                    "For here or to go? - 매장 식사 또는 포장?"
+                ]
+            },
+            "2025-08-02": {
+                title: "길 물어보기",
+                situation: "Sam이 도서관 가는 길을 몰라 행인에게 묻는 상황",
+                dialogue: [
+                    { speaker: "A (Sam)", text: "Excuse me, I'm looking for the public library. Do you know where it is?", korean: "실례합니다, 공공도서관을 찾고 있는데요. 어디에 있는지 아시나요?" },
+                    { speaker: "B (Local)", text: "Oh yes, it's not too far from here. Go straight down this street for about three blocks.", korean: "아, 네, 여기서 그리 멀지 않아요. 이 길로 쭉 가시면서 세 블록 정도 가세요." },
+                    { speaker: "A (Sam)", text: "Three blocks straight. Got it. What do I do after that?", korean: "세 블록을 쭉 가는군요. 알겠습니다. 그 다음엔 어떻게 해야 하나요?" },
+                    { speaker: "B (Local)", text: "Then turn left at the traffic light. You'll see a big park on your right.", korean: "그럼 신호등에서 좌회전하세요. 오른쪽에 큰 공원이 보일 거예요." },
+                    { speaker: "A (Sam)", text: "Turn left at the traffic light, park on the right. And then?", korean: "신호등에서 좌회전, 공원이 오른쪽에. 그 다음엔요?" },
+                    { speaker: "B (Local)", text: "Keep walking for about five minutes. The library will be on your left, next to the post office.", korean: "5분 정도 더 걸으세요. 도서관이 왼쪽에 있을 거예요, 우체국 옆에요." }
+                ],
+                keyPhrases: [
+                    "I'm looking for... - ...을 찾고 있어요",
+                    "Go straight down - 쭉 가세요",
+                    "Turn left/right - 좌회전/우회전하세요",
+                    "You'll see... - ...이 보일 거예요",
+                    "Next to... - ... 옆에"
+                ]
+            },
+            "2025-08-04": {
+                title: "레스토랑 예약하기",
+                situation: "Emma가 전화로 레스토랑 예약을 하는 상황",
+                dialogue: [
+                    { speaker: "A (Emma)", text: "Hello, I'd like to make a reservation for dinner, please.", korean: "안녕하세요, 저녁 식사 예약을 하고 싶은데요." },
+                    { speaker: "B (Host)", text: "Certainly! What date and time were you thinking?", korean: "물론이죠! 언제로 생각하고 계신가요?" },
+                    { speaker: "A (Emma)", text: "This Saturday at 7 PM, if possible.", korean: "가능하다면 이번 토요일 저녁 7시요." },
+                    { speaker: "B (Host)", text: "Let me check... Yes, we have availability. How many people will be dining?", korean: "확인해보겠습니다... 네, 자리가 있네요. 몇 분이서 식사하실 건가요?" },
+                    { speaker: "A (Emma)", text: "Four people. Also, one of us has a peanut allergy. Can you accommodate that?", korean: "4명이요. 그리고 저희 중 한 명이 땅콩 알레르기가 있는데, 배려해주실 수 있나요?" },
+                    { speaker: "B (Host)", text: "Absolutely. I'll make a note of that. Can I get your name and phone number?", korean: "물론이죠. 메모해두겠습니다. 성함과 전화번호를 알려주실 수 있나요?" }
+                ],
+                keyPhrases: [
+                    "I'd like to make a reservation - 예약하고 싶어요",
+                    "What date and time? - 언제로 하시겠어요?",
+                    "How many people? - 몇 명이세요?",
+                    "Can you accommodate...? - ...을 배려해주실 수 있나요?",
+                    "I'll make a note - 메모해두겠습니다"
+                ]
             }
+            // Add more conversation data for other dates...
+        };
+
+        // Quiz data for Sundays
+        const quizData = {
+            1: {
+                title: "1주차 복습 퀴즈 (8월 1일-2일)",
+                questions: [
+                    {
+                        question: "'메뉴를 볼 수 있을까요?'를 영어로 하면?",
+                        options: [
+                            "Can I see the menu?",
+                            "Could I see the menu?",
+                            "May I see the menu?",
+                            "모든 답이 맞음"
+                        ],
+                        correct: 3,
+                        explanation: "모든 표현이 정중하고 올바른 표현입니다."
+                    },
+                    {
+                        question: "카페에서 'For here or to go?'의 의미는?",
+                        options: [
+                            "여기서 마실 건가요, 가져갈 건가요?",
+                            "뜨거운 것, 차가운 것?",
+                            "크기를 정하셨나요?",
+                            "결제는 어떻게 하시겠어요?"
+                        ],
+                        correct: 0,
+                        explanation: "'For here or to go?'는 매장에서 먹을지 포장할지 묻는 표현입니다."
+                    }
+                ]
+            }
+            // Add more quiz data for other weeks...
+        };
+
+        let currentDate = '';
+        let currentType = '';
+        let progress = JSON.parse(localStorage.getItem('englishProgress')) || {
+            conversations: {},
+            quizzes: {},
+            scores: {}
+        };
+
+        // Initialize calendar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCalendarDisplay();
+            updateProgressStats();
+            
+            // Add click listeners to calendar days
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.addEventListener('click', function() {
+                    const date = this.dataset.date;
+                    const type = this.dataset.type;
+                    openModal(date, type);
+                });
+            });
         });
+
+        function openModal(date, type) {
+            currentDate = date;
+            currentType = type;
+            
+            const modal = document.getElementById('contentModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const completeBtn = document.getElementById('completeBtn');
+            
+            if (type === 'conversation') {
+                displayConversation(date, modalTitle, modalContent);
+                completeBtn.textContent = '학습 완료';
+                completeBtn.style.display = 'block';
+            } else if (type === 'quiz') {
+                const week = document.querySelector(`[data-date="${date}"]`).dataset.week;
+                displayQuiz(week, modalTitle, modalContent);
+                completeBtn.style.display = 'none';
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function displayConversation(date, titleElement, contentElement) {
+            const data = conversationData[date];
+            if (!data) {
+                titleElement.textContent = '준비 중...';
+                contentElement.innerHTML = '<p class="text-gray-500">아직 준비되지 않은 회화입니다.</p>';
+                return;
+            }
+            
+            titleElement.textContent = data.title;
+            
+            let content = `
+                <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                    <h4 class="font-bold text-blue-800 mb-2">
+                        <i class="fas fa-info-circle mr-2"></i>상황
+                    </h4>
+                    <p class="text-blue-700">${data.situation}</p>
+                </div>
+                
+                <div class="bg-white border rounded-lg p-4 mb-4">
+                    <h4 class="font-bold text-gray-800 mb-3">
+                        <i class="fas fa-comments mr-2"></i>대화
+                    </h4>
+                    <div class="space-y-3">
+            `;
+            
+            data.dialogue.forEach(line => {
+                const speakerClass = line.speaker.includes('A') ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800';
+                content += `
+                    <div class="border-l-4 ${line.speaker.includes('A') ? 'border-green-400' : 'border-blue-400'} pl-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="${speakerClass} px-2 py-1 rounded text-sm font-semibold">${line.speaker}</span>
+                        </div>
+                        <p class="text-gray-800 font-medium mt-1">${line.text}</p>
+                        <p class="text-gray-600 text-sm mt-1">${line.korean}</p>
+                    </div>
+                `;
+            });
+            
+            content += `
+                    </div>
+                </div>
+                
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-yellow-800 mb-2">
+                        <i class="fas fa-star mr-2"></i>핵심 표현
+                    </h4>
+                    <ul class="text-yellow-700 space-y-1">
+            `;
+            
+            data.keyPhrases.forEach(phrase => {
+                content += `<li class="flex items-center"><i class="fas fa-check mr-2"></i>${phrase}</li>`;
+            });
+            
+            content += '</ul></div>';
+            
+            contentElement.innerHTML = content;
+        }
+
+        function displayQuiz(week, titleElement, contentElement) {
+            const quiz = quizData[parseInt(week)];
+            if (!quiz) {
+                titleElement.textContent = '퀴즈 준비 중...';
+                contentElement.innerHTML = '<p class="text-gray-500">아직 준비되지 않은 퀴즈입니다.</p>';
+                return;
+            }
+            
+            titleElement.textContent = quiz.title;
+            
+            let content = `
+                <div class="space-y-6">
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-purple-800 mb-2">
+                            <i class="fas fa-question-circle mr-2"></i>이번 주 학습 내용 퀴즈
+                        </h4>
+                        <p class="text-purple-700">지난 주에 학습한 회화 표현들을 복습해보세요!</p>
+                    </div>
+            `;
+            
+            quiz.questions.forEach((q, index) => {
+                content += `
+                    <div class="border rounded-lg p-4">
+                        <h5 class="font-bold mb-3">문제 ${index + 1}: ${q.question}</h5>
+                        <div class="space-y-2">
+                `;
+                
+                q.options.forEach((option, optIndex) => {
+                    content += `
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <input type="radio" name="question${index}" value="${optIndex}" class="quiz-option">
+                            <span>${option}</span>
+                        </label>
+                    `;
+                });
+                
+                content += `
+                        </div>
+                        <div class="quiz-result mt-3 hidden">
+                            <p class="text-sm text-gray-600"><strong>해설:</strong> ${q.explanation}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content += `
+                </div>
+                <div class="mt-6 text-center">
+                    <button onclick="submitQuiz(${week})" class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-semibold">
+                        <i class="fas fa-check mr-2"></i>답안 제출
+                    </button>
+                </div>
+            `;
+            
+            contentElement.innerHTML = content;
+        }
+
+        function submitQuiz(week) {
+            const quiz = quizData[week];
+            if (!quiz) return;
+            
+            let score = 0;
+            const total = quiz.questions.length;
+            
+            quiz.questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
+                }
+            });
+            
+            const percentage = Math.round((score / total) * 100);
+            
+            // Save quiz result
+            progress.quizzes[currentDate] = true;
+            progress.scores[currentDate] = percentage;
+            localStorage.setItem('englishProgress', JSON.stringify(progress));
+            
+            // Show results
+            alert(`퀴즈 완료!\n점수: ${score}/${total} (${percentage}%)`);
+            
+            updateCalendarDisplay();
+            updateProgressStats();
+            closeModal();
+        }
+
+        function markComplete() {
+            if (currentType === 'conversation') {
+                progress.conversations[currentDate] = true;
+                localStorage.setItem('englishProgress', JSON.stringify(progress));
+                updateCalendarDisplay();
+                updateProgressStats();
+                closeModal();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('contentModal').classList.add('hidden');
+        }
+
+        function updateCalendarDisplay() {
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                const date = day.dataset.date;
+                const type = day.dataset.type;
+                
+                day.classList.remove('completed-day', 'quiz-completed');
+                
+                if (type === 'conversation' && progress.conversations[date]) {
+                    day.classList.add('completed-day');
+                } else if (type === 'quiz' && progress.quizzes[date]) {
+                    day.classList.add('quiz-completed');
+                }
+            });
+        }
+
+        function updateProgressStats() {
+            const completedConversations = Object.keys(progress.conversations).length;
+            const completedQuizzes = Object.keys(progress.quizzes).length;
+            
+            const scores = Object.values(progress.scores);
+            const averageScore = scores.length > 0 ? 
+                Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+            
+            document.getElementById('completedConversations').textContent = completedConversations;
+            document.getElementById('completedQuizzes').textContent = completedQuizzes;
+            document.getElementById('averageScore').textContent = averageScore + '%';
+        }
+
+        // Generate more conversation data
+        function generateMoreConversations() {
+            const topics = [
+                { title: "쇼핑몰에서", situation: "옷가게에서 쇼핑하기" },
+                { title: "병원 예약", situation: "병원에 전화로 예약하기" },
+                { title: "호텔 체크인", situation: "호텔 프런트에서 체크인하기" },
+                { title: "택시 타기", situation: "택시를 잡아서 목적지 말하기" },
+                { title: "친구와 약속", situation: "친구와 만날 장소와 시간 정하기" }
+            ];
+            
+            // This would generate more conversation data...
+        }
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDs028li%2FvVojoqhEk9d55Xkt8CNkwb44vmC45sQJeHUhVgUorZwjZ1mgHwmZkWenAoxgDKcezisIdjo12PW6V06gRYpMNy6186%2B2GP6y6idec0nRk%2B5kQO1mtQnx%2FJoz3SGGvFHcEjWoQ9b2YnrRgbUdVbwmn4RffOMdUoKWgTMwtZEN9WOGZ19jiNbQD2%2B%2B457Ha6S51DupCmCK%2B%2Bw8FaKLygEFxcILxe2ciI3pmdeVYoP8jQDtrq2S6rdReunrYBgC5mQx1fP38W9iuk7%2BrQE6OWb5yL60%2FX47GipjxDQv8g8wWCBYk9zeZqT9ijvHVinI%2FxFiokNthPBKXWYHVfApPGNnJDrwI1rE5QmTdssS3X7DwoNqQLFOio47v6BLdDlIiRhHx6GplQYW%2FSim%2BXFgRbDbyi55nu0vPlmIS66DQMBJFpqz3vRhqB1HxdoyHowvjHQsc6z6yyaPQSFJWZykpkJqguptee9k3Ka2dfIrTJMvfjJWdvWh6iD9CWXCzQ%3D%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDutP45IfHTSnQ%2F7aXhHtXSqFqWa2YxY2DToPUHoShyXqXFGdmu5BmBAVhZ813aUEMOmSkYF68PmA%2FwwR5VkDIHY%2B79sY3aK7ErS1%2Fp4ZTVhExplJoMfII43VbjvZlIwhztrP88VxmB685aCfHdueZpk3rWXxHAoU3mBoH7kq5vDIA5sqx6r%2BZBMUluukfuLfnhAeLK6a8iSFi8%2FOhpjcxWlTZ%2BOeNj8NNXh6Z11yNsL1P9HF%2Ffo27lc6NkG0XGSc9wY%2Bzndm8MAk8fNuJRkwq2YsXNr4f7%2BxhHpW1iOu9%2B2ozbqX%2FPt725e878bkPX16wZRYMSXkjRJN7PkiZvOIIgReDXMeRYewllo9BgILLAKmdSJPDLizrTYxsSRVScnJxhAMnDguXYAb3z4DBw4M0dUK%2BvxTCsK866pp%2BlDJDLavo7qv5fr2SND%2Bp9WuOTnAJ5hpMaaTE2S2YGP0YdNvDZMEciuvNuMqLPIBgqKaRQ3M7bfdcrMGxcqyaYhr3JMRB3kk3WHt3S29XcVXSPsxrHWHyEazszpJdM%2FNPLvVaOZ0";
         window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDs028li/vVojoqhEk9d55Xkt8CNkwb44vmC45sQJeHUhVgUorZwjZ1mgHwmZkWenAoxgDKcezisIdjo12PW6V06gRYpMNy6186+2GP6y6idec0nRk+5kQO1mtQnx/Joz3SGGvFHcEjWoQ9b2YnrRgbUdVbwmn4RffOMdUoKWgTMwtZEN9WOGZ19jiNbQD2++457Ha6S51DupCmCK++w8FaKLygEFxcILxe2ciI3pmdeVYoP8jQDtrq2S6rdReunrYBgC5mQx1fP38W9iuk7+rQE6OWb5yL60/X47GipjxDQv8g8wWCBYk9zeZqT9ijvHVinI/xFiokNthPBKXWYHVfApPGNnJDrwI1rE5QmTdssS3X7DwoNqQLFOio47v6BLdDlIiRhHx6GplQYW/Sim+XFgRbDbyi55nu0vPlmIS66DQMBJFpqz3vRhqB1HxdoyHowvjHQsc6z6yyaPQSFJWZykpkJqguptee9k3Ka2dfIrTJMvfjJWdvWh6iD9CWXCzQ==";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDutP45IfHTSnQ/7aXhHtXSqFqWa2YxY2DToPUHoShyXqXFGdmu5BmBAVhZ813aUEMOmSkYF68PmA/wwR5VkDIHY+79sY3aK7ErS1/p4ZTVhExplJoMfII43VbjvZlIwhztrP88VxmB685aCfHdueZpk3rWXxHAoU3mBoH7kq5vDIA5sqx6r+ZBMUluukfuLfnhAeLK6a8iSFi8/OhpjcxWlTZ+OeNj8NNXh6Z11yNsL1P9HF/fo27lc6NkG0XGSc9wY+zndm8MAk8fNuJRkwq2YsXNr4f7+xhHpW1iOu9+2ozbqX/Pt725e878bkPX16wZRYMSXkjRJN7PkiZvOIIgReDXMeRYewllo9BgILLAKmdSJPDLizrTYxsSRVScnJxhAMnDguXYAb3z4DBw4M0dUK+vxTCsK866pp+lDJDLavo7qv5fr2SND+p9WuOTnAJ5hpMaaTE2S2YGP0YdNvDZMEciuvNuMqLPIBgqKaRQ3M7bfdcrMGxcqyaYhr3JMRB3kk3WHt3S29XcVXSPsxrHWHyEazszpJdM/NPLvVaOZ0";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
