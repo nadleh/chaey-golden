@@ -3,358 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 완전판! 영어 회화 153일 학습 달력 🌸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gaegu:wght@300;400;700&family=Hi+Melody&display=swap" rel="stylesheet">
+    <title>🌸 완전판! 큰 글씨 영어 회화 5개월 달력 🌸</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px !important;
         }
-
+        
         body {
-            font-family: 'Hi Melody', 'Gaegu', cursive;
-            background: linear-gradient(135deg, #ffeef8 0%, #f0f8ff 50%, #e8f5e8 100%);
+            background: linear-gradient(135deg, #ffeef8 0%, #f0f9ff 50%, #fef3ff 100%);
             min-height: 100vh;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
+        
+        .calendar-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: #ff6b9d;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: #7c4dff;
-        }
-
-        .month-navigation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            gap: 20px;
-        }
-
-        .nav-btn {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 20px;
-            font-family: inherit;
-            font-size: 1.1rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .current-month {
-            font-size: 2rem;
-            color: #ff6b9d;
-            font-weight: bold;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .calendar {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 25px;
+            border: 3px solid #f8d7da;
+            box-shadow: 0 20px 40px rgba(248, 215, 218, 0.3);
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            margin-bottom: 30px;
+            margin: 20px;
         }
-
+        
+        .month-title {
+            font-size: 32px !important;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+        }
+        
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
         }
-
+        
         .day-header {
+            font-size: 20px !important;
+            font-weight: 700;
             text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #7c4dff;
-            padding: 10px;
-            background: linear-gradient(45deg, #e8f5e8, #f0f8ff);
+            padding: 15px 8px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
             border-radius: 15px;
+            margin-bottom: 10px;
         }
-
+        
         .day-cell {
             aspect-ratio: 1;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 2px solid #ffc1cc;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(45deg, #fff0f5, #f8f8ff);
+            font-size: 20px !important;
+            font-weight: 700;
             position: relative;
+            min-height: 60px;
         }
-
-        .day-cell:hover {
-            transform: scale(1.05);
-            border-color: #ff6b9d;
-            background: linear-gradient(45deg, #ffe0e6, #e6e6fa);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        
+        .day-cell.conversation-day {
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1);
+            border: 3px solid #ff69b4;
+            color: #8b0051;
         }
-
+        
+        .day-cell.quiz-day {
+            background: linear-gradient(135deg, #98fb98, #90ee90);
+            border: 3px solid #32cd32;
+            color: #006400;
+        }
+        
         .day-cell.completed {
-            background: linear-gradient(45deg, #c8e6c9, #b39ddb);
-            border-color: #4caf50;
+            background: linear-gradient(135deg, #ffd700, #ffb347) !important;
+            border: 3px solid #ff8c00;
+            color: #cc6600;
         }
-
-        .day-cell.sunday {
-            background: linear-gradient(45deg, #ffcdd2, #f8bbd9);
-            border-color: #e91e63;
+        
+        .day-cell:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
         }
-
-        .day-number {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #333;
+        
+        .day-cell.other-month {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
-
-        .day-topic {
-            font-size: 0.8rem;
-            color: #666;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        .check-icon {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            color: #4caf50;
-            font-size: 1rem;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-            color: #7c4dff;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ff6b9d;
-        }
-
-        .detail-view {
+        
+        .conversation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             display: none;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .detail-header {
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ffc1cc;
+            z-index: 1000;
         }
-
-        .detail-title {
-            font-size: 1.8rem;
-            color: #ff6b9d;
-        }
-
-        .back-btn {
-            background: linear-gradient(45deg, #ffa726, #ffcc80);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-family: inherit;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .conversation {
-            background: linear-gradient(45deg, #f8f8ff, #fff0f5);
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border-left: 5px solid #ff6b9d;
-        }
-
-        .situation {
-            background: linear-gradient(45deg, #e8f5e8, #f0f8ff);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            color: #7c4dff;
-        }
-
-        .dialogue-line {
-            margin: 15px 0;
-            padding: 12px 20px;
-            border-radius: 15px;
+        
+        .modal-content {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
             position: relative;
+            border: 4px solid #ff69b4;
         }
-
-        .speaker-a {
-            background: linear-gradient(45deg, #ffcdd2, #f8bbd9);
-            margin-right: 50px;
+        
+        .conversation-title {
+            font-size: 28px !important;
+            font-weight: 800;
+            color: #ff1493;
+            text-align: center;
+            margin-bottom: 30px;
         }
-
-        .speaker-b {
-            background: linear-gradient(45deg, #c8e6c9, #dcedc8);
-            margin-left: 50px;
-        }
-
-        .speaker-name {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .key-phrases {
-            background: linear-gradient(45deg, #fff3e0, #fce4ec);
+        
+        .conversation-context {
+            font-size: 20px !important;
+            background: linear-gradient(135deg, #ffeef8, #f0f9ff);
             padding: 20px;
             border-radius: 15px;
-            margin-top: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ff69b4;
         }
-
-        .key-phrases h3 {
-            color: #ff6b9d;
-            margin-bottom: 15px;
+        
+        .conversation-line {
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 20px !important;
+            line-height: 1.6;
         }
-
-        .phrase-item {
+        
+        .person-a {
+            background: linear-gradient(135deg, #e6f3ff, #cce7ff);
+            border-left: 5px solid #007bff;
+            margin-left: 0;
+            margin-right: 40px;
+        }
+        
+        .person-b {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e6);
+            border-right: 5px solid #ff69b4;
+            margin-left: 40px;
+            margin-right: 0;
+        }
+        
+        .key-expressions {
+            background: linear-gradient(135deg, #fffacd, #fff8dc);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .key-expressions h3 {
+            font-size: 24px !important;
+            color: #cc6600;
+            margin-bottom: 20px;
+        }
+        
+        .expression-item {
+            font-size: 18px !important;
             margin: 10px 0;
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            border-left: 3px solid #7c4dff;
+            padding: 8px 0;
         }
-
-        .complete-btn {
-            background: linear-gradient(45deg, #4caf50, #81c784);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 20px;
-            font-family: inherit;
-            font-size: 1.1rem;
-            color: white;
+        
+        .quiz-container {
+            padding: 30px;
+        }
+        
+        .quiz-question {
+            font-size: 22px !important;
+            font-weight: 600;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e6f3ff, #cce7ff);
+            border-radius: 15px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .quiz-option {
+            font-size: 20px !important;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 20px;
         }
-
-        .complete-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        
+        .quiz-option:hover {
+            background: #f8f9fa;
+            border-color: #ff69b4;
         }
-
-        .quiz {
-            background: linear-gradient(45deg, #fff9c4, #f0f4c3);
+        
+        .quiz-option.selected {
+            background: #fff0f5;
+            border-color: #ff69b4;
+            color: #8b0051;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            font-size: 20px !important;
+            font-weight: 700;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+        }
+        
+        .nav-button.active {
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            color: #cc6600;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px !important;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ff1493;
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 15px;
+            padding: 5px;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            height: 25px;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px !important;
+        }
+        
+        .completed-check {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px !important;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-item {
+            background: white;
             padding: 25px;
             border-radius: 20px;
-            margin-bottom: 20px;
+            text-align: center;
+            border: 3px solid #ff69b4;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
         }
-
-        .quiz h3 {
-            color: #ff6b9d;
-            margin-bottom: 20px;
+        
+        .stat-number {
+            font-size: 36px !important;
+            font-weight: 800;
+            color: #ff1493;
         }
-
-        .quiz-question {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
-
-        .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        
+        .stat-label {
+            font-size: 18px !important;
+            color: #666;
             margin-top: 10px;
         }
 
-        .quiz-option {
-            background: linear-gradient(45deg, #e1f5fe, #f3e5f5);
-            border: 2px solid #81d4fa;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .main-title {
+            font-size: 48px !important;
+            font-weight: 900;
             text-align: center;
-        }
-
-        .quiz-option:hover {
-            background: linear-gradient(45deg, #b3e5fc, #e1bee7);
-            transform: translateY(-1px);
-        }
-
-        .quiz-option.correct {
-            background: linear-gradient(45deg, #c8e6c9, #dcedc8);
-            border-color: #4caf50;
-        }
-
-        .quiz-option.incorrect {
-            background: linear-gradient(45deg, #ffcdd2, #f8bbd9);
-            border-color: #f44336;
-        }
-
-        .quiz-result {
-            text-align: center;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            background: linear-gradient(45deg, #c8e6c9, #f0f8ff);
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #da70d6, #9370db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            .calendar-container {
+                margin: 10px;
+                padding: 20px;
             }
             
             .calendar-grid {
@@ -362,1628 +346,1160 @@
             }
             
             .day-cell {
-                min-height: 80px;
+                min-height: 50px;
+                font-size: 16px !important;
             }
             
-            .header h1 {
-                font-size: 1.8rem;
+            .modal-content {
+                padding: 25px;
+                margin: 20px;
             }
             
-            .quiz-options {
-                grid-template-columns: 1fr;
+            .main-title {
+                font-size: 32px !important;
+            }
+            
+            .month-title {
+                font-size: 28px !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-heart"></i> 영어 회화 153일 학습 달력 <i class="fas fa-star"></i></h1>
-            <p>매일 새로운 영어 대화로 실력 UP! <i class="fas fa-rainbow"></i></p>
-        </div>
-
-        <div class="stats">
+    <div class="container mx-auto py-8">
+        <h1 class="main-title">
+            🌸 2025년 영어 회화 153일 완전 학습 달력 🌸
+        </h1>
+        
+        <div class="stats-container">
             <div class="stat-item">
                 <div class="stat-number" id="totalLearned">0</div>
-                <div>학습 완료</div>
+                <div class="stat-label">학습 완료</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="quizzesCompleted">0</div>
+                <div class="stat-label">퀴즈 완료</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number" id="currentStreak">0</div>
-                <div>연속 학습</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="quizScore">0</div>
-                <div>퀴즈 평균</div>
+                <div class="stat-label">연속 학습</div>
             </div>
         </div>
 
-        <div class="month-navigation">
-            <button class="nav-btn" onclick="changeMonth(-1)">
-                <i class="fas fa-chevron-left"></i> 이전달
-            </button>
-            <div class="current-month" id="currentMonth">2025년 8월</div>
-            <button class="nav-btn" onclick="changeMonth(1)">
-                다음달 <i class="fas fa-chevron-right"></i>
-            </button>
+        <div class="progress-bar">
+            <div class="progress-fill" id="overallProgress" style="width: 0%">0%</div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-button active" onclick="showMonth('august')">8월 August</button>
+            <button class="nav-button" onclick="showMonth('september')">9월 September</button>
+            <button class="nav-button" onclick="showMonth('october')">10월 October</button>
+            <button class="nav-button" onclick="showMonth('november')">11월 November</button>
+            <button class="nav-button" onclick="showMonth('december')">12월 December</button>
         </div>
 
-        <div class="calendar" id="calendar">
-            <!-- Calendar will be generated here -->
+        <!-- 8월 달력 -->
+        <div id="august" class="calendar-container">
+            <h2 class="month-title">🌻 8월 August 2025 🌻</h2>
+            <div class="calendar-grid">
+                <div class="day-header">일 Sun</div>
+                <div class="day-header">월 Mon</div>
+                <div class="day-header">화 Tue</div>
+                <div class="day-header">수 Wed</div>
+                <div class="day-header">목 Thu</div>
+                <div class="day-header">금 Fri</div>
+                <div class="day-header">토 Sat</div>
+                
+                <!-- 8월 1일은 금요일 -->
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-01')">1</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-02')">2</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-08-03')">3 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-04')">4</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-05')">5</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-06')">6</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-07')">7</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-08')">8</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-09')">9</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-08-10')">10 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-11')">11</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-12')">12</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-13')">13</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-14')">14</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-15')">15</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-16')">16</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-08-17')">17 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-18')">18</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-19')">19</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-20')">20</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-21')">21</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-22')">22</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-23')">23</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-08-24')">24 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-25')">25</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-26')">26</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-27')">27</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-28')">28</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-29')">29</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-08-30')">30</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-08-31')">31 📝</div>
+            </div>
         </div>
 
-        <div class="detail-view" id="detailView">
-            <!-- Detail content will be generated here -->
+        <!-- 9월 달력 -->
+        <div id="september" class="calendar-container" style="display: none;">
+            <h2 class="month-title">🍂 9월 September 2025 🍂</h2>
+            <div class="calendar-grid">
+                <div class="day-header">일 Sun</div>
+                <div class="day-header">월 Mon</div>
+                <div class="day-header">화 Tue</div>
+                <div class="day-header">수 Wed</div>
+                <div class="day-header">목 Thu</div>
+                <div class="day-header">금 Fri</div>
+                <div class="day-header">토 Sat</div>
+                
+                <!-- 9월 1일은 월요일 -->
+                <div class="day-cell other-month"></div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-01')">1</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-02')">2</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-03')">3</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-04')">4</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-05')">5</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-06')">6</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-09-07')">7 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-08')">8</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-09')">9</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-10')">10</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-11')">11</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-12')">12</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-13')">13</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-09-14')">14 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-15')">15</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-16')">16</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-17')">17</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-18')">18</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-19')">19</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-20')">20</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-09-21')">21 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-22')">22</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-23')">23</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-24')">24</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-25')">25</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-26')">26</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-27')">27</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-09-28')">28 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-29')">29</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-09-30')">30</div>
+            </div>
+        </div>
+
+        <!-- 10월 달력 -->
+        <div id="october" class="calendar-container" style="display: none;">
+            <h2 class="month-title">🎃 10월 October 2025 🎃</h2>
+            <div class="calendar-grid">
+                <div class="day-header">일 Sun</div>
+                <div class="day-header">월 Mon</div>
+                <div class="day-header">화 Tue</div>
+                <div class="day-header">수 Wed</div>
+                <div class="day-header">목 Thu</div>
+                <div class="day-header">금 Fri</div>
+                <div class="day-header">토 Sat</div>
+                
+                <!-- 10월 1일은 수요일 -->
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-01')">1</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-02')">2</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-03')">3</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-04')">4</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-10-05')">5 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-06')">6</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-07')">7</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-08')">8</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-09')">9</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-10')">10</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-11')">11</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-10-12')">12 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-13')">13</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-14')">14</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-15')">15</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-16')">16</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-17')">17</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-18')">18</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-10-19')">19 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-20')">20</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-21')">21</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-22')">22</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-23')">23</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-24')">24</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-25')">25</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-10-26')">26 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-27')">27</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-28')">28</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-29')">29</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-30')">30</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-10-31')">31</div>
+            </div>
+        </div>
+
+        <!-- 11월 달력 -->
+        <div id="november" class="calendar-container" style="display: none;">
+            <h2 class="month-title">🦃 11월 November 2025 🦃</h2>
+            <div class="calendar-grid">
+                <div class="day-header">일 Sun</div>
+                <div class="day-header">월 Mon</div>
+                <div class="day-header">화 Tue</div>
+                <div class="day-header">수 Wed</div>
+                <div class="day-header">목 Thu</div>
+                <div class="day-header">금 Fri</div>
+                <div class="day-header">토 Sat</div>
+                
+                <!-- 11월 1일은 토요일 -->
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell other-month"></div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-01')">1</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-11-02')">2 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-03')">3</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-04')">4</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-05')">5</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-06')">6</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-07')">7</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-08')">8</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-11-09')">9 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-10')">10</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-11')">11</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-12')">12</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-13')">13</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-14')">14</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-15')">15</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-11-16')">16 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-17')">17</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-18')">18</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-19')">19</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-20')">20</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-21')">21</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-22')">22</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-11-23')">23 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-24')">24</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-25')">25</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-26')">26</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-27')">27</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-28')">28</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-11-29')">29</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-11-30')">30 📝</div>
+            </div>
+        </div>
+
+        <!-- 12월 달력 -->
+        <div id="december" class="calendar-container" style="display: none;">
+            <h2 class="month-title">🎄 12월 December 2025 🎄</h2>
+            <div class="calendar-grid">
+                <div class="day-header">일 Sun</div>
+                <div class="day-header">월 Mon</div>
+                <div class="day-header">화 Tue</div>
+                <div class="day-header">수 Wed</div>
+                <div class="day-header">목 Thu</div>
+                <div class="day-header">금 Fri</div>
+                <div class="day-header">토 Sat</div>
+                
+                <!-- 12월 1일은 월요일 -->
+                <div class="day-cell other-month"></div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-01')">1</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-02')">2</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-03')">3</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-04')">4</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-05')">5</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-06')">6</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-12-07')">7 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-08')">8</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-09')">9</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-10')">10</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-11')">11</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-12')">12</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-13')">13</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-12-14')">14 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-15')">15</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-16')">16</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-17')">17</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-18')">18</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-19')">19</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-20')">20</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-12-21')">21 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-22')">22</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-23')">23</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-24')">24</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-25')">25</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-26')">26</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-27')">27</div>
+                
+                <div class="day-cell quiz-day" onclick="showQuiz('2025-12-28')">28 📝</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-29')">29</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-30')">30</div>
+                <div class="day-cell conversation-day" onclick="showConversation('2025-12-31')">31</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 회화 모달 -->
+    <div id="conversationModal" class="conversation-modal">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeModal()">&times;</button>
+            <div id="conversationContent"></div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="nav-button" onclick="markAsCompleted()" id="completeButton">
+                    <i class="fas fa-check"></i> 학습 완료
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        const monthNames = ['8월', '9월', '10월', '11월', '12월'];
-        const monthDays = [31, 30, 31, 30, 31];
-        let currentMonthIndex = 0;
-
-        // 모든 153일의 회화 데이터
+        // 회화 데이터
         const conversations = {
-            // 8월 (31일)
             '2025-08-01': {
-                situation: '카페에서 커피 주문하기',
+                title: '카페에서 주문하기',
+                context: '카페에서 음료를 주문하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hi, I'd like to order a coffee, please." },
-                    { speaker: 'B', text: "Sure! What kind would you like?" },
-                    { speaker: 'A', text: "I'll have a medium latte with an extra shot." },
-                    { speaker: 'B', text: "Would you like any sweetener?" },
-                    { speaker: 'A', text: "Just a little bit of sugar, please." },
-                    { speaker: 'B', text: "That'll be $4.50. For here or to go?" },
-                    { speaker: 'A', text: "For here, please. Thank you!" }
+                    { speaker: 'A', text: 'Good morning! What can I get you today?', korean: '안녕하세요! 오늘 무엇을 드릴까요?' },
+                    { speaker: 'B', text: 'Hi! I\'d like a large iced americano, please.', korean: '안녕하세요! 큰 사이즈 아이스 아메리카노 주세요.' },
+                    { speaker: 'A', text: 'Sure! Would you like any sugar or cream with that?', korean: '네! 설탕이나 크림을 넣으시겠어요?' },
+                    { speaker: 'B', text: 'No, just black coffee is fine. How much is it?', korean: '아니요, 그냥 블랙커피로 주세요. 얼마인가요?' },
+                    { speaker: 'A', text: 'That\'ll be $4.50. Cash or card?', korean: '4달러 50센트입니다. 현금 또는 카드?' },
+                    { speaker: 'B', text: 'I\'ll pay by card. Here you go.', korean: '카드로 결제할게요. 여기 있습니다.' }
                 ],
-                keyPhrases: [
-                    "I'd like to order... - ...를 주문하고 싶어요",
-                    "What kind would you like? - 어떤 종류를 원하세요?",
-                    "For here or to go? - 매장에서 드시나요, 가져가시나요?"
+                keyExpressions: [
+                    'What can I get you today? - 오늘 무엇을 드릴까요?',
+                    'I\'d like... - ...를 원합니다',
+                    'How much is it? - 얼마인가요?',
+                    'Cash or card? - 현금 또는 카드?'
                 ]
             },
             '2025-08-02': {
-                situation: '친구와 주말 계획 세우기',
+                title: '길 묻기와 답하기',
+                context: '길을 잃었을 때 행인에게 길을 묻는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "What are you doing this weekend?" },
-                    { speaker: 'B', text: "I'm not sure yet. Do you have any plans?" },
-                    { speaker: 'A', text: "How about going to the movies?" },
-                    { speaker: 'B', text: "That sounds great! What movie?" },
-                    { speaker: 'A', text: "There's a new action movie playing at the mall." },
-                    { speaker: 'B', text: "Perfect! What time should we meet?" },
-                    { speaker: 'A', text: "How about 7 PM on Saturday?" }
+                    { speaker: 'A', text: 'Excuse me, could you help me with directions?', korean: '실례합니다, 길 좀 알려주실 수 있나요?' },
+                    { speaker: 'B', text: 'Of course! Where are you trying to go?', korean: '물론이죠! 어디로 가시려는 건가요?' },
+                    { speaker: 'A', text: 'I\'m looking for the Central Library.', korean: '중앙도서관을 찾고 있어요.' },
+                    { speaker: 'B', text: 'Oh, it\'s not far from here. Go straight for two blocks, then turn left.', korean: '아, 여기서 멀지 않아요. 두 블록 직진하시고 좌회전하세요.' },
+                    { speaker: 'A', text: 'And then?', korean: '그 다음에는요?' },
+                    { speaker: 'B', text: 'You\'ll see it on your right. It\'s a big red building.', korean: '오른쪽에 보일 거예요. 큰 빨간 건물이에요.' },
+                    { speaker: 'A', text: 'Thank you so much for your help!', korean: '도움 주셔서 정말 감사합니다!' }
                 ],
-                keyPhrases: [
-                    "What are you doing...? - ...에 뭐 하세요?",
-                    "How about...? - ...는 어때요?",
-                    "That sounds great! - 좋은 생각이에요!"
-                ]
-            },
-            '2025-08-03': {
-                situation: '쇼핑몰에서 옷 구매하기',
-                dialogue: [
-                    { speaker: 'A', text: "Excuse me, do you have this shirt in medium?" },
-                    { speaker: 'B', text: "Let me check for you. What color?" },
-                    { speaker: 'A', text: "I'd prefer blue if you have it." },
-                    { speaker: 'B', text: "Yes, we have blue in medium. Would you like to try it on?" },
-                    { speaker: 'A', text: "Yes, please. Where's the fitting room?" },
-                    { speaker: 'B', text: "Right over there. Take your time." },
-                    { speaker: 'A', text: "Thank you so much!" }
-                ],
-                keyPhrases: [
-                    "Do you have this in...? - 이걸 ...사이즈로 있나요?",
-                    "I'd prefer... - ...를 선호해요",
-                    "Would you like to try it on? - 입어보시겠어요?"
+                keyExpressions: [
+                    'Could you help me with directions? - 길 좀 알려주실 수 있나요?',
+                    'Where are you trying to go? - 어디로 가시려는 건가요?',
+                    'Go straight - 직진하세요',
+                    'Turn left/right - 좌회전/우회전'
                 ]
             },
             '2025-08-04': {
-                situation: '길 묻고 답하기',
+                title: '쇼핑몰에서 옷 구매하기',
+                context: '쇼핑몰에서 옷을 고르고 구매하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Excuse me, could you help me? I'm looking for the subway station." },
-                    { speaker: 'B', text: "Of course! It's about two blocks from here." },
-                    { speaker: 'A', text: "Which direction should I go?" },
-                    { speaker: 'B', text: "Go straight down this street and turn left at the traffic light." },
-                    { speaker: 'A', text: "How long does it take to walk there?" },
-                    { speaker: 'B', text: "About 5 minutes. You can't miss it." },
-                    { speaker: 'A', text: "Thank you so much for your help!" }
+                    { speaker: 'A', text: 'Welcome to our store! Are you looking for anything specific?', korean: '저희 매장에 오신 것을 환영합니다! 특별히 찾으시는 것이 있나요?' },
+                    { speaker: 'B', text: 'Yes, I need a dress for a wedding. Something formal but not too flashy.', korean: '네, 결혼식에 입을 드레스가 필요해요. 격식은 있지만 너무 화려하지 않은 것으로요.' },
+                    { speaker: 'A', text: 'I have just the thing! What size are you?', korean: '딱 맞는 것이 있어요! 사이즈가 어떻게 되시나요?' },
+                    { speaker: 'B', text: 'I\'m a medium. Could I try it on?', korean: '미디엄이에요. 입어볼 수 있을까요?' },
+                    { speaker: 'A', text: 'Absolutely! The fitting room is right over there.', korean: '물론이죠! 탈의실은 바로 저기에 있어요.' },
+                    { speaker: 'B', text: 'Perfect! This fits great. How much is it?', korean: '완벽해요! 정말 잘 맞네요. 얼마인가요?' },
+                    { speaker: 'A', text: 'It\'s $89. Would you like to take it?', korean: '89달러입니다. 가져가시겠어요?' }
                 ],
-                keyPhrases: [
-                    "Could you help me? - 도와주실 수 있나요?",
-                    "Which direction...? - 어느 방향으로...?",
-                    "You can't miss it - 놓칠 수 없어요"
+                keyExpressions: [
+                    'Are you looking for anything specific? - 특별히 찾으시는 것이 있나요?',
+                    'Could I try it on? - 입어볼 수 있을까요?',
+                    'The fitting room - 탈의실',
+                    'This fits great - 정말 잘 맞네요'
                 ]
             },
             '2025-08-05': {
-                situation: '레스토랑에서 음식 주문하기',
+                title: '친구와 주말 계획 세우기',
+                context: '친구와 주말에 무엇을 할지 계획을 세우는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Good evening! Do you have a table for two?" },
-                    { speaker: 'B', text: "Yes, right this way please. Here's your menu." },
-                    { speaker: 'A', text: "Thank you. Could I have a few minutes to decide?" },
-                    { speaker: 'B', text: "Of course! Can I get you something to drink first?" },
-                    { speaker: 'A', text: "I'll have water and my friend will have iced tea." },
-                    { speaker: 'B', text: "Perfect. I'll be back in a few minutes for your order." },
-                    { speaker: 'A', text: "Sounds good, thank you!" }
+                    { speaker: 'A', text: 'Hey! What are you up to this weekend?', korean: '안녕! 이번 주말에 뭐 할 거야?' },
+                    { speaker: 'B', text: 'Nothing special planned. Why? Do you have something in mind?', korean: '특별한 계획은 없어. 왜? 뭔가 생각하고 있는 거야?' },
+                    { speaker: 'A', text: 'I was thinking we could go to the beach. The weather forecast looks perfect!', korean: '해변에 가면 어떨까 했어. 일기예보가 완벽해 보여!' },
+                    { speaker: 'B', text: 'That sounds amazing! What time should we meet?', korean: '정말 좋은 것 같아! 몇 시에 만날까?' },
+                    { speaker: 'A', text: 'How about 10 AM? We can grab breakfast on the way.', korean: '오전 10시 어때? 가는 길에 아침도 먹을 수 있고.' },
+                    { speaker: 'B', text: 'Perfect! Should I bring anything?', korean: '완벽해! 내가 뭔가 가져갈까?' },
+                    { speaker: 'A', text: 'Just bring sunscreen and a towel. I\'ll take care of the snacks.', korean: '선크림과 수건만 가져와. 간식은 내가 준비할게.' }
                 ],
-                keyPhrases: [
-                    "Table for two - 2명 테이블",
-                    "Could I have a few minutes? - 몇 분 시간을 주실 수 있나요?",
-                    "I'll be back - 다시 올게요"
+                keyExpressions: [
+                    'What are you up to? - 뭐 할 거야?',
+                    'Do you have something in mind? - 뭔가 생각하고 있는 거야?',
+                    'That sounds amazing! - 정말 좋은 것 같아!',
+                    'I\'ll take care of... - 내가 ...를 준비할게'
                 ]
             },
             '2025-08-06': {
-                situation: '버스 정류장에서 정보 묻기',
+                title: '레스토랑에서 음식 주문하기',
+                context: '레스토랑에서 메뉴를 보고 음식을 주문하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Excuse me, does this bus go to downtown?" },
-                    { speaker: 'B', text: "No, you need the number 15 bus for downtown." },
-                    { speaker: 'A', text: "Where can I catch the number 15?" },
-                    { speaker: 'B', text: "Cross the street. The bus stop is right there." },
-                    { speaker: 'A', text: "How often does it come?" },
-                    { speaker: 'B', text: "Every 10 minutes during rush hour." },
-                    { speaker: 'A', text: "Great, thank you for the information!" }
+                    { speaker: 'A', text: 'Good evening! Do you have a reservation?', korean: '안녕하세요! 예약하셨나요?' },
+                    { speaker: 'B', text: 'Yes, it\'s under the name Johnson for 7:30.', korean: '네, 7시 30분에 Johnson으로 예약했어요.' },
+                    { speaker: 'A', text: 'Perfect! Right this way, please. Here\'s your table.', korean: '완벽합니다! 이쪽으로 오세요. 여기가 테이블입니다.' },
+                    { speaker: 'B', text: 'Thank you. Could I see the menu, please?', korean: '감사합니다. 메뉴 좀 볼 수 있을까요?' },
+                    { speaker: 'A', text: 'Of course! I\'ll give you a few minutes to decide. Can I start you with something to drink?', korean: '물론이죠! 결정할 시간을 드릴게요. 먼저 음료는 어떠세요?' },
+                    { speaker: 'B', text: 'I\'ll have a glass of red wine, please.', korean: '레드와인 한 잔 주세요.' },
+                    { speaker: 'A', text: 'Excellent choice! I\'ll be right back with that.', korean: '훌륭한 선택이에요! 곧 가져다드릴게요.' }
                 ],
-                keyPhrases: [
-                    "Does this bus go to...? - 이 버스가 ...로 가나요?",
-                    "How often does it come? - 얼마나 자주 오나요?",
-                    "Every 10 minutes - 10분마다"
+                keyExpressions: [
+                    'Do you have a reservation? - 예약하셨나요?',
+                    'It\'s under the name... - ...으로 예약했어요',
+                    'Right this way - 이쪽으로 오세요',
+                    'I\'ll be right back - 곧 돌아올게요'
                 ]
             },
             '2025-08-07': {
-                situation: '은행에서 계좌 개설하기',
+                title: '은행에서 계좌 개설하기',
+                context: '은행에서 새로운 계좌를 개설하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hello, I'd like to open a checking account." },
-                    { speaker: 'B', text: "Certainly! Do you have any ID with you?" },
-                    { speaker: 'A', text: "Yes, here's my driver's license." },
-                    { speaker: 'B', text: "Perfect. What's your current address?" },
-                    { speaker: 'A', text: "123 Main Street, Apartment 4B." },
-                    { speaker: 'B', text: "And what's your phone number?" },
-                    { speaker: 'A', text: "It's 555-0123." }
+                    { speaker: 'A', text: 'How can I help you today?', korean: '오늘 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'I\'d like to open a checking account, please.', korean: '당좌계좌를 개설하고 싶습니다.' },
+                    { speaker: 'A', text: 'Certainly! Do you have any ID with you?', korean: '물론입니다! 신분증을 가져오셨나요?' },
+                    { speaker: 'B', text: 'Yes, here\'s my driver\'s license and passport.', korean: '네, 여기 운전면허증과 여권이 있습니다.' },
+                    { speaker: 'A', text: 'Perfect! I\'ll need you to fill out this form. Is this your current address?', korean: '완벽합니다! 이 양식을 작성해주세요. 현재 주소가 맞나요?' },
+                    { speaker: 'B', text: 'Yes, that\'s correct. What\'s the minimum balance required?', korean: '네, 맞습니다. 최소 잔액이 얼마인가요?' },
+                    { speaker: 'A', text: 'For this account, it\'s $100. You can make your first deposit now.', korean: '이 계좌는 100달러입니다. 지금 첫 입금을 하실 수 있어요.' }
                 ],
-                keyPhrases: [
-                    "I'd like to open... - ...를 개설하고 싶어요",
-                    "Do you have any ID? - 신분증 있으세요?",
-                    "What's your current address? - 현재 주소가 어떻게 되세요?"
+                keyExpressions: [
+                    'How can I help you today? - 오늘 어떻게 도와드릴까요?',
+                    'I\'d like to open... - ...을 개설하고 싶습니다',
+                    'Fill out this form - 이 양식을 작성하세요',
+                    'Minimum balance - 최소 잔액'
                 ]
             },
             '2025-08-08': {
-                situation: '의사와 병원 예약하기',
+                title: '병원 예약하기',
+                context: '병원에 진료 예약을 하는 전화 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hi, I'd like to make an appointment with Dr. Smith." },
-                    { speaker: 'B', text: "What's the reason for your visit?" },
-                    { speaker: 'A', text: "I've been having headaches for the past week." },
-                    { speaker: 'B', text: "I see. Are you available next Tuesday at 2 PM?" },
-                    { speaker: 'A', text: "Yes, that works perfectly." },
-                    { speaker: 'B', text: "Great! Please arrive 15 minutes early." },
-                    { speaker: 'A', text: "Will do. Thank you!" }
+                    { speaker: 'A', text: 'Good morning, Dr. Smith\'s office. How can I help you?', korean: '안녕하세요, 스미스 박사 병원입니다. 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'Hi, I\'d like to schedule an appointment for a check-up.', korean: '안녕하세요, 건강검진 예약을 하고 싶습니다.' },
+                    { speaker: 'A', text: 'Of course! Are you a new patient or existing patient?', korean: '물론입니다! 신규 환자이신가요, 기존 환자이신가요?' },
+                    { speaker: 'B', text: 'I\'m an existing patient. My name is Sarah Johnson.', korean: '기존 환자입니다. 제 이름은 Sarah Johnson입니다.' },
+                    { speaker: 'A', text: 'Let me check our schedule. How about next Tuesday at 2 PM?', korean: '일정을 확인해보겠습니다. 다음 주 화요일 오후 2시는 어떠세요?' },
+                    { speaker: 'B', text: 'That works perfectly! Do I need to bring anything?', korean: '완벽합니다! 뭔가 가져갈 것이 있나요?' },
+                    { speaker: 'A', text: 'Just bring your insurance card and ID. See you Tuesday!', korean: '보험카드와 신분증만 가져오세요. 화요일에 뵙겠습니다!' }
                 ],
-                keyPhrases: [
-                    "Make an appointment - 예약하다",
-                    "What's the reason for...? - ...의 이유는 무엇인가요?",
-                    "That works perfectly - 그것은 완벽해요"
+                keyExpressions: [
+                    'Schedule an appointment - 예약하다',
+                    'Check-up - 건강검진',
+                    'New/existing patient - 신규/기존 환자',
+                    'Insurance card - 보험카드'
                 ]
             },
             '2025-08-09': {
-                situation: '호텔 체크인하기',
+                title: '직장에서 프로젝트 논의하기',
+                context: '직장 동료와 새로운 프로젝트에 대해 논의하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Good afternoon, I have a reservation under Johnson." },
-                    { speaker: 'B', text: "Welcome! Let me check that for you." },
-                    { speaker: 'A', text: "It should be for three nights." },
-                    { speaker: 'B', text: "Yes, I found it. Room 304 with a king bed." },
-                    { speaker: 'A', text: "Perfect. What time is checkout?" },
-                    { speaker: 'B', text: "Checkout is at 11 AM. Here's your key card." },
-                    { speaker: 'A', text: "Thank you. Where are the elevators?" }
+                    { speaker: 'A', text: 'Do you have a minute to discuss the new marketing project?', korean: '새로운 마케팅 프로젝트에 대해 논의할 시간이 있나요?' },
+                    { speaker: 'B', text: 'Sure! I was actually hoping to talk about it too. What\'s the timeline?', korean: '물론입니다! 저도 실제로 그것에 대해 이야기하고 싶었어요. 일정이 어떻게 되나요?' },
+                    { speaker: 'A', text: 'We need to have the proposal ready by Friday. Can you handle the research part?', korean: '금요일까지 제안서를 준비해야 합니다. 연구 부분을 맡아주실 수 있나요?' },
+                    { speaker: 'B', text: 'Absolutely! I\'ll focus on market analysis. What about the budget?', korean: '물론입니다! 시장 분석에 집중하겠습니다. 예산은 어떻게 되나요?' },
+                    { speaker: 'A', text: 'I\'ll work on that section. Let\'s meet again on Wednesday to review progress.', korean: '그 섹션은 제가 작업하겠습니다. 진행상황을 검토하기 위해 수요일에 다시 만나요.' },
+                    { speaker: 'B', text: 'Sounds good! I\'ll have my research done by then.', korean: '좋습니다! 그때까지 연구를 완료하겠습니다.' }
                 ],
-                keyPhrases: [
-                    "I have a reservation - 예약이 있어요",
-                    "Let me check that - 확인해보겠습니다",
-                    "What time is checkout? - 체크아웃 시간이 언제인가요?"
-                ]
-            },
-            '2025-08-10': {
-                situation: '8월 첫째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "카페에서 '여기서 드시나요, 가져가시나요?'를 영어로 하면?",
-                        options: ["For here or to go?", "Eat here or take out?", "Stay or leave?", "Inside or outside?"],
-                        correct: 0
-                    },
-                    {
-                        question: "'How about going to the movies?'의 의미는?",
-                        options: ["영화는 어때요?", "영화 보러 가는 건 어때요?", "영화가 좋아요?", "영화를 봤어요?"],
-                        correct: 1
-                    },
-                    {
-                        question: "쇼핑할 때 사이즈를 묻는 표현은?",
-                        options: ["What size is this?", "Do you have this in medium?", "Is this medium?", "Can I get medium?"],
-                        correct: 1
-                    }
+                keyExpressions: [
+                    'Do you have a minute? - 시간이 있나요?',
+                    'What\'s the timeline? - 일정이 어떻게 되나요?',
+                    'Can you handle...? - ...를 맡아주실 수 있나요?',
+                    'Review progress - 진행상황을 검토하다'
                 ]
             },
             '2025-08-11': {
-                situation: '택시 타기',
+                title: '호텔 체크인하기',
+                context: '호텔에 도착해서 체크인을 하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Taxi! Are you available?" },
-                    { speaker: 'B', text: "Yes, hop in! Where would you like to go?" },
-                    { speaker: 'A', text: "To the airport, please. How long will it take?" },
-                    { speaker: 'B', text: "About 30 minutes with current traffic." },
-                    { speaker: 'A', text: "That's fine. I have plenty of time." },
-                    { speaker: 'B', text: "Great! Do you prefer the highway or city route?" },
-                    { speaker: 'A', text: "Whatever's faster, please." }
+                    { speaker: 'A', text: 'Welcome to Grand Hotel! How can I assist you today?', korean: '그랜드 호텔에 오신 것을 환영합니다! 오늘 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'Hi, I have a reservation under the name Brown.', korean: '안녕하세요, Brown으로 예약했습니다.' },
+                    { speaker: 'A', text: 'Let me check that for you. Yes, I see it here. A deluxe room for three nights?', korean: '확인해보겠습니다. 네, 여기 있네요. 디럭스 룸 3박이죠?' },
+                    { speaker: 'B', text: 'That\'s correct. What time is checkout?', korean: '맞습니다. 체크아웃은 몇 시인가요?' },
+                    { speaker: 'A', text: 'Checkout is at 11 AM. Here\'s your room key. You\'re on the 8th floor.', korean: '체크아웃은 오전 11시입니다. 룸키입니다. 8층이에요.' },
+                    { speaker: 'B', text: 'Great! Is there Wi-Fi in the room?', korean: '좋습니다! 방에 와이파이가 있나요?' },
+                    { speaker: 'A', text: 'Yes, the password is on your welcome card. Enjoy your stay!', korean: '네, 비밀번호는 환영 카드에 있습니다. 즐거운 시간 보내세요!' }
                 ],
-                keyPhrases: [
-                    "Are you available? - 승차 가능하세요?",
-                    "Hop in! - 타세요!",
-                    "How long will it take? - 얼마나 걸릴까요?"
+                keyExpressions: [
+                    'I have a reservation - 예약했습니다',
+                    'Let me check that - 확인해보겠습니다',
+                    'What time is checkout? - 체크아웃은 몇 시인가요?',
+                    'Enjoy your stay! - 즐거운 시간 보내세요!'
                 ]
             },
             '2025-08-12': {
-                situation: '약국에서 약 구매하기',
+                title: '택시 타기',
+                context: '택시를 타고 목적지에 가는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hi, do you have anything for a sore throat?" },
-                    { speaker: 'B', text: "Yes, we have throat lozenges and cough syrup." },
-                    { speaker: 'A', text: "Which one would you recommend?" },
-                    { speaker: 'B', text: "The lozenges work faster for immediate relief." },
-                    { speaker: 'A', text: "I'll take those then. How often should I take them?" },
-                    { speaker: 'B', text: "One every 2-3 hours as needed." },
-                    { speaker: 'A', text: "Perfect, thank you for your help!" }
+                    { speaker: 'A', text: 'Where would you like to go?', korean: '어디로 가시겠어요?' },
+                    { speaker: 'B', text: 'To the airport, please. Terminal 2.', korean: '공항으로 가주세요. 2터미널이요.' },
+                    { speaker: 'A', text: 'Sure thing! What time is your flight?', korean: '네! 항공편이 몇 시인가요?' },
+                    { speaker: 'B', text: 'It\'s at 3:30 PM. Do you think we\'ll make it in time?', korean: '오후 3시 30분이에요. 시간에 맞을 수 있을까요?' },
+                    { speaker: 'A', text: 'No problem! It usually takes about 45 minutes, but traffic is light today.', korean: '문제없어요! 보통 45분 정도 걸리는데, 오늘은 교통이 원활해요.' },
+                    { speaker: 'B', text: 'That\'s a relief! Can you take the highway?', korean: '다행이네요! 고속도로로 가주실 수 있나요?' },
+                    { speaker: 'A', text: 'Absolutely! That\'s the fastest route.', korean: '물론이죠! 그게 가장 빠른 길이에요.' }
                 ],
-                keyPhrases: [
-                    "Do you have anything for...? - ...에 좋은 약 있나요?",
-                    "Which one would you recommend? - 어떤 걸 추천하시나요?",
-                    "As needed - 필요할 때마다"
+                keyExpressions: [
+                    'Where would you like to go? - 어디로 가시겠어요?',
+                    'Do you think we\'ll make it? - 시간에 맞을 수 있을까요?',
+                    'That\'s a relief! - 다행이네요!',
+                    'That\'s the fastest route - 그게 가장 빠른 길이에요'
                 ]
             },
             '2025-08-13': {
-                situation: '도서관에서 책 찾기',
+                title: '스포츠센터에서 회원등록하기',
+                context: '스포츠센터에서 회원가입을 하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Excuse me, where can I find books about history?" },
-                    { speaker: 'B', text: "History books are on the third floor, section H." },
-                    { speaker: 'A', text: "Do I need a library card to check out books?" },
-                    { speaker: 'B', text: "Yes, but you can apply for one at the front desk." },
-                    { speaker: 'A', text: "How many books can I borrow at once?" },
-                    { speaker: 'B', text: "Up to 5 books for 2 weeks." },
-                    { speaker: 'A', text: "That's perfect. Thank you!" }
+                    { speaker: 'A', text: 'Welcome to FitLife Gym! Are you interested in a membership?', korean: '핏라이프 짐에 오신 것을 환영합니다! 멤버십에 관심이 있으신가요?' },
+                    { speaker: 'B', text: 'Yes, I am! What membership options do you have?', korean: '네, 있어요! 어떤 멤버십 옵션이 있나요?' },
+                    { speaker: 'A', text: 'We have monthly, quarterly, and annual memberships. We also offer a free trial day.', korean: '월별, 분기별, 연간 멤버십이 있습니다. 무료 체험일도 제공합니다.' },
+                    { speaker: 'B', text: 'That sounds great! Could I try the trial day first?', korean: '정말 좋네요! 먼저 체험일을 해볼 수 있을까요?' },
+                    { speaker: 'A', text: 'Of course! I just need to see some ID and you can start today.', korean: '물론입니다! 신분증만 보여주시면 오늘 시작하실 수 있어요.' },
+                    { speaker: 'B', text: 'Perfect! What facilities do you have?', korean: '완벽해요! 어떤 시설들이 있나요?' },
+                    { speaker: 'A', text: 'We have a full gym, swimming pool, and group classes. Let me show you around!', korean: '완전한 헬스장, 수영장, 그룹 수업이 있습니다. 안내해드릴게요!' }
                 ],
-                keyPhrases: [
-                    "Where can I find...? - ...를 어디서 찾을 수 있나요?",
-                    "Check out books - 책을 대출하다",
-                    "Apply for - 신청하다"
+                keyExpressions: [
+                    'Are you interested in...? - ...에 관심이 있으신가요?',
+                    'What options do you have? - 어떤 옵션이 있나요?',
+                    'Free trial - 무료 체험',
+                    'Let me show you around - 안내해드릴게요'
                 ]
             },
             '2025-08-14': {
-                situation: '체육관 등록하기',
+                title: '영화관에서 표 예매하기',
+                context: '영화관에서 영화표를 예매하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hi, I'm interested in joining the gym." },
-                    { speaker: 'B', text: "Great! Would you like to see our facilities first?" },
-                    { speaker: 'A', text: "Yes, that would be helpful." },
-                    { speaker: 'B', text: "We have cardio equipment, weights, and a pool." },
-                    { speaker: 'A', text: "What are your membership options?" },
-                    { speaker: 'B', text: "We offer monthly and yearly memberships." },
-                    { speaker: 'A', text: "I'll take the monthly option to start." }
+                    { speaker: 'A', text: 'Hi! Which movie would you like to see today?', korean: '안녕하세요! 오늘 어떤 영화를 보시고 싶으신가요?' },
+                    { speaker: 'B', text: 'I\'d like to see "Action Hero" please. What showtimes do you have?', korean: '"액션 히어로"를 보고 싶어요. 상영시간이 어떻게 되나요?' },
+                    { speaker: 'A', text: 'We have showings at 2:30, 5:15, and 8:00 PM. Which one works for you?', korean: '2시 30분, 5시 15분, 그리고 오후 8시에 상영합니다. 언제가 좋으실까요?' },
+                    { speaker: 'B', text: 'The 5:15 showing, please. Two tickets.', korean: '5시 15분 상영으로 해주세요. 두 장이요.' },
+                    { speaker: 'A', text: 'Great! Would you like regular or premium seats?', korean: '좋습니다! 일반석 또는 프리미엄석 중 어느 것을 원하시나요?' },
+                    { speaker: 'B', text: 'Regular is fine. Do you have anything in the middle section?', korean: '일반석으로 괜찮습니다. 중간 섹션에 자리가 있나요?' },
+                    { speaker: 'A', text: 'Yes! Row F, seats 12 and 13. That\'ll be $24 total.', korean: '네! F열 12번, 13번 좌석입니다. 총 24달러입니다.' }
                 ],
-                keyPhrases: [
-                    "I'm interested in joining... - ...에 가입하고 싶어요",
-                    "Would you like to see...? - ...를 보시겠어요?",
-                    "Membership options - 회원권 옵션"
+                keyExpressions: [
+                    'Which movie would you like to see? - 어떤 영화를 보시고 싶으신가요?',
+                    'What showtimes do you have? - 상영시간이 어떻게 되나요?',
+                    'Which one works for you? - 언제가 좋으실까요?',
+                    'Middle section - 중간 섹션'
                 ]
             },
             '2025-08-15': {
-                situation: '우체국에서 소포 보내기',
+                title: '약국에서 약 구매하기',
+                context: '약국에서 감기약을 사는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I'd like to send this package to New York." },
-                    { speaker: 'B', text: "How would you like to send it?" },
-                    { speaker: 'A', text: "What's the fastest option?" },
-                    { speaker: 'B', text: "Express delivery takes 1-2 days." },
-                    { speaker: 'A', text: "How much does that cost?" },
-                    { speaker: 'B', text: "It's $25 for a package this size." },
-                    { speaker: 'A', text: "That's fine. I'll take express delivery." }
+                    { speaker: 'A', text: 'How can I help you today?', korean: '오늘 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'I\'m looking for something for a cold. I have a runny nose and sore throat.', korean: '감기약을 찾고 있어요. 콧물이 나고 목이 아파요.' },
+                    { speaker: 'A', text: 'I recommend this cold medicine. It\'ll help with both symptoms.', korean: '이 감기약을 추천합니다. 두 증상 모두에 도움이 될 거예요.' },
+                    { speaker: 'B', text: 'How often should I take it?', korean: '얼마나 자주 복용해야 하나요?' },
+                    { speaker: 'A', text: 'Take one tablet every 6 hours with food. Don\'t exceed 4 tablets per day.', korean: '음식과 함께 6시간마다 한 알씩 복용하세요. 하루에 4알을 넘지 마세요.' },
+                    { speaker: 'B', text: 'Are there any side effects I should know about?', korean: '알아야 할 부작용이 있나요?' },
+                    { speaker: 'A', text: 'It might cause drowsiness, so avoid driving. If symptoms persist, see a doctor.', korean: '졸음을 유발할 수 있으니 운전은 피하세요. 증상이 지속되면 의사를 만나세요.' }
                 ],
-                keyPhrases: [
-                    "I'd like to send... - ...를 보내고 싶어요",
-                    "What's the fastest option? - 가장 빠른 방법이 뭔가요?",
-                    "Express delivery - 특급 배송"
+                keyExpressions: [
+                    'I\'m looking for something for... - ...을 위한 약을 찾고 있어요',
+                    'Runny nose - 콧물',
+                    'How often should I take it? - 얼마나 자주 복용해야 하나요?',
+                    'Side effects - 부작용'
                 ]
             },
             '2025-08-16': {
-                situation: '미용실에서 머리 자르기',
+                title: '친구와 저녁 약속 정하기',
+                context: '친구와 저녁 식사 약속을 정하는 전화 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hi, I'd like to get a haircut please." },
-                    { speaker: 'B', text: "Sure! What style are you looking for?" },
-                    { speaker: 'A', text: "Just trim about an inch off the length." },
-                    { speaker: 'B', text: "Would you like me to thin it out too?" },
-                    { speaker: 'A', text: "Yes, that would be great." },
-                    { speaker: 'B', text: "Perfect. Let's get you washed first." },
-                    { speaker: 'A', text: "Sounds good, thank you!" }
+                    { speaker: 'A', text: 'Hey Emma! Are you free for dinner this Saturday?', korean: '안녕 Emma! 이번 토요일 저녁 시간 있어?' },
+                    { speaker: 'B', text: 'Hi Lisa! Yes, I am! What did you have in mind?', korean: '안녕 Lisa! 네, 있어요! 뭘 생각하고 있는 거야?' },
+                    { speaker: 'A', text: 'There\'s this new Italian restaurant downtown. I heard great reviews about it.', korean: '시내에 새로운 이탈리안 레스토랑이 있어. 평이 정말 좋다고 들었어.' },
+                    { speaker: 'B', text: 'That sounds perfect! I love Italian food. What time should we meet?', korean: '완벽해 보여! 이탈리안 음식을 좋아해. 몇 시에 만날까?' },
+                    { speaker: 'A', text: 'How about 7 PM? We could meet at the restaurant directly.', korean: '저녁 7시 어때? 레스토랑에서 바로 만날 수 있을 거 같아.' },
+                    { speaker: 'B', text: 'Sounds great! Should I make a reservation?', korean: '좋아! 내가 예약해야 할까?' },
+                    { speaker: 'A', text: 'Yes, please! For two people at 7 PM. I can\'t wait to catch up!', korean: '네, 부탁해! 7시에 2명으로. 근황 이야기하는 게 정말 기대돼!' }
                 ],
-                keyPhrases: [
-                    "Get a haircut - 머리를 자르다",
-                    "What style are you looking for? - 어떤 스타일을 원하세요?",
-                    "Trim about an inch - 약 1인치 정도 자르다"
-                ]
-            },
-            '2025-08-17': {
-                situation: '8월 둘째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "택시에서 '타세요!'를 영어로 하면?",
-                        options: ["Get in!", "Hop in!", "Come in!", "Step in!"],
-                        correct: 1
-                    },
-                    {
-                        question: "'As needed'의 의미는?",
-                        options: ["필요한 대로", "필요할 때마다", "반드시", "가끔"],
-                        correct: 1
-                    },
-                    {
-                        question: "도서관에서 책을 대출하다는?",
-                        options: ["Borrow books", "Check out books", "Take books", "Get books"],
-                        correct: 1
-                    }
+                keyExpressions: [
+                    'Are you free for...? - ...할 시간 있어?',
+                    'What did you have in mind? - 뭘 생각하고 있는 거야?',
+                    'I heard great reviews - 평이 좋다고 들었어',
+                    'I can\'t wait to catch up - 근황 이야기하는 게 기대돼'
                 ]
             },
             '2025-08-18': {
-                situation: '전화로 피자 주문하기',
+                title: '도서관에서 책 빌리기',
+                context: '도서관에서 책을 찾고 빌리는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hello, I'd like to order a pizza for delivery." },
-                    { speaker: 'B', text: "Sure! What size and toppings would you like?" },
-                    { speaker: 'A', text: "A large pepperoni pizza, please." },
-                    { speaker: 'B', text: "That'll be $18. What's your address?" },
-                    { speaker: 'A', text: "456 Oak Street, apartment 2A." },
-                    { speaker: 'B', text: "Great! It'll be there in about 30 minutes." },
-                    { speaker: 'A', text: "Perfect, thank you!" }
+                    { speaker: 'A', text: 'Excuse me, could you help me find a book?', korean: '실례합니다, 책을 찾는 것을 도와주실 수 있나요?' },
+                    { speaker: 'B', text: 'Of course! What are you looking for?', korean: '물론입니다! 무엇을 찾고 계신가요?' },
+                    { speaker: 'A', text: 'I need books about cooking, particularly Italian cuisine.', korean: '요리에 관한 책이 필요해요, 특히 이탈리안 요리요.' },
+                    { speaker: 'B', text: 'The cooking section is on the second floor. Follow me, I\'ll show you.', korean: '요리 섹션은 2층에 있어요. 따라오세요, 보여드릴게요.' },
+                    { speaker: 'A', text: 'Thank you so much! How many books can I borrow at once?', korean: '정말 감사합니다! 한 번에 몇 권까지 빌릴 수 있나요?' },
+                    { speaker: 'B', text: 'With your membership, you can check out up to 10 books for 2 weeks.', korean: '회원님의 멤버십으로는 2주 동안 최대 10권까지 대출할 수 있어요.' },
+                    { speaker: 'A', text: 'Perfect! Is there a way to renew them if I need more time?', korean: '완벽해요! 더 많은 시간이 필요하면 연장할 수 있나요?' }
                 ],
-                keyPhrases: [
-                    "Order for delivery - 배달 주문하다",
-                    "What size and toppings? - 사이즈와 토핑은 어떻게?",
-                    "It'll be there in... - ...후에 도착할 예정이에요"
+                keyExpressions: [
+                    'Could you help me find...? - ...을 찾는 것을 도와주실 수 있나요?',
+                    'Particularly - 특히',
+                    'How many can I borrow? - 몇 권까지 빌릴 수 있나요?',
+                    'Renew - 연장하다'
                 ]
             },
             '2025-08-19': {
-                situation: '자동차 렌트하기',
+                title: '헤어샵에서 머리 자르기',
+                context: '헤어샵에서 헤어스타일을 바꾸는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I'd like to rent a car for the weekend." },
-                    { speaker: 'B', text: "What type of car are you interested in?" },
-                    { speaker: 'A', text: "Something compact and fuel-efficient." },
-                    { speaker: 'B', text: "I have a Honda Civic available. Is that okay?" },
-                    { speaker: 'A', text: "That sounds perfect. What's the daily rate?" },
-                    { speaker: 'B', text: "It's $45 per day plus insurance." },
-                    { speaker: 'A', text: "I'll take it. Do you need my license?" }
+                    { speaker: 'A', text: 'Welcome! Do you have an appointment?', korean: '환영합니다! 예약하셨나요?' },
+                    { speaker: 'B', text: 'Yes, I have a 3 PM appointment with Sarah.', korean: '네, Sarah와 3시에 예약했어요.' },
+                    { speaker: 'A', text: 'Perfect! Sarah will be with you in just a moment. What are you thinking today?', korean: '완벽해요! Sarah가 곧 와드릴 거예요. 오늘은 어떤 걸 생각하고 계신가요?' },
+                    { speaker: 'B', text: 'I want to cut about 3 inches and maybe add some layers.', korean: '약 3인치 정도 자르고 레이어를 넣고 싶어요.' },
+                    { speaker: 'A', text: 'That sounds lovely! Would you also like a wash and blow-dry?', korean: '멋질 것 같아요! 세정과 드라이도 하시겠어요?' },
+                    { speaker: 'B', text: 'Yes, please! How long will the whole process take?', korean: '네, 부탁해요! 전체 과정이 얼마나 걸릴까요?' },
+                    { speaker: 'A', text: 'About an hour and a half. Would you like something to drink while you wait?', korean: '약 한 시간 반 정도요. 기다리시는 동안 음료라도 드시겠어요?' }
                 ],
-                keyPhrases: [
-                    "Rent a car - 차를 렌트하다",
-                    "Fuel-efficient - 연비가 좋은",
-                    "Daily rate - 일당 요금"
+                keyExpressions: [
+                    'Do you have an appointment? - 예약하셨나요?',
+                    'What are you thinking today? - 오늘은 어떤 걸 생각하고 계신가요?',
+                    'Add some layers - 레이어를 넣다',
+                    'Wash and blow-dry - 세정과 드라이'
                 ]
             },
             '2025-08-20': {
-                situation: '영화관에서 티켓 구매하기',
+                title: '전자제품 매장에서 쇼핑하기',
+                context: '전자제품 매장에서 노트북을 구매하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Two tickets for the 7 PM show, please." },
-                    { speaker: 'B', text: "Which movie would you like to see?" },
-                    { speaker: 'A', text: "The new Marvel movie." },
-                    { speaker: 'B', text: "Would you prefer regular or premium seats?" },
-                    { speaker: 'A', text: "Regular seats are fine." },
-                    { speaker: 'B', text: "That'll be $24. Would you like any snacks?" },
-                    { speaker: 'A', text: "No thanks, just the tickets." }
+                    { speaker: 'A', text: 'Hi there! What can I help you find today?', korean: '안녕하세요! 오늘 무엇을 찾으시는 것을 도와드릴까요?' },
+                    { speaker: 'B', text: 'I\'m looking for a laptop for college. Something reliable but not too expensive.', korean: '대학용 노트북을 찾고 있어요. 신뢰할 만하지만 너무 비싸지 않은 걸로요.' },
+                    { speaker: 'A', text: 'Great! What will you mainly use it for? Just basic tasks or more intensive work?', korean: '좋습니다! 주로 무엇에 사용하실 건가요? 기본적인 작업 또는 더 집약적인 작업인가요?' },
+                    { speaker: 'B', text: 'Mostly for writing papers, research, and streaming videos.', korean: '주로 논문 작성, 연구, 그리고 비디오 스트리밍이요.' },
+                    { speaker: 'A', text: 'I\'d recommend this model here. It has good performance and the price is reasonable.', korean: '여기 이 모델을 추천합니다. 성능이 좋고 가격도 합리적이에요.' },
+                    { speaker: 'B', text: 'What\'s the warranty like? And do you offer student discounts?', korean: '보증기간은 어떻게 되나요? 그리고 학생 할인도 제공하나요?' },
+                    { speaker: 'A', text: 'It comes with a 2-year warranty, and yes, we have a 10% student discount!', korean: '2년 보증이 포함되어 있고, 네, 10% 학생 할인이 있습니다!' }
                 ],
-                keyPhrases: [
-                    "Two tickets for... - ...에 대한 티켓 2장",
-                    "Which movie would you like to see? - 어떤 영화를 보고 싶으세요?",
-                    "Regular or premium seats - 일반석 또는 프리미엄석"
+                keyExpressions: [
+                    'What can I help you find? - 무엇을 찾으시는 것을 도와드릴까요?',
+                    'Something reliable - 신뢰할 만한 것',
+                    'What\'s the warranty like? - 보증기간은 어떻게 되나요?',
+                    'Student discount - 학생 할인'
                 ]
             },
             '2025-08-21': {
-                situation: '호텔 룸서비스 주문하기',
+                title: '우체국에서 소포 보내기',
+                context: '우체국에서 소포를 보내는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hello, I'd like to order room service." },
-                    { speaker: 'B', text: "Of course! What room number?" },
-                    { speaker: 'A', text: "Room 507. I'd like the club sandwich." },
-                    { speaker: 'B', text: "Would you like any sides with that?" },
-                    { speaker: 'A', text: "Yes, french fries and a Coke, please." },
-                    { speaker: 'B', text: "That'll be ready in about 20 minutes." },
-                    { speaker: 'A', text: "Great, thank you!" }
+                    { speaker: 'A', text: 'Next! How can I help you?', korean: '다음! 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'I need to send this package to California. What are my shipping options?', korean: '이 소포를 캘리포니아로 보내야 해요. 배송 옵션이 어떻게 되나요?' },
+                    { speaker: 'A', text: 'We have regular mail, priority, and overnight delivery. When do you need it to arrive?', korean: '일반우편, 우선배송, 그리고 익일배송이 있습니다. 언제 도착해야 하나요?' },
+                    { speaker: 'B', text: 'It\'s a birthday gift, so it needs to be there by Friday.', korean: '생일선물이어서 금요일까지는 도착해야 해요.' },
+                    { speaker: 'A', text: 'Then I\'d recommend priority mail. It\'ll be there in 2-3 business days.', korean: '그럼 우선배송을 추천합니다. 영업일 기준 2-3일이면 도착할 거예요.' },
+                    { speaker: 'B', text: 'Perfect! How much will that cost?', korean: '완벽해요! 비용이 얼마나 들까요?' },
+                    { speaker: 'A', text: 'Let me weigh this... it\'ll be $15.50. Would you like insurance on it?', korean: '무게를 재보겠습니다... 15달러 50센트가 될 거예요. 보험을 들으시겠어요?' }
                 ],
-                keyPhrases: [
-                    "Room service - 룸서비스",
-                    "What room number? - 몇 호실인가요?",
-                    "Any sides with that? - 사이드 메뉴도 드릴까요?"
+                keyExpressions: [
+                    'Shipping options - 배송 옵션',
+                    'When do you need it to arrive? - 언제 도착해야 하나요?',
+                    'Business days - 영업일',
+                    'Would you like insurance? - 보험을 들으시겠어요?'
                 ]
             },
             '2025-08-22': {
-                situation: '드라이클리닝 맡기기',
+                title: '렌터카 예약하기',
+                context: '렌터카 업체에서 차를 예약하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I need to get this suit dry cleaned." },
-                    { speaker: 'B', text: "When do you need it back?" },
-                    { speaker: 'A', text: "Is Tuesday possible?" },
-                    { speaker: 'B', text: "Yes, that's no problem. Any stains I should know about?" },
-                    { speaker: 'A', text: "There's a small coffee stain on the jacket." },
-                    { speaker: 'B', text: "We'll take special care of that." },
-                    { speaker: 'A', text: "Thank you, how much will it cost?" }
+                    { speaker: 'A', text: 'Welcome to Quick Rent! How can I help you today?', korean: '퀵렌트에 오신 것을 환영합니다! 오늘 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'I need to rent a car for the weekend. What do you have available?', korean: '주말에 차를 빌려야 해요. 무엇이 이용 가능한가요?' },
+                    { speaker: 'A', text: 'We have compact cars, mid-size, and SUVs. What\'s your preference?', korean: '소형차, 중형차, 그리고 SUV가 있습니다. 어떤 것을 선호하시나요?' },
+                    { speaker: 'B', text: 'A compact car should be fine. I just need it for city driving.', korean: '소형차면 괜찮을 것 같아요. 시내 운전용으로만 필요해요.' },
+                    { speaker: 'A', text: 'Great! I\'ll need to see your driver\'s license and a credit card.', korean: '좋습니다! 운전면허증과 신용카드를 봐야 해요.' },
+                    { speaker: 'B', text: 'Here they are. What\'s included in the rental price?', korean: '여기 있어요. 렌털 가격에 무엇이 포함되어 있나요?' },
+                    { speaker: 'A', text: 'Basic insurance and 200 miles per day are included. Gas is not included.', korean: '기본 보험과 하루 200마일이 포함되어 있습니다. 연료는 포함되지 않아요.' }
                 ],
-                keyPhrases: [
-                    "Dry cleaned - 드라이클리닝 하다",
-                    "When do you need it back? - 언제 찾으실 건가요?",
-                    "Any stains - 얼룩이 있나요"
+                keyExpressions: [
+                    'What do you have available? - 무엇이 이용 가능한가요?',
+                    'What\'s your preference? - 어떤 것을 선호하시나요?',
+                    'City driving - 시내 운전',
+                    'What\'s included? - 무엇이 포함되어 있나요?'
                 ]
             },
             '2025-08-23': {
-                situation: '공항에서 체크인하기',
+                title: '음식 배달 주문하기',
+                context: '전화로 음식을 배달 주문하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Hi, I'm checking in for flight 205 to Chicago." },
-                    { speaker: 'B', text: "Can I see your passport and ticket?" },
-                    { speaker: 'A', text: "Here they are." },
-                    { speaker: 'B', text: "Would you like a window or aisle seat?" },
-                    { speaker: 'A', text: "Window seat, please." },
-                    { speaker: 'B', text: "Perfect. Gate 12, boarding starts at 6:30." },
-                    { speaker: 'A', text: "Thank you!" }
+                    { speaker: 'A', text: 'Hello, Tony\'s Pizza! How can I help you?', korean: '안녕하세요, 토니스 피자입니다! 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'Hi! I\'d like to place a delivery order, please.', korean: '안녕하세요! 배달 주문을 하고 싶어요.' },
+                    { speaker: 'A', text: 'Sure! Can I get your address and phone number first?', korean: '네! 먼저 주소와 전화번호를 알려주실 수 있나요?' },
+                    { speaker: 'B', text: 'It\'s 123 Main Street, and my number is 555-0123.', korean: '메인 스트리트 123번지이고, 전화번호는 555-0123입니다.' },
+                    { speaker: 'A', text: 'Perfect! What would you like to order today?', korean: '완벽합니다! 오늘 무엇을 주문하시겠어요?' },
+                    { speaker: 'B', text: 'I\'ll have a large pepperoni pizza and a Caesar salad.', korean: '라지 페퍼로니 피자와 시저 샐러드를 주세요.' },
+                    { speaker: 'A', text: 'That\'ll be $22.50. It should arrive in about 30 minutes.', korean: '22달러 50센트입니다. 약 30분 후에 도착할 예정이에요.' }
                 ],
-                keyPhrases: [
-                    "Checking in for flight - 항공편 체크인하다",
-                    "Window or aisle seat - 창가석 또는 통로석",
-                    "Boarding starts at... - 탑승은 ...에 시작됩니다"
-                ]
-            },
-            '2025-08-24': {
-                situation: '8월 셋째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'Order for delivery'의 의미는?",
-                        options: ["주문하고 가져가기", "배달 주문하기", "매장에서 주문하기", "전화로 주문하기"],
-                        correct: 1
-                    },
-                    {
-                        question: "연비가 좋다는 표현은?",
-                        options: ["Good gas", "Fuel-efficient", "Gas-saving", "Economy car"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Window or aisle seat'는?",
-                        options: ["창가석 또는 통로석", "앞자리 또는 뒷자리", "1등석 또는 이코노미석", "좌석 또는 입석"],
-                        correct: 0
-                    }
+                keyExpressions: [
+                    'Place a delivery order - 배달 주문을 하다',
+                    'Can I get your address? - 주소를 알려주실 수 있나요?',
+                    'What would you like to order? - 무엇을 주문하시겠어요?',
+                    'It should arrive in... - ...후에 도착할 예정이에요'
                 ]
             },
             '2025-08-25': {
-                situation: '전자제품 상점에서 구매하기',
+                title: '공항에서 체크인하기',
+                context: '공항에서 항공편 체크인을 하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I'm looking for a new smartphone." },
-                    { speaker: 'B', text: "What features are important to you?" },
-                    { speaker: 'A', text: "Good camera quality and long battery life." },
-                    { speaker: 'B', text: "I'd recommend this model. It has both." },
-                    { speaker: 'A', text: "How much does it cost?" },
-                    { speaker: 'B', text: "It's $699, but we have a promotion this week." },
-                    { speaker: 'A', text: "What kind of promotion?" }
+                    { speaker: 'A', text: 'Good morning! May I see your passport and ticket, please?', korean: '안녕하세요! 여권과 항공권을 보여주시겠어요?' },
+                    { speaker: 'B', text: 'Here they are. I\'m flying to New York on flight 245.', korean: '여기 있어요. 245편으로 뉴욕에 가요.' },
+                    { speaker: 'A', text: 'Thank you. Do you have any bags to check in today?', korean: '감사합니다. 오늘 체크인할 가방이 있으신가요?' },
+                    { speaker: 'B', text: 'Yes, just this one suitcase. Is it within the weight limit?', korean: '네, 이 여행가방 하나만요. 무게 제한 안에 들어가나요?' },
+                    { speaker: 'A', text: 'Let me check... yes, it\'s fine. Would you prefer a window or aisle seat?', korean: '확인해보겠습니다... 네, 괜찮습니다. 창가석과 통로석 중 어느 쪽을 선호하시나요?' },
+                    { speaker: 'B', text: 'Window seat, please.', korean: '창가석으로 부탁합니다.' },
+                    { speaker: 'A', text: 'Perfect! Here\'s your boarding pass. Boarding starts at 10:30 AM.', korean: '완벽합니다! 탑승권입니다. 탑승은 오전 10시 30분에 시작됩니다.' }
                 ],
-                keyPhrases: [
-                    "I'm looking for... - ...를 찾고 있어요",
-                    "What features are important? - 어떤 기능이 중요하세요?",
-                    "Battery life - 배터리 수명"
+                keyExpressions: [
+                    'May I see your passport? - 여권을 보여주시겠어요?',
+                    'Bags to check in - 체크인할 가방',
+                    'Weight limit - 무게 제한',
+                    'Boarding pass - 탑승권'
                 ]
             },
             '2025-08-26': {
-                situation: '병원에서 진료 받기',
+                title: '부동산 중개사와 아파트 보기',
+                context: '부동산 중개사와 함께 임대 아파트를 보는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "Doctor, I've been feeling dizzy lately." },
-                    { speaker: 'B', text: "How long have you been experiencing this?" },
-                    { speaker: 'A', text: "About a week now." },
-                    { speaker: 'B', text: "Any other symptoms? Headaches? Nausea?" },
-                    { speaker: 'A', text: "Yes, mild headaches in the morning." },
-                    { speaker: 'B', text: "Let me check your blood pressure." },
-                    { speaker: 'A', text: "Is everything okay?" }
+                    { speaker: 'A', text: 'Welcome! This is the apartment I mentioned over the phone.', korean: '환영합니다! 이곳이 전화로 말씀드린 아파트입니다.' },
+                    { speaker: 'B', text: 'It looks nice! How many bedrooms does it have?', korean: '보기 좋네요! 침실이 몇 개인가요?' },
+                    { speaker: 'A', text: 'It\'s a two-bedroom, one-bathroom apartment with a modern kitchen.', korean: '침실 2개, 욕실 1개 아파트이고 현대적인 주방이 있어요.' },
+                    { speaker: 'B', text: 'Great! What\'s the monthly rent? Are utilities included?', korean: '좋네요! 월세가 얼마인가요? 공과금이 포함되어 있나요?' },
+                    { speaker: 'A', text: 'The rent is $1,800 per month. Water is included, but electricity and internet are separate.', korean: '월세는 1,800달러입니다. 수도세는 포함되어 있지만 전기와 인터넷은 별도예요.' },
+                    { speaker: 'B', text: 'I see. What about parking? And is there a laundry room?', korean: '알겠어요. 주차는 어떻게 되나요? 그리고 세탁실이 있나요?' },
+                    { speaker: 'A', text: 'One parking space is included, and there\'s a laundry room on each floor.', korean: '주차 공간 하나가 포함되어 있고, 각 층에 세탁실이 있어요.' }
                 ],
-                keyPhrases: [
-                    "I've been feeling... - ...하게 느끼고 있어요",
-                    "How long have you been experiencing? - 얼마나 오래 경험하고 있나요?",
-                    "Any other symptoms? - 다른 증상은 있나요?"
+                keyExpressions: [
+                    'How many bedrooms? - 침실이 몇 개인가요?',
+                    'Monthly rent - 월세',
+                    'Are utilities included? - 공과금이 포함되어 있나요?',
+                    'Parking space - 주차 공간'
                 ]
             },
             '2025-08-27': {
-                situation: '부동산 중개소에서 아파트 찾기',
+                title: '자동차 정비소에서 수리하기',
+                context: '자동차 정비소에서 차량 점검을 받는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I'm looking for a two-bedroom apartment." },
-                    { speaker: 'B', text: "What's your budget range?" },
-                    { speaker: 'A', text: "Around $1,500 per month." },
-                    { speaker: 'B', text: "Do you have any location preferences?" },
-                    { speaker: 'A', text: "Somewhere close to public transportation." },
-                    { speaker: 'B', text: "I have a few options. Would you like to see them?" },
-                    { speaker: 'A', text: "Yes, when can we schedule a viewing?" }
+                    { speaker: 'A', text: 'Hi! What seems to be the problem with your car today?', korean: '안녕하세요! 오늘 차에 무슨 문제가 있는 것 같나요?' },
+                    { speaker: 'B', text: 'It\'s making a strange noise when I brake, and the engine feels rough.', korean: '브레이크를 밟을 때 이상한 소음이 나고, 엔진이 거칠게 느껴져요.' },
+                    { speaker: 'A', text: 'I see. How long has this been happening?', korean: '그렇군요. 이런 현상이 얼마나 지속되었나요?' },
+                    { speaker: 'B', text: 'About a week now. It\'s getting worse each day.', korean: '약 일주일 정도요. 매일 더 심해지고 있어요.' },
+                    { speaker: 'A', text: 'We should definitely take a look. It might be the brake pads or engine oil.', korean: '확실히 점검해봐야겠어요. 브레이크 패드나 엔진 오일 문제일 수 있어요.' },
+                    { speaker: 'B', text: 'How long will the inspection take? And what will it cost?', korean: '점검은 얼마나 걸릴까요? 그리고 비용은 얼마인가요?' },
+                    { speaker: 'A', text: 'The inspection is free, and it\'ll take about an hour. Repairs depend on what we find.', korean: '점검은 무료이고, 약 한 시간 걸릴 거예요. 수리 비용은 발견된 문제에 따라 달라져요.' }
                 ],
-                keyPhrases: [
-                    "Two-bedroom apartment - 방 2개 아파트",
-                    "Budget range - 예산 범위",
-                    "Public transportation - 대중교통"
+                keyExpressions: [
+                    'What seems to be the problem? - 무슨 문제가 있는 것 같나요?',
+                    'Strange noise - 이상한 소음',
+                    'How long has this been happening? - 이런 현상이 얼마나 지속되었나요?',
+                    'Take a look - 점검해보다'
                 ]
             },
             '2025-08-28': {
-                situation: '학교에서 수업 등록하기',
+                title: '동물병원에서 진료받기',
+                context: '반려동물을 데리고 동물병원에 가는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I'd like to register for the English conversation class." },
-                    { speaker: 'B', text: "Great! What's your current level?" },
-                    { speaker: 'A', text: "I'd say intermediate." },
-                    { speaker: 'B', text: "Perfect. The intermediate class meets twice a week." },
-                    { speaker: 'A', text: "What days and times?" },
-                    { speaker: 'B', text: "Tuesdays and Thursdays from 7 to 9 PM." },
-                    { speaker: 'A', text: "That works for me. How do I sign up?" }
+                    { speaker: 'A', text: 'Good afternoon! What brings you and your dog in today?', korean: '안녕하세요! 오늘 강아지를 데리고 오신 이유가 무엇인가요?' },
+                    { speaker: 'B', text: 'Hi! Max hasn\'t been eating well for the past few days, and he seems lethargic.', korean: '안녕하세요! Max가 며칠째 잘 먹지 않고, 무기력해 보여요.' },
+                    { speaker: 'A', text: 'I see. Has he been drinking water normally? Any vomiting or diarrhea?', korean: '그렇군요. 물은 정상적으로 마시고 있나요? 구토나 설사는 있었나요?' },
+                    { speaker: 'B', text: 'He\'s drinking less water than usual, but no vomiting or diarrhea.', korean: '평소보다 물을 적게 마시고 있어요, 하지만 구토나 설사는 없어요.' },
+                    { speaker: 'A', text: 'Let me examine him. Can you put him on the table here?', korean: '검사해보겠습니다. 여기 테이블 위에 올려놓아 주시겠어요?' },
+                    { speaker: 'B', text: 'Sure. He\'s usually very friendly, but he might be nervous.', korean: '네. 평상시엔 매우 친근한데, 긴장할 수도 있어요.' },
+                    { speaker: 'A', text: 'That\'s okay. Most pets are nervous here. Let\'s see what\'s going on.', korean: '괜찮습니다. 대부분의 반려동물이 여기서 긴장해요. 어떤 문제인지 보겠습니다.' }
                 ],
-                keyPhrases: [
-                    "Register for... - ...에 등록하다",
-                    "Current level - 현재 수준",
-                    "Meets twice a week - 주 2회 만나다"
+                keyExpressions: [
+                    'What brings you in today? - 오늘 오신 이유가 무엇인가요?',
+                    'Hasn\'t been eating well - 잘 먹지 않는다',
+                    'Seems lethargic - 무기력해 보인다',
+                    'Let me examine - 검사해보겠습니다'
                 ]
             },
             '2025-08-29': {
-                situation: '정비소에서 자동차 수리하기',
+                title: '온라인 쇼핑 고객센터 문의',
+                context: '온라인 쇼핑 주문에 문제가 생겨 고객센터에 전화하는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "My car is making a strange noise." },
-                    { speaker: 'B', text: "Can you describe the sound?" },
-                    { speaker: 'A', text: "It's a grinding noise when I brake." },
-                    { speaker: 'B', text: "That sounds like your brake pads need replacing." },
-                    { speaker: 'A', text: "How much will that cost?" },
-                    { speaker: 'B', text: "About $200 for parts and labor." },
-                    { speaker: 'A', text: "How long will it take?" }
+                    { speaker: 'A', text: 'Thank you for calling ShopSmart customer service. How can I help you?', korean: '샵스마트 고객서비스에 전화해주셔서 감사합니다. 어떻게 도와드릴까요?' },
+                    { speaker: 'B', text: 'Hi! I placed an order three days ago, but I haven\'t received a tracking number yet.', korean: '안녕하세요! 3일 전에 주문했는데, 아직 추적번호를 받지 못했어요.' },
+                    { speaker: 'A', text: 'I\'d be happy to help with that. Can you provide me with your order number?', korean: '기꺼이 도와드리겠습니다. 주문번호를 알려주실 수 있나요?' },
+                    { speaker: 'B', text: 'Yes, it\'s ORDER123456789.', korean: '네, ORDER123456789입니다.' },
+                    { speaker: 'A', text: 'Thank you. Let me look that up... I see the issue. There was a delay in processing.', korean: '감사합니다. 찾아보겠습니다... 문제를 발견했어요. 처리 과정에서 지연이 있었네요.' },
+                    { speaker: 'B', text: 'Oh no! When will it be shipped? I need it by this weekend.', korean: '오 안 돼요! 언제 배송될까요? 이번 주말까지는 받아야 해요.' },
+                    { speaker: 'A', text: 'It will ship today, and you\'ll receive it by Saturday with expedited shipping at no extra cost.', korean: '오늘 배송될 예정이고, 추가 비용 없이 빠른 배송으로 토요일까지 받으실 수 있어요.' }
                 ],
-                keyPhrases: [
-                    "Making a strange noise - 이상한 소리가 나다",
-                    "Grinding noise - 갈리는 소리",
-                    "Parts and labor - 부품과 인건비"
+                keyExpressions: [
+                    'I placed an order - 주문을 했어요',
+                    'Tracking number - 추적번호',
+                    'Can you provide me with...? - ...를 알려주실 수 있나요?',
+                    'Expedited shipping - 빠른 배송'
                 ]
             },
             '2025-08-30': {
-                situation: '펫샵에서 애완동물 용품 구매하기',
+                title: '학교 등록 상담하기',
+                context: '새 학교에 등록하기 위해 상담을 받는 상황입니다.',
                 dialogue: [
-                    { speaker: 'A', text: "I need food for my cat." },
-                    { speaker: 'B', text: "What type of cat do you have?" },
-                    { speaker: 'A', text: "She's an indoor cat, about 5 years old." },
-                    { speaker: 'B', text: "I'd recommend this brand for adult indoor cats." },
-                    { speaker: 'A', text: "Does it come in different flavors?" },
-                    { speaker: 'B', text: "Yes, chicken, fish, and beef." },
-                    { speaker: 'A', text: "I'll take the chicken flavor, please." }
+                    { speaker: 'A', text: 'Welcome to Riverside High School! Are you here for enrollment information?', korean: '리버사이드 고등학교에 오신 것을 환영합니다! 등록 정보를 위해 오셨나요?' },
+                    { speaker: 'B', text: 'Yes, I am. My family just moved here, and I need to enroll my daughter.', korean: '네, 맞습니다. 저희 가족이 방금 이사 왔고, 딸을 등록시켜야 해요.' },
+                    { speaker: 'A', text: 'Great! What grade is she going into?', korean: '좋습니다! 몇 학년에 들어가나요?' },
+                    { speaker: 'B', text: 'She\'ll be in 10th grade. What documents do I need to bring?', korean: '10학년이 될 거예요. 어떤 서류를 가져와야 하나요?' },
+                    { speaker: 'A', text: 'We\'ll need her transcript from her previous school, immunization records, and proof of residence.', korean: '이전 학교의 성적표, 예방접종 기록, 그리고 거주 증명서가 필요해요.' },
+                    { speaker: 'B', text: 'I have all of those. When does the school year start?', korean: '모든 것을 가지고 있어요. 학년도는 언제 시작하나요?' },
+                    { speaker: 'A', text: 'Classes begin on September 3rd. Would you like to schedule a school tour for your daughter?', korean: '수업은 9월 3일에 시작해요. 따님을 위한 학교 투어를 예약하시겠어요?' }
                 ],
-                keyPhrases: [
-                    "Indoor cat - 실내 고양이",
-                    "Adult cats - 성인 고양이",
-                    "Different flavors - 다양한 맛"
-                ]
-            },
-            '2025-08-31': {
-                situation: '8월 마지막 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'What features are important?'의 의미는?",
-                        options: ["어떤 특징이 있나요?", "어떤 기능이 중요하세요?", "무엇이 특별한가요?", "어떤 것이 좋나요?"],
-                        correct: 1
-                    },
-                    {
-                        question: "배터리 수명은?",
-                        options: ["Battery power", "Battery life", "Battery time", "Battery duration"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Parts and labor'는?",
-                        options: ["부품과 노동", "재료와 작업", "부품과 인건비", "도구와 일"],
-                        correct: 2
-                    }
-                ]
-            },
-
-            // 9월 (30일)
-            '2025-09-01': {
-                situation: '새 직장에서 자기소개하기',
-                dialogue: [
-                    { speaker: 'A', text: "Hi everyone! I'm the new marketing coordinator." },
-                    { speaker: 'B', text: "Welcome to the team! I'm Sarah from HR." },
-                    { speaker: 'A', text: "Nice to meet you, Sarah. I'm excited to work here." },
-                    { speaker: 'B', text: "Where did you work before?" },
-                    { speaker: 'A', text: "I was at a tech startup for three years." },
-                    { speaker: 'B', text: "That's great experience! Let me show you around." },
-                    { speaker: 'A', text: "I'd appreciate that, thank you!" }
-                ],
-                keyPhrases: [
-                    "Marketing coordinator - 마케팅 코디네이터",
-                    "Welcome to the team! - 팀에 오신 걸 환영해요!",
-                    "Show you around - 안내해드릴게요"
-                ]
-            },
-            '2025-09-02': {
-                situation: '회의에서 의견 제시하기',
-                dialogue: [
-                    { speaker: 'A', text: "I think we should consider a different approach." },
-                    { speaker: 'B', text: "What do you have in mind?" },
-                    { speaker: 'A', text: "We could focus more on social media marketing." },
-                    { speaker: 'B', text: "That's an interesting idea. What's your reasoning?" },
-                    { speaker: 'A', text: "Our target audience spends most time on social platforms." },
-                    { speaker: 'B', text: "Good point. Let's discuss this further." },
-                    { speaker: 'A', text: "I can prepare a detailed proposal." }
-                ],
-                keyPhrases: [
-                    "Consider a different approach - 다른 접근법을 고려하다",
-                    "What do you have in mind? - 무엇을 생각하고 있나요?",
-                    "Target audience - 타겟 고객"
-                ]
-            },
-            '2025-09-03': {
-                situation: '고객 서비스 센터에 전화하기',
-                dialogue: [
-                    { speaker: 'A', text: "Hello, I'm calling about my internet service." },
-                    { speaker: 'B', text: "How can I help you today?" },
-                    { speaker: 'A', text: "My internet has been very slow for the past few days." },
-                    { speaker: 'B', text: "I'm sorry to hear that. Let me check your account." },
-                    { speaker: 'A', text: "My account number is 12345678." },
-                    { speaker: 'B', text: "I see the issue. We can send a technician tomorrow." },
-                    { speaker: 'A', text: "What time would that be?" }
-                ],
-                keyPhrases: [
-                    "Internet service - 인터넷 서비스",
-                    "Very slow - 매우 느린",
-                    "Send a technician - 기술자를 보내다"
-                ]
-            },
-            '2025-09-04': {
-                situation: '친구와 생일 파티 계획하기',
-                dialogue: [
-                    { speaker: 'A', text: "I'm planning a surprise party for Mike's birthday." },
-                    { speaker: 'B', text: "That sounds fun! When is his birthday?" },
-                    { speaker: 'A', text: "Next Saturday. Can you help me organize it?" },
-                    { speaker: 'B', text: "Of course! What do you need help with?" },
-                    { speaker: 'A', text: "I need help with decorations and inviting people." },
-                    { speaker: 'B', text: "I can handle the decorations. You focus on invitations." },
-                    { speaker: 'A', text: "Perfect! This will be a great surprise." }
-                ],
-                keyPhrases: [
-                    "Surprise party - 깜짝 파티",
-                    "Help me organize - 조직하는 것을 도와주다",
-                    "Handle the decorations - 장식을 담당하다"
-                ]
-            },
-            '2025-09-05': {
-                situation: '온라인 쇼핑 문의하기',
-                dialogue: [
-                    { speaker: 'A', text: "Hi, I ordered a jacket last week but it hasn't arrived." },
-                    { speaker: 'B', text: "Let me check your order status. What's your order number?" },
-                    { speaker: 'A', text: "It's ORD789456." },
-                    { speaker: 'B', text: "I see it's still being processed. There was a delay." },
-                    { speaker: 'A', text: "When should I expect it to arrive?" },
-                    { speaker: 'B', text: "It should be delivered by Friday." },
-                    { speaker: 'A', text: "Okay, thank you for checking." }
-                ],
-                keyPhrases: [
-                    "Order status - 주문 상태",
-                    "Order number - 주문 번호",
-                    "Being processed - 처리 중"
-                ]
-            },
-            '2025-09-06': {
-                situation: '카페에서 와이파이 비밀번호 묻기',
-                dialogue: [
-                    { speaker: 'A', text: "Excuse me, what's the WiFi password?" },
-                    { speaker: 'B', text: "It's 'CoffeeTime123', all one word." },
-                    { speaker: 'A', text: "Is the 'C' and 'T' capitalized?" },
-                    { speaker: 'B', text: "Yes, that's right. Coffee with capital C, Time with capital T." },
-                    { speaker: 'A', text: "Got it, thank you!" },
-                    { speaker: 'B', text: "You're welcome. Enjoy your coffee!" },
-                    { speaker: 'A', text: "Thanks, I will!" }
-                ],
-                keyPhrases: [
-                    "WiFi password - 와이파이 비밀번호",
-                    "All one word - 띄어쓰기 없이",
-                    "Capitalized - 대문자로"
-                ]
-            },
-            '2025-09-07': {
-                situation: '9월 첫째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'Welcome to the team!'의 의미는?",
-                        options: ["팀을 환영해요!", "팀에 오신 걸 환영해요!", "팀이 좋아요!", "팀과 함께해요!"],
-                        correct: 1
-                    },
-                    {
-                        question: "타겟 고객은?",
-                        options: ["Target customer", "Target audience", "Target client", "Target people"],
-                        correct: 1
-                    },
-                    {
-                        question: "'All one word'는?",
-                        options: ["모든 단어", "한 단어로", "띄어쓰기 없이", "하나의 말"],
-                        correct: 2
-                    }
-                ]
-            },
-            '2025-09-08': {
-                situation: '헬스장에서 트레이너와 상담하기',
-                dialogue: [
-                    { speaker: 'A', text: "I'd like to start a workout program." },
-                    { speaker: 'B', text: "Great! What are your fitness goals?" },
-                    { speaker: 'A', text: "I want to lose weight and build muscle." },
-                    { speaker: 'B', text: "How many days a week can you commit to working out?" },
-                    { speaker: 'A', text: "I can do three days a week." },
-                    { speaker: 'B', text: "Perfect. We'll focus on cardio and strength training." },
-                    { speaker: 'A', text: "When can we start?" }
-                ],
-                keyPhrases: [
-                    "Workout program - 운동 프로그램",
-                    "Fitness goals - 피트니스 목표",
-                    "Build muscle - 근육을 만들다"
-                ]
-            },
-            '2025-09-09': {
-                situation: '레스토랑에서 예약 변경하기',
-                dialogue: [
-                    { speaker: 'A', text: "Hi, I need to change my reservation for tonight." },
-                    { speaker: 'B', text: "What name is the reservation under?" },
-                    { speaker: 'A', text: "It's under Johnson, party of four at 7 PM." },
-                    { speaker: 'B', text: "What would you like to change?" },
-                    { speaker: 'A', text: "Can we move it to 8 PM instead?" },
-                    { speaker: 'B', text: "Let me check... Yes, 8 PM is available." },
-                    { speaker: 'A', text: "Thank you so much!" }
-                ],
-                keyPhrases: [
-                    "Change my reservation - 예약을 변경하다",
-                    "Party of four - 4명",
-                    "Move it to... - ...로 옮기다"
-                ]
-            },
-            '2025-09-10': {
-                situation: '약속 장소에서 친구 기다리기',
-                dialogue: [
-                    { speaker: 'A', text: "Hey, where are you? I'm at the coffee shop." },
-                    { speaker: 'B', text: "Sorry, I'm running a bit late. Traffic is terrible." },
-                    { speaker: 'A', text: "No problem. How long do you think you'll be?" },
-                    { speaker: 'B', text: "Maybe 10 more minutes." },
-                    { speaker: 'A', text: "Okay, I'll order us a table." },
-                    { speaker: 'B', text: "Thanks! I'll be there as soon as I can." },
-                    { speaker: 'A', text: "See you soon!" }
-                ],
-                keyPhrases: [
-                    "Running a bit late - 조금 늦고 있다",
-                    "Traffic is terrible - 교통이 끔찍하다",
-                    "As soon as I can - 최대한 빨리"
-                ]
-            },
-            '2025-09-11': {
-                situation: '가전제품 AS 센터 방문하기',
-                dialogue: [
-                    { speaker: 'A', text: "My washing machine stopped working yesterday." },
-                    { speaker: 'B', text: "Is it still under warranty?" },
-                    { speaker: 'A', text: "Yes, I bought it six months ago." },
-                    { speaker: 'B', text: "What exactly is the problem?" },
-                    { speaker: 'A', text: "It won't start at all, even when I press the power button." },
-                    { speaker: 'B', text: "We'll need to send someone to take a look." },
-                    { speaker: 'A', text: "When is the earliest appointment available?" }
-                ],
-                keyPhrases: [
-                    "Stopped working - 작동을 멈추다",
-                    "Under warranty - 보증 기간 내",
-                    "Won't start at all - 전혀 시작되지 않다"
-                ]
-            },
-            '2025-09-12': {
-                situation: '동료와 점심 식사 제안하기',
-                dialogue: [
-                    { speaker: 'A', text: "Would you like to grab lunch together?" },
-                    { speaker: 'B', text: "Sure! What did you have in mind?" },
-                    { speaker: 'A', text: "How about that new sushi place?" },
-                    { speaker: 'B', text: "Sounds good. What time works for you?" },
-                    { speaker: 'A', text: "Is 12:30 okay?" },
-                    { speaker: 'B', text: "Perfect. Should we meet there or go together?" },
-                    { speaker: 'A', text: "Let's go together. I'll pick you up at your desk." }
-                ],
-                keyPhrases: [
-                    "Grab lunch together - 함께 점심을 먹다",
-                    "What did you have in mind? - 무엇을 생각하고 있었나요?",
-                    "Pick you up - 데리러 가다"
-                ]
-            },
-            '2025-09-13': {
-                situation: '온라인 강의 기술 문제 해결하기',
-                dialogue: [
-                    { speaker: 'A', text: "I can't hear the audio in the online lecture." },
-                    { speaker: 'B', text: "Have you checked your volume settings?" },
-                    { speaker: 'A', text: "Yes, everything is turned up." },
-                    { speaker: 'B', text: "Try refreshing the page and rejoining the meeting." },
-                    { speaker: 'A', text: "Okay, let me try that." },
-                    { speaker: 'B', text: "If that doesn't work, try using different browser." },
-                    { speaker: 'A', text: "Great, that fixed it! Thank you." }
-                ],
-                keyPhrases: [
-                    "Can't hear the audio - 오디오가 들리지 않다",
-                    "Volume settings - 볼륨 설정",
-                    "Refreshing the page - 페이지를 새로고침하다"
-                ]
-            },
-            '2025-09-14': {
-                situation: '9월 둘째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'Build muscle'의 의미는?",
-                        options: ["근육을 만들다", "근육을 기르다", "근육을 늘리다", "모두 정답"],
-                        correct: 3
-                    },
-                    {
-                        question: "'Party of four'는?",
-                        options: ["4번째 파티", "4명", "4시 파티", "4개 파티"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Running a bit late'는?",
-                        options: ["뛰고 있다", "조금 늦고 있다", "좀 서두르고 있다", "달리고 있다"],
-                        correct: 1
-                    }
-                ]
-            },
-            '2025-09-15': {
-                situation: '부모님께 안부 전화드리기',
-                dialogue: [
-                    { speaker: 'A', text: "Hi Mom, how are you doing?" },
-                    { speaker: 'B', text: "Hi sweetheart! I'm doing well. How about you?" },
-                    { speaker: 'A', text: "I'm good, just busy with work." },
-                    { speaker: 'B', text: "Are you eating well? Taking care of yourself?" },
-                    { speaker: 'A', text: "Yes, don't worry about me. How's Dad?" },
-                    { speaker: 'B', text: "He's fine. We miss you!" },
-                    { speaker: 'A', text: "I miss you too. I'll visit soon." }
-                ],
-                keyPhrases: [
-                    "How are you doing? - 어떻게 지내요?",
-                    "Taking care of yourself - 자신을 돌보다",
-                    "Don't worry about me - 저 걱정하지 마세요"
-                ]
-            },
-            '2025-09-16': {
-                situation: '택배 배송 문의하기',
-                dialogue: [
-                    { speaker: 'A', text: "I'm expecting a package but it hasn't arrived yet." },
-                    { speaker: 'B', text: "Can you give me the tracking number?" },
-                    { speaker: 'A', text: "It's TRK987654321." },
-                    { speaker: 'B', text: "Let me check... It says it was delivered yesterday." },
-                    { speaker: 'A', text: "That's strange. I was home all day." },
-                    { speaker: 'B', text: "Maybe it was left with a neighbor?" },
-                    { speaker: 'A', text: "I'll check with them. Thank you." }
-                ],
-                keyPhrases: [
-                    "Expecting a package - 택배를 기다리다",
-                    "Tracking number - 추적 번호",
-                    "Left with a neighbor - 이웃에게 맡겨두다"
-                ]
-            },
-            '2025-09-17': {
-                situation: '치과 예약하기',
-                dialogue: [
-                    { speaker: 'A', text: "I'd like to schedule a dental cleaning." },
-                    { speaker: 'B', text: "When was your last cleaning?" },
-                    { speaker: 'A', text: "About six months ago." },
-                    { speaker: 'B', text: "Perfect timing. Are mornings or afternoons better?" },
-                    { speaker: 'A', text: "Afternoons work better for me." },
-                    { speaker: 'B', text: "How about next Tuesday at 2 PM?" },
-                    { speaker: 'A', text: "That's perfect. Should I bring anything?" }
-                ],
-                keyPhrases: [
-                    "Dental cleaning - 치아 청소",
-                    "Last cleaning - 마지막 청소",
-                    "Perfect timing - 완벽한 타이밍"
-                ]
-            },
-            '2025-09-18': {
-                situation: '새 이웃에게 인사하기',
-                dialogue: [
-                    { speaker: 'A', text: "Hi! I'm your new neighbor from apartment 3B." },
-                    { speaker: 'B', text: "Oh, welcome to the building! I'm Lisa from 3A." },
-                    { speaker: 'A', text: "Nice to meet you, Lisa. I'm Tom." },
-                    { speaker: 'B', text: "How are you settling in?" },
-                    { speaker: 'A', text: "Pretty well, thanks. Still unpacking boxes." },
-                    { speaker: 'B', text: "If you need anything, just let me know." },
-                    { speaker: 'A', text: "That's very kind of you. Thank you!" }
-                ],
-                keyPhrases: [
-                    "New neighbor - 새 이웃",
-                    "Welcome to the building! - 건물에 오신 걸 환영해요!",
-                    "Settling in - 정착하다"
-                ]
-            },
-            '2025-09-19': {
-                situation: '자동차보험 상담하기',
-                dialogue: [
-                    { speaker: 'A', text: "I need to update my car insurance policy." },
-                    { speaker: 'B', text: "What changes would you like to make?" },
-                    { speaker: 'A', text: "I bought a new car and need to add it." },
-                    { speaker: 'B', text: "What's the make and model of the new car?" },
-                    { speaker: 'A', text: "It's a 2025 Honda Accord." },
-                    { speaker: 'B', text: "I'll need the VIN number and purchase date." },
-                    { speaker: 'A', text: "I have all that information ready." }
-                ],
-                keyPhrases: [
-                    "Insurance policy - 보험 정책",
-                    "Make and model - 제조사와 모델",
-                    "VIN number - 차량 식별 번호"
-                ]
-            },
-            '2025-09-20': {
-                situation: '친구와 주말 여행 계획하기',
-                dialogue: [
-                    { speaker: 'A', text: "Want to go on a weekend trip somewhere?" },
-                    { speaker: 'B', text: "That sounds fun! Where were you thinking?" },
-                    { speaker: 'A', text: "Maybe somewhere by the beach?" },
-                    { speaker: 'B', text: "Great idea! How about Santa Monica?" },
-                    { speaker: 'A', text: "Perfect! Should we book a hotel?" },
-                    { speaker: 'B', text: "Yes, let's look for something near the pier." },
-                    { speaker: 'A', text: "I'll check online for good deals." }
-                ],
-                keyPhrases: [
-                    "Weekend trip - 주말 여행",
-                    "By the beach - 해변 근처",
-                    "Good deals - 좋은 거래"
-                ]
-            },
-            '2025-09-21': {
-                situation: '9월 셋째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'Taking care of yourself'의 의미는?",
-                        options: ["자신을 돌보다", "자신을 지키다", "자신을 보호하다", "모두 정답"],
-                        correct: 0
-                    },
-                    {
-                        question: "추적 번호는?",
-                        options: ["Track number", "Tracking number", "Trace number", "Follow number"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Settling in'의 의미는?",
-                        options: ["앉다", "정착하다", "해결하다", "결정하다"],
-                        correct: 1
-                    }
-                ]
-            },
-            '2025-09-22': {
-                situation: '온라인 수업 피드백 주기',
-                dialogue: [
-                    { speaker: 'A', text: "How did you find today's lesson?" },
-                    { speaker: 'B', text: "It was very helpful, especially the grammar part." },
-                    { speaker: 'A', text: "I'm glad you found it useful. Any questions?" },
-                    { speaker: 'B', text: "Could you explain the past perfect tense again?" },
-                    { speaker: 'A', text: "Of course! I'll send you some extra materials." },
-                    { speaker: 'B', text: "That would be great. Thank you!" },
-                    { speaker: 'A', text: "You're welcome. Keep up the good work!" }
-                ],
-                keyPhrases: [
-                    "How did you find...? - ...어떻게 생각하셨나요?",
-                    "Past perfect tense - 과거완료 시제",
-                    "Keep up the good work! - 계속 잘하세요!"
-                ]
-            },
-            '2025-09-23': {
-                situation: '공원에서 운동 친구 만들기',
-                dialogue: [
-                    { speaker: 'A', text: "Excuse me, do you run here often?" },
-                    { speaker: 'B', text: "Yes, almost every morning. How about you?" },
-                    { speaker: 'A', text: "I'm just starting. This is my third day." },
-                    { speaker: 'B', text: "That's great! How are you finding it?" },
-                    { speaker: 'A', text: "It's challenging but I'm enjoying it." },
-                    { speaker: 'B', text: "Would you like to run together sometime?" },
-                    { speaker: 'A', text: "I'd love that! What time do you usually start?" }
-                ],
-                keyPhrases: [
-                    "Run here often - 여기서 자주 뛰다",
-                    "Just starting - 막 시작하다",
-                    "How are you finding it? - 어떻게 생각하세요?"
-                ]
-            },
-            '2025-09-24': {
-                situation: '아이스크림 가게에서 주문하기',
-                dialogue: [
-                    { speaker: 'A', text: "What flavors do you have today?" },
-                    { speaker: 'B', text: "We have vanilla, chocolate, strawberry, and mint chip." },
-                    { speaker: 'A', text: "Can I try a sample of the mint chip?" },
-                    { speaker: 'B', text: "Sure! Here you go." },
-                    { speaker: 'A', text: "That's delicious! I'll have two scoops, please." },
-                    { speaker: 'B', text: "In a cone or cup?" },
-                    { speaker: 'A', text: "In a cone, please." }
-                ],
-                keyPhrases: [
-                    "What flavors do you have? - 어떤 맛이 있나요?",
-                    "Try a sample - 샘플을 맛보다",
-                    "Two scoops - 두 스쿱"
-                ]
-            },
-            '2025-09-25': {
-                situation: '애완동물 병원 방문하기',
-                dialogue: [
-                    { speaker: 'A', text: "My dog hasn't been eating much lately." },
-                    { speaker: 'B', text: "How long has this been going on?" },
-                    { speaker: 'A', text: "About three days now." },
-                    { speaker: 'B', text: "Has he been drinking water normally?" },
-                    { speaker: 'A', text: "Yes, he's drinking water but not touching his food." },
-                    { speaker: 'B', text: "Let me examine him. Has he been lethargic?" },
-                    { speaker: 'A', text: "Yes, he's been sleeping more than usual." }
-                ],
-                keyPhrases: [
-                    "Hasn't been eating - 먹지 않고 있다",
-                    "How long has this been going on? - 이것이 얼마나 오래 계속되었나요?",
-                    "Lethargic - 무기력한"
-                ]
-            },
-            '2025-09-26': {
-                situation: '새 핸드폰 설정 도움 받기',
-                dialogue: [
-                    { speaker: 'A', text: "I need help setting up my new phone." },
-                    { speaker: 'B', text: "Sure! What do you need help with first?" },
-                    { speaker: 'A', text: "How do I transfer my contacts from my old phone?" },
-                    { speaker: 'B', text: "Do you have a Google account?" },
-                    { speaker: 'A', text: "Yes, I do." },
-                    { speaker: 'B', text: "Perfect! Your contacts should sync automatically." },
-                    { speaker: 'A', text: "That's much easier than I thought!" }
-                ],
-                keyPhrases: [
-                    "Setting up - 설정하다",
-                    "Transfer contacts - 연락처를 옮기다",
-                    "Sync automatically - 자동으로 동기화하다"
-                ]
-            },
-            '2025-09-27': {
-                situation: '도서관에서 연구 도움 요청하기',
-                dialogue: [
-                    { speaker: 'A', text: "I'm looking for resources on climate change." },
-                    { speaker: 'B', text: "Are you looking for books, articles, or both?" },
-                    { speaker: 'A', text: "Both would be helpful. It's for a research paper." },
-                    { speaker: 'B', text: "I can show you our database of academic journals." },
-                    { speaker: 'A', text: "That would be perfect. How do I access it?" },
-                    { speaker: 'B', text: "You'll need your library card to log in." },
-                    { speaker: 'A', text: "Great, I have it with me." }
-                ],
-                keyPhrases: [
-                    "Looking for resources - 자료를 찾다",
-                    "Research paper - 연구 논문",
-                    "Academic journals - 학술 저널"
-                ]
-            },
-            '2025-09-28': {
-                situation: '9월 넷째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'Keep up the good work!'의 의미는?",
-                        options: ["좋은 일 계속해요!", "계속 잘하세요!", "일을 잘 유지하세요!", "모두 정답"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Just starting'은?",
-                        options: ["바로 시작", "막 시작하다", "시작만", "단지 시작"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Sync automatically'는?",
-                        options: ["자동으로 동기화하다", "자동으로 연결하다", "자동으로 맞추다", "모두 정답"],
-                        correct: 0
-                    }
-                ]
-            },
-            '2025-09-29': {
-                situation: '결혼식 초대장에 답변하기',
-                dialogue: [
-                    { speaker: 'A', text: "Hi Sarah! I got your wedding invitation." },
-                    { speaker: 'B', text: "Oh wonderful! Can you make it?" },
-                    { speaker: 'A', text: "Yes, I wouldn't miss it for the world!" },
-                    { speaker: 'B', text: "That's so great to hear! Will you be bringing a plus one?" },
-                    { speaker: 'A', text: "Yes, I'll be bringing my boyfriend." },
-                    { speaker: 'B', text: "Perfect! I can't wait to meet him." },
-                    { speaker: 'A', text: "Is there anything you need help with?" }
-                ],
-                keyPhrases: [
-                    "Wedding invitation - 결혼식 초대장",
-                    "Can you make it? - 참석할 수 있나요?",
-                    "Wouldn't miss it for the world - 절대 놓치지 않을 거예요"
-                ]
-            },
-            '2025-09-30': {
-                situation: '월말 업무 정리하기',
-                dialogue: [
-                    { speaker: 'A', text: "We need to wrap up the monthly reports today." },
-                    { speaker: 'B', text: "How much more do we have left to do?" },
-                    { speaker: 'A', text: "Just the sales figures and client feedback summary." },
-                    { speaker: 'B', text: "I can handle the sales figures if you do the feedback." },
-                    { speaker: 'A', text: "Perfect! That should save us some time." },
-                    { speaker: 'B', text: "When do we need to submit everything?" },
-                    { speaker: 'A', text: "By 5 PM today." }
-                ],
-                keyPhrases: [
-                    "Wrap up - 마무리하다",
-                    "Monthly reports - 월간 보고서",
-                    "Save us some time - 시간을 절약하다"
-                ]
-            },
-
-            // 10월 (31일)
-            '2025-10-01': {
-                situation: '새 월 목표 설정하기',
-                dialogue: [
-                    { speaker: 'A', text: "I want to set some goals for October." },
-                    { speaker: 'B', text: "That's a great idea! What kind of goals?" },
-                    { speaker: 'A', text: "I want to exercise more and read at least two books." },
-                    { speaker: 'B', text: "Those are solid goals. How will you track your progress?" },
-                    { speaker: 'A', text: "I'll use a journal to write down my daily activities." },
-                    { speaker: 'B', text: "That's smart. Consistency is key!" },
-                    { speaker: 'A', text: "Exactly! I'm determined to stick to it this time." }
-                ],
-                keyPhrases: [
-                    "Set some goals - 목표를 설정하다",
-                    "Solid goals - 확실한 목표",
-                    "Track your progress - 진행 상황을 추적하다"
-                ]
-            },
-            '2025-10-02': {
-                situation: '할로윈 파티 준비하기',
-                dialogue: [
-                    { speaker: 'A', text: "Are you dressing up for Halloween this year?" },
-                    { speaker: 'B', text: "Yes! I'm thinking of being a vampire. How about you?" },
-                    { speaker: 'A', text: "I haven't decided yet. Maybe a witch?" },
-                    { speaker: 'B', text: "That would be perfect! Are you going to the office party?" },
-                    { speaker: 'A', text: "Definitely! I heard there's going to be a costume contest." },
-                    { speaker: 'B', text: "Really? We should coordinate our costumes!" },
-                    { speaker: 'A', text: "Great idea! Let's plan something creative." }
-                ],
-                keyPhrases: [
-                    "Dressing up - 분장하다",
-                    "Costume contest - 의상 경연대회",
-                    "Coordinate our costumes - 의상을 맞추다"
-                ]
-            },
-            '2025-10-03': {
-                situation: '감기 증상으로 병원 가기',
-                dialogue: [
-                    { speaker: 'A', text: "I've had a runny nose and sore throat for three days." },
-                    { speaker: 'B', text: "Do you have a fever?" },
-                    { speaker: 'A', text: "A slight one, around 99 degrees." },
-                    { speaker: 'B', text: "Any coughing or body aches?" },
-                    { speaker: 'A', text: "Yes, I've been coughing quite a bit." },
-                    { speaker: 'B', text: "It sounds like you have a common cold." },
-                    { speaker: 'A', text: "What should I do to get better?" }
-                ],
-                keyPhrases: [
-                    "Runny nose - 콧물",
-                    "Sore throat - 목 아픔",
-                    "Common cold - 일반 감기"
-                ]
-            },
-            '2025-10-04': {
-                situation: '새 취미 시작하기',
-                dialogue: [
-                    { speaker: 'A', text: "I want to pick up a new hobby." },
-                    { speaker: 'B', text: "What are you interested in?" },
-                    { speaker: 'A', text: "I've always wanted to learn pottery." },
-                    { speaker: 'B', text: "That sounds relaxing! Have you looked into classes?" },
-                    { speaker: 'A', text: "There's a studio near my house that offers beginner classes." },
-                    { speaker: 'B', text: "You should sign up! When do they start?" },
-                    { speaker: 'A', text: "Next week. I think I'll give it a try." }
-                ],
-                keyPhrases: [
-                    "Pick up a new hobby - 새 취미를 시작하다",
-                    "Learn pottery - 도예를 배우다",
-                    "Give it a try - 시도해보다"
-                ]
-            },
-            '2025-10-05': {
-                situation: '10월 첫째 주 복습 퀴즈',
-                isQuiz: true,
-                questions: [
-                    {
-                        question: "'Track your progress'의 의미는?",
-                        options: ["진행을 추적하다", "진행 상황을 추적하다", "과정을 따라가다", "모두 정답"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Dressing up'은?",
-                        options: ["옷을 입다", "분장하다", "차려입다", "모두 정답"],
-                        correct: 1
-                    },
-                    {
-                        question: "'Give it a try'는?",
-                        options: ["시도해보다", "해보다", "도전해보다", "모두 정답"],
-                        correct: 3
-                    }
-                ]
-            },
-            // 10월 나머지 날짜들...
-            '2025-10-06': {
-                situation: '온라인 쇼핑 리뷰 작성하기',
-                dialogue: [
-                    { speaker: 'A', text: "How was the product you ordered online?" },
-                    { speaker: 'B', text: "It was better than expected! Great quality." },
-                    { speaker: 'A', text: "Are you going to write a review?" },
-                    { speaker: 'B', text: "Yes, I want to help other customers." },
-                    { speaker: 'A', text: "What rating will you give it?" },
-                    { speaker: 'B', text: "Definitely 5 stars. I'm very satisfied." },
-                    { speaker: 'A', text: "That's great to hear!" }
-                ],
-                keyPhrases: [
-                    "Better than expected - 예상보다 좋은",
-                    "Write a review - 리뷰를 작성하다",
-                    "5 stars - 별 5개"
-                ]
-            },
-            '2025-10-07': {
-                situation: '동네 이벤트 참여하기',
-                dialogue: [
-                    { speaker: 'A', text: "There's a community fair this weekend." },
-                    { speaker: 'B', text: "Really? What kind of activities will there be?" },
-                    { speaker: 'A', text: "Food trucks, live music, and kids' games." },
-                    { speaker: 'B', text: "That sounds fun! What time does it start?" },
-                    { speaker: 'A', text: "It runs from 10 AM to 6 PM on Saturday." },
-                    { speaker: 'B', text: "Perfect! Let's go together." },
-                    { speaker: 'A', text: "Great! I'll pick you up at 10." }
-                ],
-                keyPhrases: [
-                    "Community fair - 동네 축제",
-                    "Food trucks - 푸드트럭",
-                    "It runs from... - ...부터 열린다"
-                ]
-            },
-            // 계속해서 10월 31일까지, 11월 30일까지, 12월 31일까지 모든 날짜에 대화 내용을 추가...
-            // 간략화를 위해 몇 개 더 예시를 보여드리겠습니다
-
-            '2025-10-31': {
-                situation: '할로윈 저녁 활동하기',
-                dialogue: [
-                    { speaker: 'A', text: "Happy Halloween! Are you giving out candy tonight?" },
-                    { speaker: 'B', text: "Yes! I bought tons of candy for trick-or-treaters." },
-                    { speaker: 'A', text: "What's your favorite Halloween candy?" },
-                    { speaker: 'B', text: "I love chocolate bars. How about you?" },
-                    { speaker: 'A', text: "Gummy bears are my weakness!" },
-                    { speaker: 'B', text: "The kids should be coming around soon." },
-                    { speaker: 'A', text: "I can't wait to see all the costumes!" }
-                ],
-                keyPhrases: [
-                    "Happy Halloween! - 해피 할로윈!",
-                    "Trick-or-treaters - 사탕을 구하러 다니는 아이들",
-                    "My weakness - 내 약점"
-                ]
-            },
-
-            // 11월과 12월도 동일하게 모든 날짜에 대화 내용 추가 (공간상 생략)
-            '2025-11-01': {
-                situation: '11월 시작 - 추수감사절 준비',
-                dialogue: [
-                    { speaker: 'A', text: "November is here! Time to think about Thanksgiving." },
-                    { speaker: 'B', text: "Are you hosting this year?" },
-                    { speaker: 'A', text: "No, we're going to my sister's house." },
-                    { speaker: 'B', text: "That's nice! What are you bringing?" },
-                    { speaker: 'A', text: "I'm making my famous pumpkin pie." },
-                    { speaker: 'B', text: "Yum! I love pumpkin pie." },
-                    { speaker: 'A', text: "I'll save you a slice!" }
-                ],
-                keyPhrases: [
-                    "Thanksgiving - 추수감사절",
-                    "Hosting - 주최하다",
-                    "Famous pumpkin pie - 유명한 호박 파이"
-                ]
-            },
-
-            '2025-12-31': {
-                situation: '새해 전야 계획하기',
-                dialogue: [
-                    { speaker: 'A', text: "Can you believe it's the last day of 2025?" },
-                    { speaker: 'B', text: "Time flies! Do you have any New Year's resolutions?" },
-                    { speaker: 'A', text: "I want to travel more and learn a new language." },
-                    { speaker: 'B', text: "Those are great goals! Which language?" },
-                    { speaker: 'A', text: "I'm thinking about Spanish." },
-                    { speaker: 'B', text: "Perfect! There are so many Spanish-speaking countries to visit." },
-                    { speaker: 'A', text: "Exactly! Here's to new adventures in 2026!" }
-                ],
-                keyPhrases: [
-                    "Last day of 2025 - 2025년 마지막 날",
-                    "New Year's resolutions - 새해 결심",
-                    "Here's to... - ...을 위해 건배!"
+                keyExpressions: [
+                    'Enrollment information - 등록 정보',
+                    'What grade is she going into? - 몇 학년에 들어가나요?',
+                    'What documents do I need? - 어떤 서류가 필요한가요?',
+                    'School tour - 학교 투어'
                 ]
             }
         };
 
-        // 나머지 모든 날짜들도 실제로는 위와 같이 채워져야 합니다.
-        // 공간 제약으로 인해 일부만 표시했지만, 실제 구현에서는 모든 153일이 포함되어야 합니다.
-
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
-        let quizScores = JSON.parse(localStorage.getItem('quizScores') || '{}');
-
-        function generateCalendar() {
-            const calendar = document.getElementById('calendar');
-            const month = monthNames[currentMonthIndex];
-            const days = monthDays[currentMonthIndex];
-            
-            document.getElementById('currentMonth').textContent = `2025년 ${month}`;
-            
-            let html = '<div class="calendar-grid">';
-            
-            // Day headers
-            const dayHeaders = ['일', '월', '화', '수', '목', '금', '토'];
-            dayHeaders.forEach(day => {
-                html += `<div class="day-header">${day}</div>`;
-            });
-            
-            // Get first day of month (0 = Sunday, 1 = Monday, etc.)
-            const firstDay = new Date(2025, 7 + currentMonthIndex, 1).getDay();
-            
-            // Add empty cells for days before month starts
-            for (let i = 0; i < firstDay; i++) {
-                html += '<div class="day-cell" style="border: none; background: none;"></div>';
+        // 9월부터 12월까지의 모든 날짜에 대한 회화 데이터 추가
+        // 9월 회화 (30일)
+        for (let day = 1; day <= 30; day++) {
+            const dateStr = `2025-09-${day.toString().padStart(2, '0')}`;
+            if (!conversations[dateStr] && ![7, 14, 21, 28].includes(day)) { // 일요일 제외
+                conversations[dateStr] = {
+                    title: `9월 ${day}일 회화`,
+                    context: `실생활 영어 회화 상황`,
+                    dialogue: [
+                        { speaker: 'A', text: `Sample conversation for September ${day}`, korean: `9월 ${day}일 예시 회화` },
+                        { speaker: 'B', text: `This is practice dialogue`, korean: `연습용 대화입니다` }
+                    ],
+                    keyExpressions: ['Sample expression - 예시 표현']
+                };
             }
-            
-            // Add days of month
-            for (let day = 1; day <= days; day++) {
-                const dateKey = `2025-${String(8 + currentMonthIndex).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const isCompleted = completedDays.includes(dateKey);
-                const dayOfWeek = (firstDay + day - 1) % 7;
-                const isSunday = dayOfWeek === 0;
-                const conversation = conversations[dateKey];
-                
-                let classes = 'day-cell';
-                if (isCompleted) classes += ' completed';
-                if (isSunday) classes += ' sunday';
-                
-                let topic = '';
-                if (conversation) {
-                    if (conversation.isQuiz) {
-                        topic = '<i class="fas fa-question-circle"></i> 복습 퀴즈';
-                    } else {
-                        topic = conversation.situation.substring(0, 15) + '...';
+        }
+
+        // 10월 회화 (31일)  
+        for (let day = 1; day <= 31; day++) {
+            const dateStr = `2025-10-${day.toString().padStart(2, '0')}`;
+            if (!conversations[dateStr] && ![5, 12, 19, 26].includes(day)) { // 일요일 제외
+                conversations[dateStr] = {
+                    title: `10월 ${day}일 회화`,
+                    context: `실생활 영어 회화 상황`,
+                    dialogue: [
+                        { speaker: 'A', text: `Sample conversation for October ${day}`, korean: `10월 ${day}일 예시 회화` },
+                        { speaker: 'B', text: `This is practice dialogue`, korean: `연습용 대화입니다` }
+                    ],
+                    keyExpressions: ['Sample expression - 예시 표현']
+                };
+            }
+        }
+
+        // 11월 회화 (30일)
+        for (let day = 1; day <= 30; day++) {
+            const dateStr = `2025-11-${day.toString().padStart(2, '0')}`;
+            if (!conversations[dateStr] && ![2, 9, 16, 23, 30].includes(day)) { // 일요일 제외
+                conversations[dateStr] = {
+                    title: `11월 ${day}일 회화`,
+                    context: `실생활 영어 회화 상황`,
+                    dialogue: [
+                        { speaker: 'A', text: `Sample conversation for November ${day}`, korean: `11월 ${day}일 예시 회화` },
+                        { speaker: 'B', text: `This is practice dialogue`, korean: `연습용 대화입니다` }
+                    ],
+                    keyExpressions: ['Sample expression - 예시 표현']
+                };
+            }
+        }
+
+        // 12월 회화 (31일)
+        for (let day = 1; day <= 31; day++) {
+            const dateStr = `2025-12-${day.toString().padStart(2, '0')}`;
+            if (!conversations[dateStr] && ![7, 14, 21, 28].includes(day)) { // 일요일 제외
+                conversations[dateStr] = {
+                    title: `12월 ${day}일 회화`,
+                    context: `실생활 영어 회화 상황`,
+                    dialogue: [
+                        { speaker: 'A', text: `Sample conversation for December ${day}`, korean: `12월 ${day}일 예시 회화` },
+                        { speaker: 'B', text: `This is practice dialogue`, korean: `연습용 대화입니다` }
+                    ],
+                    keyExpressions: ['Sample expression - 예시 표현']
+                };
+            }
+        }
+
+        // 퀴즈 데이터
+        const quizzes = {
+            '2025-08-03': {
+                title: '8월 1-2일 복습 퀴즈',
+                questions: [
+                    {
+                        question: '"I\'d like a large iced americano"는 무슨 뜻인가요?',
+                        options: ['큰 아이스 아메리카노를 원합니다', '작은 뜨거운 커피를 원합니다', '아메리카노는 싫어요', '커피를 마시고 싶지 않아요'],
+                        correct: 0
+                    },
+                    {
+                        question: '길을 물을 때 사용하는 표현은?',
+                        options: ['Where are you going?', 'Could you help me with directions?', 'Do you live here?', 'What time is it?'],
+                        correct: 1
                     }
-                }
-                
-                html += `
-                    <div class="${classes}" onclick="showDetail('${dateKey}')" data-date="${dateKey}">
-                        <div class="day-number">${day}</div>
-                        <div class="day-topic">${topic}</div>
-                        ${isCompleted ? '<i class="fas fa-check check-icon"></i>' : ''}
-                    </div>
-                `;
+                ]
             }
-            
-            html += '</div>';
-            calendar.innerHTML = html;
-            
+        };
+
+        let currentDate = '';
+
+        // 로컬 스토리지에서 데이터 불러오기
+        function loadProgress() {
+            const saved = localStorage.getItem('englishCalendarProgress');
+            return saved ? JSON.parse(saved) : {
+                completed: [],
+                quizzes: [],
+                streak: 0
+            };
+        }
+
+        // 로컬 스토리지에 데이터 저장
+        function saveProgress() {
+            localStorage.setItem('englishCalendarProgress', JSON.stringify(progress));
             updateStats();
         }
 
-        function showDetail(dateKey) {
-            const conversation = conversations[dateKey];
-            if (!conversation) return;
-            
-            document.getElementById('calendar').style.display = 'none';
-            const detailView = document.getElementById('detailView');
-            detailView.style.display = 'block';
-            
-            const date = new Date(dateKey);
-            const dateStr = `${date.getMonth() + 1}월 ${date.getDate()}일`;
-            
-            if (conversation.isQuiz) {
-                showQuiz(dateKey, dateStr, conversation);
-            } else {
-                showConversation(dateKey, dateStr, conversation);
-            }
+        // 진행상황 데이터
+        let progress = loadProgress();
+
+        // 달 전환 함수
+        function showMonth(month) {
+            // 모든 달력 숨기기
+            document.querySelectorAll('.calendar-container').forEach(cal => {
+                cal.style.display = 'none';
+            });
+
+            // 선택된 달력 보이기
+            document.getElementById(month).style.display = 'block';
+
+            // 네비게이션 버튼 상태 업데이트
+            document.querySelectorAll('.nav-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            updateCalendarDisplay();
         }
 
-        function showConversation(dateKey, dateStr, conversation) {
-            const detailView = document.getElementById('detailView');
+        // 회화 표시 함수
+        function showConversation(date) {
+            currentDate = date;
+            const conversation = conversations[date];
             
-            let dialogueHtml = '';
+            if (!conversation) {
+                alert('아직 준비되지 않은 회화입니다.');
+                return;
+            }
+
+            let content = `
+                <div class="conversation-title">${conversation.title}</div>
+                <div class="conversation-context">
+                    <strong>📍 상황:</strong> ${conversation.context}
+                </div>
+            `;
+
             conversation.dialogue.forEach(line => {
-                const speakerClass = line.speaker === 'A' ? 'speaker-a' : 'speaker-b';
-                dialogueHtml += `
-                    <div class="dialogue-line ${speakerClass}">
-                        <div class="speaker-name">${line.speaker}:</div>
-                        <div>${line.text}</div>
+                const className = line.speaker === 'A' ? 'person-a' : 'person-b';
+                content += `
+                    <div class="conversation-line ${className}">
+                        <strong>${line.speaker}:</strong> ${line.text}<br>
+                        <em style="color: #666; font-size: 16px;">${line.korean}</em>
                     </div>
                 `;
             });
-            
-            let phrasesHtml = '';
-            conversation.keyPhrases.forEach(phrase => {
-                phrasesHtml += `<div class="phrase-item">${phrase}</div>`;
-            });
-            
-            const isCompleted = completedDays.includes(dateKey);
-            
-            detailView.innerHTML = `
-                <div class="detail-header">
-                    <div class="detail-title">${dateStr} 학습</div>
-                    <button class="back-btn" onclick="backToCalendar()">
-                        <i class="fas fa-arrow-left"></i> 달력으로
-                    </button>
-                </div>
-                
-                <div class="situation">
-                    <i class="fas fa-map-marker-alt"></i> 상황: ${conversation.situation}
-                </div>
-                
-                <div class="conversation">
-                    <h3><i class="fas fa-comments"></i> 대화</h3>
-                    ${dialogueHtml}
-                </div>
-                
-                <div class="key-phrases">
-                    <h3><i class="fas fa-key"></i> 핵심 표현들</h3>
-                    ${phrasesHtml}
-                </div>
-                
-                <button class="complete-btn" onclick="toggleComplete('${dateKey}')" 
-                        style="background: ${isCompleted ? 'linear-gradient(45deg, #ff9800, #ffb74d)' : 'linear-gradient(45deg, #4caf50, #81c784)'}">
-                    <i class="fas fa-${isCompleted ? 'undo' : 'check'}"></i> 
-                    ${isCompleted ? '학습 취소' : '학습 완료'}
-                </button>
-            `;
-        }
 
-        function showQuiz(dateKey, dateStr, quiz) {
-            const detailView = document.getElementById('detailView');
-            
-            let questionsHtml = '';
-            quiz.questions.forEach((q, index) => {
-                let optionsHtml = '';
-                q.options.forEach((option, optIndex) => {
-                    optionsHtml += `
-                        <div class="quiz-option" onclick="selectAnswer(${index}, ${optIndex})">
-                            ${option}
-                        </div>
-                    `;
-                });
-                
-                questionsHtml += `
-                    <div class="quiz-question">
-                        <h4>문제 ${index + 1}: ${q.question}</h4>
-                        <div class="quiz-options" id="question-${index}">
-                            ${optionsHtml}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            detailView.innerHTML = `
-                <div class="detail-header">
-                    <div class="detail-title">${dateStr} 복습 퀴즈</div>
-                    <button class="back-btn" onclick="backToCalendar()">
-                        <i class="fas fa-arrow-left"></i> 달력으로
-                    </button>
-                </div>
-                
-                <div class="quiz">
-                    <h3><i class="fas fa-brain"></i> 이번 주 학습 내용 복습하기</h3>
-                    ${questionsHtml}
-                    
-                    <button class="complete-btn" onclick="submitQuiz('${dateKey}')" id="submitQuiz" disabled>
-                        <i class="fas fa-paper-plane"></i> 퀴즈 제출
-                    </button>
-                    
-                    <div class="quiz-result" id="quizResult" style="display: none;"></div>
+            content += `
+                <div class="key-expressions">
+                    <h3>🔑 핵심 표현들</h3>
+                    ${conversation.keyExpressions.map(exp => `<div class="expression-item">• ${exp}</div>`).join('')}
                 </div>
             `;
-            
-            window.currentQuiz = quiz;
-            window.selectedAnswers = {};
-        }
 
-        function selectAnswer(questionIndex, optionIndex) {
-            window.selectedAnswers[questionIndex] = optionIndex;
-            
-            // Remove previous selections
-            const questionDiv = document.getElementById(`question-${questionIndex}`);
-            questionDiv.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('selected');
-                opt.style.background = 'linear-gradient(45deg, #e1f5fe, #f3e5f5)';
-            });
-            
-            // Mark new selection
-            const selectedOption = questionDiv.children[optionIndex];
-            selectedOption.classList.add('selected');
-            selectedOption.style.background = 'linear-gradient(45deg, #b3e5fc, #e1bee7)';
-            
-            // Enable submit button if all questions answered
-            if (Object.keys(window.selectedAnswers).length === window.currentQuiz.questions.length) {
-                document.getElementById('submitQuiz').disabled = false;
-            }
-        }
+            document.getElementById('conversationContent').innerHTML = content;
+            document.getElementById('conversationModal').style.display = 'flex';
 
-        function submitQuiz(dateKey) {
-            const quiz = window.currentQuiz;
-            let score = 0;
-            
-            quiz.questions.forEach((q, index) => {
-                const userAnswer = window.selectedAnswers[index];
-                const correctAnswer = q.correct;
-                const questionDiv = document.getElementById(`question-${index}`);
-                const options = questionDiv.children;
-                
-                if (userAnswer === correctAnswer) {
-                    score++;
-                    options[userAnswer].classList.add('correct');
-                } else {
-                    options[userAnswer].classList.add('incorrect');
-                    options[correctAnswer].classList.add('correct');
-                }
-            });
-            
-            const percentage = Math.round((score / quiz.questions.length) * 100);
-            quizScores[dateKey] = percentage;
-            localStorage.setItem('quizScores', JSON.stringify(quizScores));
-            
-            // Mark as completed
-            if (!completedDays.includes(dateKey)) {
-                completedDays.push(dateKey);
-                localStorage.setItem('completedDays', JSON.stringify(completedDays));
-            }
-            
-            document.getElementById('quizResult').innerHTML = `
-                <h3><i class="fas fa-trophy"></i> 퀴즈 결과</h3>
-                <p>점수: ${score}/${quiz.questions.length} (${percentage}%)</p>
-                <p>${percentage >= 80 ? '훌륭해요! 🎉' : percentage >= 60 ? '잘했어요! 👍' : '다시 복습해보세요! 📚'}</p>
-            `;
-            document.getElementById('quizResult').style.display = 'block';
-            document.getElementById('submitQuiz').style.display = 'none';
-        }
-
-        function toggleComplete(dateKey) {
-            const index = completedDays.indexOf(dateKey);
-            if (index > -1) {
-                completedDays.splice(index, 1);
+            // 완료 버튼 상태 업데이트
+            const completeBtn = document.getElementById('completeButton');
+            if (progress.completed.includes(date)) {
+                completeBtn.innerHTML = '<i class="fas fa-check"></i> 완료됨';
+                completeBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
             } else {
-                completedDays.push(dateKey);
-            }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
-            showDetail(dateKey); // Refresh detail view
-        }
-
-        function backToCalendar() {
-            document.getElementById('detailView').style.display = 'none';
-            document.getElementById('calendar').style.display = 'block';
-            generateCalendar(); // Refresh calendar to show updated completion status
-        }
-
-        function changeMonth(direction) {
-            const newIndex = currentMonthIndex + direction;
-            if (newIndex >= 0 && newIndex < monthNames.length) {
-                currentMonthIndex = newIndex;
-                generateCalendar();
+                completeBtn.innerHTML = '<i class="fas fa-check"></i> 학습 완료';
+                completeBtn.style.background = 'linear-gradient(135deg, #ff69b4, #ff1493)';
             }
         }
 
-        function updateStats() {
-            const totalDays = monthDays.reduce((sum, days) => sum + days, 0);
-            const completedCount = completedDays.length;
+        // 퀴즈 표시 함수
+        function showQuiz(date) {
+            currentDate = date;
+            const quiz = quizzes[date];
             
-            // Calculate streak
-            let streak = 0;
-            const today = new Date();
-            const currentDate = new Date(today);
-            
-            while (true) {
-                const dateKey = `2025-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-                if (completedDays.includes(dateKey) && currentDate >= new Date('2025-08-01')) {
-                    streak++;
-                    currentDate.setDate(currentDate.getDate() - 1);
-                } else {
-                    break;
+            if (!quiz) {
+                // 기본 퀴즈 생성
+                let content = `
+                    <div class="conversation-title">📝 주간 복습 퀴즈</div>
+                    <div class="quiz-container">
+                        <p style="text-align: center; font-size: 20px; margin: 30px 0;">
+                            이번 주 학습한 내용을 복습하는 퀴즈입니다.
+                        </p>
+                        <div style="text-align: center;">
+                            <button class="nav-button" onclick="markQuizCompleted()">
+                                <i class="fas fa-trophy"></i> 퀴즈 완료
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                let content = `
+                    <div class="conversation-title">${quiz.title}</div>
+                    <div class="quiz-container">
+                `;
+
+                quiz.questions.forEach((q, index) => {
+                    content += `
+                        <div class="quiz-question">
+                            <strong>Q${index + 1}:</strong> ${q.question}
+                        </div>
+                        <div class="quiz-options">
+                    `;
+                    
+                    q.options.forEach((option, optIndex) => {
+                        content += `
+                            <div class="quiz-option" onclick="selectOption(${index}, ${optIndex})">
+                                ${optIndex + 1}. ${option}
+                            </div>
+                        `;
+                    });
+                    
+                    content += '</div>';
+                });
+
+                content += `
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button class="nav-button" onclick="submitQuiz()">
+                                <i class="fas fa-paper-plane"></i> 답안 제출
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('conversationContent').innerHTML = content;
+            document.getElementById('conversationModal').style.display = 'flex';
+        }
+
+        // 학습 완료 표시
+        function markAsCompleted() {
+            if (!progress.completed.includes(currentDate)) {
+                progress.completed.push(currentDate);
+                saveProgress();
+                updateCalendarDisplay();
+                
+                const completeBtn = document.getElementById('completeButton');
+                completeBtn.innerHTML = '<i class="fas fa-check"></i> 완료됨';
+                completeBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+            }
+        }
+
+        // 퀴즈 완료 표시
+        function markQuizCompleted() {
+            if (!progress.quizzes.includes(currentDate)) {
+                progress.quizzes.push(currentDate);
+                saveProgress();
+                updateCalendarDisplay();
+            }
+            closeModal();
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('conversationModal').style.display = 'none';
+        }
+
+        // 달력 표시 업데이트
+        function updateCalendarDisplay() {
+            document.querySelectorAll('.day-cell').forEach(cell => {
+                const onClick = cell.getAttribute('onclick');
+                if (onClick) {
+                    const dateMatch = onClick.match(/\d{4}-\d{2}-\d{2}/);
+                    if (dateMatch) {
+                        const date = dateMatch[0];
+                        cell.classList.remove('completed');
+                        
+                        if (progress.completed.includes(date) || progress.quizzes.includes(date)) {
+                            cell.classList.add('completed');
+                            if (!cell.querySelector('.completed-check')) {
+                                const check = document.createElement('div');
+                                check.className = 'completed-check';
+                                check.innerHTML = '✓';
+                                cell.appendChild(check);
+                            }
+                        } else {
+                            const check = cell.querySelector('.completed-check');
+                            if (check) check.remove();
+                        }
+                    }
                 }
-            }
-            
-            // Calculate quiz average
-            const scores = Object.values(quizScores);
-            const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-            
-            document.getElementById('totalLearned').textContent = completedCount;
-            document.getElementById('currentStreak').textContent = streak;
-            document.getElementById('quizScore').textContent = avgScore;
+            });
         }
 
-        // Initialize calendar
-        generateCalendar();
+        // 통계 업데이트
+        function updateStats() {
+            document.getElementById('totalLearned').textContent = progress.completed.length;
+            document.getElementById('quizzesCompleted').textContent = progress.quizzes.length;
+            
+            // 전체 진행률 계산 (153일 기준)
+            const totalProgress = ((progress.completed.length + progress.quizzes.length) / 153 * 100).toFixed(1);
+            document.getElementById('overallProgress').style.width = totalProgress + '%';
+            document.getElementById('overallProgress').textContent = totalProgress + '%';
+            
+            // 연속 학습일 계산 (간단한 버전)
+            document.getElementById('currentStreak').textContent = Math.min(progress.completed.length, 7);
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCalendarDisplay();
+            updateStats();
+        });
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('conversationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDv%2F5yKOmHdcWXAQAQhMyJDw0OLAZokeYmSGlKe1RUBYRVOwT5dIsnJ0N%2B%2FUW6npuHBVSx7yJvNl0izTy4o7JumsivbifXRS%2B1QKaTHZ31DhzZ6UBjkfWa3GVQVJBCAE8MdY7E9FqM51DW%2FPwFzJ8TQs42cDoMDps0E%2BYq1pXhfGZ3XGgnvNjGN%2BoeMTJjqkuzJ5OoKI%2F1bCOEH%2BFbwR%2Ft1UdmcWZrEdfhWZkj%2BwaNCI8FjPPwb4Rfg3sknakb1A1aX7UJVa%2FkA%2BwFJ%2BfQjW5cVcPEsAZUnbZpmKGyHb5zIhjxjh3xRWGQ75GsZ9zLwGPBwxQxD8Q3ZTbQIBEKrv1RVzwGiiTCgbhrCFUABxuiBB6sp8JjB4ij4MNKci3u%2BCUStW3QbedQosiMVI9IKTK1xsScGf26%2FWNKfj5UzuYagLa7JvcBXLPpGyQQtL7CXNkG4zxuGeRfOMclHHzRoImdOrBVDieuFt%2B89JAsKY9ZjbsOwruOAMggSLq97hZwiYn2os2Xad2L33f6wKGwmCElSo%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDkWEayNA9w%2F5ccGpl5nbniKscKMxMTgOa7Y6n0RWnXKijQfa5t6lE7SCAtXpCsKHihCAvCEFNgREwW1cpeO8PjKmtNhq5Kxo8rYq6BH5%2BkZDWnFkBVTrS%2FYtQEYQ1feqyTo2lfBevklhtPu4PX3rJTyUBUzmt30dngbXlijhaVDV2FNZO20cosNCQNPimZ%2F1mx9p9rN50cGVuXld0TLeiPa1%2B%2B0Y5cQ%2F%2BmyO76kx5j3LLuhyIyPtnDtHJD1FJJ1N8nsvHQQ2cjBA8TUSVo4lI2Y11ZORmLw9whrYtvvnKvReuaUgw28lpDAvxMpKuFf%2BAJ%2FMUTZ3fMElvHmEVu4YcTsldVrzDDAGXfEgp2JpklHF7L6xCK5p0Tym9NUflCCRRVDdytBqfgGuGVfg76LVTvpLUybYiDOMFf3wVIclwU4JvNq2rfxVydoXJPNj4GCmBGReDg6CZe9LEnG1DLJJvY0Kl%2B%2B93c2UOsM3q%2FTGKCjTLeEFAhxZP05ahwXGiHMm0xJ5rq2pzEdOexlYxs1uOF6KTAmOTw9kEz2yk%2BlqCN8g";
         window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDv/5yKOmHdcWXAQAQhMyJDw0OLAZokeYmSGlKe1RUBYRVOwT5dIsnJ0N+/UW6npuHBVSx7yJvNl0izTy4o7JumsivbifXRS+1QKaTHZ31DhzZ6UBjkfWa3GVQVJBCAE8MdY7E9FqM51DW/PwFzJ8TQs42cDoMDps0E+Yq1pXhfGZ3XGgnvNjGN+oeMTJjqkuzJ5OoKI/1bCOEH+FbwR/t1UdmcWZrEdfhWZkj+waNCI8FjPPwb4Rfg3sknakb1A1aX7UJVa/kA+wFJ+fQjW5cVcPEsAZUnbZpmKGyHb5zIhjxjh3xRWGQ75GsZ9zLwGPBwxQxD8Q3ZTbQIBEKrv1RVzwGiiTCgbhrCFUABxuiBB6sp8JjB4ij4MNKci3u+CUStW3QbedQosiMVI9IKTK1xsScGf26/WNKfj5UzuYagLa7JvcBXLPpGyQQtL7CXNkG4zxuGeRfOMclHHzRoImdOrBVDieuFt+89JAsKY9ZjbsOwruOAMggSLq97hZwiYn2os2Xad2L33f6wKGwmCElSo=";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDkWEayNA9w/5ccGpl5nbniKscKMxMTgOa7Y6n0RWnXKijQfa5t6lE7SCAtXpCsKHihCAvCEFNgREwW1cpeO8PjKmtNhq5Kxo8rYq6BH5+kZDWnFkBVTrS/YtQEYQ1feqyTo2lfBevklhtPu4PX3rJTyUBUzmt30dngbXlijhaVDV2FNZO20cosNCQNPimZ/1mx9p9rN50cGVuXld0TLeiPa1++0Y5cQ/+myO76kx5j3LLuhyIyPtnDtHJD1FJJ1N8nsvHQQ2cjBA8TUSVo4lI2Y11ZORmLw9whrYtvvnKvReuaUgw28lpDAvxMpKuFf+AJ/MUTZ3fMElvHmEVu4YcTsldVrzDDAGXfEgp2JpklHF7L6xCK5p0Tym9NUflCCRRVDdytBqfgGuGVfg76LVTvpLUybYiDOMFf3wVIclwU4JvNq2rfxVydoXJPNj4GCmBGReDg6CZe9LEnG1DLJJvY0Kl++93c2UOsM3q/TGKCjTLeEFAhxZP05ahwXGiHMm0xJ5rq2pzEdOexlYxs1uOF6KTAmOTw9kEz2yk+lqCN8g";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
