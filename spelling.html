@@ -304,27 +304,69 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
-        .draw-result {
-            text-align: center;
-            padding: 30px;
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
-        .draw-result h2 {
+        .popup-content {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .popup-title {
+            font-size: 24px;
+            font-weight: 700;
             color: #8e44ad;
             margin-bottom: 20px;
-            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .reward-display {
-            font-size: 48px;
+            font-size: 60px;
             margin-bottom: 15px;
+            animation: bounce 1s ease-in-out;
         }
 
         .reward-text {
             font-size: 18px;
             font-weight: 600;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .popup-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .hidden {
@@ -348,6 +390,15 @@
 
         .bounce {
             animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .popup-content {
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
 </head>
@@ -411,13 +462,16 @@
                     <button class="celebration-button" onclick="goHome()">🏠 메뉴로</button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div id="drawResult" class="draw-result hidden">
-                <h2>🎰 뽑기 결과</h2>
-                <div class="reward-display" id="rewardIcon"></div>
-                <div class="reward-text" id="rewardDescription"></div>
-                <button class="celebration-button" onclick="closeDraw()">확인</button>
-            </div>
+    <!-- 뽑기 결과 팝업 -->
+    <div id="drawPopup" class="popup-overlay hidden">
+        <div class="popup-content">
+            <div class="popup-title">🎰 뽑기 결과</div>
+            <div class="reward-display" id="rewardIcon"></div>
+            <div class="reward-text" id="rewardDescription"></div>
+            <button class="popup-button" onclick="closeDrawPopup()">확인</button>
         </div>
     </div>
 
@@ -503,10 +557,12 @@
                 drawButton.disabled = false;
                 drawButton.textContent = '🎰 뽑기 (5개)';
                 drawButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                drawButton.onclick = performDraw;
             } else {
                 drawButton.disabled = true;
                 drawButton.textContent = '🔒 뽑기 (5개)';
                 drawButton.style.background = '#cccccc';
+                drawButton.onclick = null;
             }
         }
 
@@ -550,7 +606,6 @@
             document.getElementById('pictureGame').classList.add('hidden');
             document.getElementById('fillBlankGame').classList.add('hidden');
             document.getElementById('celebration').classList.add('hidden');
-            document.getElementById('drawResult').classList.add('hidden');
         }
 
         function startMemoryGame() {
@@ -858,51 +913,35 @@
                     }
                 }
                 
-                hideAllGames();
-                document.getElementById('drawResult').classList.remove('hidden');
+                // 팝업 표시
                 document.getElementById('rewardIcon').textContent = selectedReward.icon;
                 document.getElementById('rewardDescription').textContent = selectedReward.text;
-                
-                const rewardIcon = document.getElementById('rewardIcon');
-                rewardIcon.classList.add('bounce');
-                setTimeout(() => rewardIcon.classList.remove('bounce'), 1000);
+                document.getElementById('drawPopup').classList.remove('hidden');
             }
         }
 
-        function closeDraw() {
-            document.getElementById('drawResult').classList.add('hidden');
+        function closeDrawPopup() {
+            document.getElementById('drawPopup').classList.add('hidden');
         }
+
+        // 팝업 배경 클릭시 닫기
+        document.getElementById('drawPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDrawPopup();
+            }
+        });
 
         // Initialize
         displayWords();
         updateStickerDisplay();
-        
-        // Add event listener for draw button to ensure it works
-        document.addEventListener('DOMContentLoaded', function() {
-            const drawButton = document.getElementById('drawButton');
-            drawButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (!this.disabled && stickers >= 5) {
-                    performDraw();
-                }
-            });
-            
-            // Double check the button setup
-            drawButton.onclick = function(e) {
-                e.preventDefault();
-                if (!this.disabled && stickers >= 5) {
-                    performDraw();
-                }
-            };
-        });
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDjvWThcHRBQ5zSwbJyIopmhMXDqL3PcKzgDnNNsnlV869wc3yiUvMopA%2Bt%2BGLfZ%2Bm50PkqB8RbmZpH4DbRyue4RikGFNd4lJVNB8Uqf5IdfIl4bzIOlwo4qraYwgYUxyHlbWHBCxXG1edvPWgRNYSd5wJR2DQ3KfdKZKwa0TvPPE1vNGSkVyPxaI7n8nBaTKIyUFXWR9bT4sMomkzI69H6es8ePIK%2FxTFVn%2BM1GXy5Qj4fNtjDU6CqHShmWRNHow7%2BEwju%2FhYIT8CU%2BMmM7CpdXdG%2BGnRKk%2Fc8Z98C4T6SE5qvvC3N7IMYQPZ50kie%2BIGTQGjQz0ZE4pRLmpx847ojMonID9J81uqdXyqEzltwbivlUWDK143f4zTs4IK9GucNhq652DhxR4jy3zHNOj5GymRv5HCYqCh8GG087iOXrXN6fcQ8hmFFGqj4ECY%2FbLT4J6f6AZb9XlfnryFRTCkFf5CCQFFIfz%2FtQqlIlj%2FEQWv%2FDsBKh9EZ0gA2T%2BeW6FUQ%3D%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDmBEvEe%2FMy92OluHBf8E2%2FTVKFFfeq0HFveFzpwxHrK0XOLCN3qHgFsAdyX9kUHCspIkJDeLBp%2BXqOZ85MtRrqawV7qWx1OHQo%2FPfgUDJvc33e0AWKBac6Pwz1l2LwVPYLKzKd2izHBl3G5%2FVB2f2qgaPU5HDz%2FUlEH85CQXFG6D4pfQWYQWM%2Bp8JX6qR%2FCqrbjeAGnFmlqSLslGBbOhmmOVf%2BWa%2FqZiRi34u61oeVcRmb4krDr6ctVSpGkak61jJrtKXdaDn4YC9eYQb1fOTn8HbC43SZAUK0x4PTe%2Fpn3q9QrLiil6tQtjv95mRE4ygPq1Gd41JDYiUhUZwlBCb0B74rVx6NqV689M0kQe8VuLaWH38fCULqaZaCTZH8qjLMYJpqYfakgAFaUCu3PkBoNaNy6CKOmrZFXTU3i1zpjiEI5u3E6Py27bT%2BvqX9TUGD9xW1I5u8vGR%2BSkFxl4oLhq5TTjWBlGkwMtV06P%2B6vZfHeMKVxKYAicsOgMaZJKNw%3D%3D";
         window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDjvWThcHRBQ5zSwbJyIopmhMXDqL3PcKzgDnNNsnlV869wc3yiUvMopA+t+GLfZ+m50PkqB8RbmZpH4DbRyue4RikGFNd4lJVNB8Uqf5IdfIl4bzIOlwo4qraYwgYUxyHlbWHBCxXG1edvPWgRNYSd5wJR2DQ3KfdKZKwa0TvPPE1vNGSkVyPxaI7n8nBaTKIyUFXWR9bT4sMomkzI69H6es8ePIK/xTFVn+M1GXy5Qj4fNtjDU6CqHShmWRNHow7+Ewju/hYIT8CU+MmM7CpdXdG+GnRKk/c8Z98C4T6SE5qvvC3N7IMYQPZ50kie+IGTQGjQz0ZE4pRLmpx847ojMonID9J81uqdXyqEzltwbivlUWDK143f4zTs4IK9GucNhq652DhxR4jy3zHNOj5GymRv5HCYqCh8GG087iOXrXN6fcQ8hmFFGqj4ECY/bLT4J6f6AZb9XlfnryFRTCkFf5CCQFFIfz/tQqlIlj/EQWv/DsBKh9EZ0gA2T+eW6FUQ==";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDmBEvEe/My92OluHBf8E2/TVKFFfeq0HFveFzpwxHrK0XOLCN3qHgFsAdyX9kUHCspIkJDeLBp+XqOZ85MtRrqawV7qWx1OHQo/PfgUDJvc33e0AWKBac6Pwz1l2LwVPYLKzKd2izHBl3G5/VB2f2qgaPU5HDz/UlEH85CQXFG6D4pfQWYQWM+p8JX6qR/CqrbjeAGnFmlqSLslGBbOhmmOVf+Wa/qZiRi34u61oeVcRmb4krDr6ctVSpGkak61jJrtKXdaDn4YC9eYQb1fOTn8HbC43SZAUK0x4PTe/pn3q9QrLiil6tQtjv95mRE4ygPq1Gd41JDYiUhUZwlBCb0B74rVx6NqV689M0kQe8VuLaWH38fCULqaZaCTZH8qjLMYJpqYfakgAFaUCu3PkBoNaNy6CKOmrZFXTU3i1zpjiEI5u3E6Py27bT+vqX9TUGD9xW1I5u8vGR+SkFxl4oLhq5TTjWBlGkwMtV06P+6vZfHeMKVxKYAicsOgMaZJKNw==";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
