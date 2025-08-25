@@ -357,7 +357,7 @@
             <div class="title">🌟 스펠링 마스터 게임</div>
             <div class="sticker-info">
                 <div class="sticker-count">⭐ 스티커: <span id="stickerCount">0</span>개</div>
-                <button class="draw-button" id="drawButton" disabled onclick="performDraw()">🔒 뽑기 (5개)</button>
+                <button class="draw-button" id="drawButton" disabled>🔒 뽑기 (5개)</button>
             </div>
         </div>
 
@@ -876,14 +876,33 @@
         // Initialize
         displayWords();
         updateStickerDisplay();
+        
+        // Add event listener for draw button to ensure it works
+        document.addEventListener('DOMContentLoaded', function() {
+            const drawButton = document.getElementById('drawButton');
+            drawButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!this.disabled && stickers >= 5) {
+                    performDraw();
+                }
+            });
+            
+            // Double check the button setup
+            drawButton.onclick = function(e) {
+                e.preventDefault();
+                if (!this.disabled && stickers >= 5) {
+                    performDraw();
+                }
+            };
+        });
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDpxVquvff2XkOhHleNSwhpFEWw%2BUbdfGoq%2Bu%2BjP71Y2g2QilrjgmCKH26Z%2FcHCQbqYbFphc7owq3YsjLhDhA0wRwiBUY9gClb6gHPnsiPOmk%2BO4bf3Fsyh3m8aEzA7kiRGsfjI7jYd0J6sx0by%2F3pPeEm1va3IGDC0gjrg7x8hlS7IOF5I0G9ZmL43PzKC5EJpF0aNgGkQihKEXby0M7Na7hKGRm7cOAJcNvKPWRY5w5LvR9gChGlXsU6wL7z1ED9bGYlxLhX%2FnHDIayhnxayBTO3pbPJ7dt1XAXEWqly441DOuVoUFNXCnWZDkudITgSOAuitgSTbn8ziYjVDMdTyKEKkzgBJX7QbAwuX8Xx0NTxycyKGs2HyPot5ZeexiNsRPofDG0DRD%2FT39ATSdmf6RvA%2BcVLSGABBPqXVWC%2FNuTCYTYZNEvaX6SdicQGZ6fF3Zv7Hvejs163gFWYWhI4DFNKpHiEepIFrmf%2Fx6i9D7wII1AIyY5VaF0VusH7SSHw7oN77hDchhAzVn6Elp2QX0%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDjvWThcHRBQ5zSwbJyIopmhMXDqL3PcKzgDnNNsnlV869wc3yiUvMopA%2Bt%2BGLfZ%2Bm50PkqB8RbmZpH4DbRyue4RikGFNd4lJVNB8Uqf5IdfIl4bzIOlwo4qraYwgYUxyHlbWHBCxXG1edvPWgRNYSd5wJR2DQ3KfdKZKwa0TvPPE1vNGSkVyPxaI7n8nBaTKIyUFXWR9bT4sMomkzI69H6es8ePIK%2FxTFVn%2BM1GXy5Qj4fNtjDU6CqHShmWRNHow7%2BEwju%2FhYIT8CU%2BMmM7CpdXdG%2BGnRKk%2Fc8Z98C4T6SE5qvvC3N7IMYQPZ50kie%2BIGTQGjQz0ZE4pRLmpx847ojMonID9J81uqdXyqEzltwbivlUWDK143f4zTs4IK9GucNhq652DhxR4jy3zHNOj5GymRv5HCYqCh8GG087iOXrXN6fcQ8hmFFGqj4ECY%2FbLT4J6f6AZb9XlfnryFRTCkFf5CCQFFIfz%2FtQqlIlj%2FEQWv%2FDsBKh9EZ0gA2T%2BeW6FUQ%3D%3D";
         window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDpxVquvff2XkOhHleNSwhpFEWw+UbdfGoq+u+jP71Y2g2QilrjgmCKH26Z/cHCQbqYbFphc7owq3YsjLhDhA0wRwiBUY9gClb6gHPnsiPOmk+O4bf3Fsyh3m8aEzA7kiRGsfjI7jYd0J6sx0by/3pPeEm1va3IGDC0gjrg7x8hlS7IOF5I0G9ZmL43PzKC5EJpF0aNgGkQihKEXby0M7Na7hKGRm7cOAJcNvKPWRY5w5LvR9gChGlXsU6wL7z1ED9bGYlxLhX/nHDIayhnxayBTO3pbPJ7dt1XAXEWqly441DOuVoUFNXCnWZDkudITgSOAuitgSTbn8ziYjVDMdTyKEKkzgBJX7QbAwuX8Xx0NTxycyKGs2HyPot5ZeexiNsRPofDG0DRD/T39ATSdmf6RvA+cVLSGABBPqXVWC/NuTCYTYZNEvaX6SdicQGZ6fF3Zv7Hvejs163gFWYWhI4DFNKpHiEepIFrmf/x6i9D7wII1AIyY5VaF0VusH7SSHw7oN77hDchhAzVn6Elp2QX0=";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDjvWThcHRBQ5zSwbJyIopmhMXDqL3PcKzgDnNNsnlV869wc3yiUvMopA+t+GLfZ+m50PkqB8RbmZpH4DbRyue4RikGFNd4lJVNB8Uqf5IdfIl4bzIOlwo4qraYwgYUxyHlbWHBCxXG1edvPWgRNYSd5wJR2DQ3KfdKZKwa0TvPPE1vNGSkVyPxaI7n8nBaTKIyUFXWR9bT4sMomkzI69H6es8ePIK/xTFVn+M1GXy5Qj4fNtjDU6CqHShmWRNHow7+Ewju/hYIT8CU+MmM7CpdXdG+GnRKk/c8Z98C4T6SE5qvvC3N7IMYQPZ50kie+IGTQGjQz0ZE4pRLmpx847ojMonID9J81uqdXyqEzltwbivlUWDK143f4zTs4IK9GucNhq652DhxR4jy3zHNOj5GymRv5HCYqCh8GG087iOXrXN6fcQ8hmFFGqj4ECY/bLT4J6f6AZb9XlfnryFRTCkFf5CCQFFIfz/tQqlIlj/EQWv/DsBKh9EZ0gA2T+eW6FUQ==";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
