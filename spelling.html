@@ -16,49 +16,39 @@
             font-family: 'Quicksand', 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
             min-height: 100vh;
-            color: #2c3e50;
-            overflow-x: hidden;
+            padding: 10px;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 400px;
             margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
             padding: 20px;
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 25px;
-            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
         }
 
         .title {
             font-size: 24px;
             font-weight: 700;
-            color: #8e44ad;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            color: #333;
+            margin-bottom: 10px;
         }
 
         .sticker-info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-
-        .sticker-count {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
             color: white;
             padding: 8px 15px;
-            border-radius: 20px;
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             font-weight: 600;
-            font-size: 14px;
         }
 
         .draw-button {
@@ -66,115 +56,81 @@
             color: white;
             border: none;
             padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
+            border-radius: 15px;
+            margin-left: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            opacity: 0.5;
         }
 
-        .draw-button:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
+        .draw-button:enabled {
+            opacity: 1;
         }
 
-        .draw-button:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .words-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .word-card {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 8px 4px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 500;
-            color: #2c3e50;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .word-card.easy { border-color: #27ae60; }
-        .word-card.medium { border-color: #f39c12; }
-        .word-card.hard { border-color: #e74c3c; }
-
-        .games-section {
+        .game-buttons {
             display: flex;
             gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .game-button {
             flex: 1;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
             border: none;
-            padding: 15px 8px;
-            border-radius: 15px;
+            padding: 12px 8px;
+            border-radius: 10px;
+            cursor: pointer;
             font-weight: 600;
             font-size: 11px;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.3s ease;
             text-align: center;
-            line-height: 1.2;
+            transition: transform 0.2s;
         }
 
         .game-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .word-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .word-item {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #333;
         }
 
         .game-area {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            margin-bottom: 20px;
-            min-height: 400px;
+            display: none;
+        }
+
+        .game-area.active {
+            display: block;
         }
 
         .game-title {
-            font-size: 20px;
-            font-weight: 700;
             text-align: center;
-            margin-bottom: 20px;
-            color: #8e44ad;
-        }
-
-        .back-button {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            font-size: 18px;
             font-weight: 600;
-            color: #2c3e50;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            color: #333;
         }
 
         .progress {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 600;
-            color: #8e44ad;
+            color: #666;
         }
 
         .cards-grid {
@@ -186,27 +142,22 @@
 
         .card {
             aspect-ratio: 1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
             border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s;
         }
 
         .card.flipped {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            color: #333;
             border: 2px solid #2196F3;
         }
 
@@ -222,16 +173,16 @@
 
         .question {
             font-size: 18px;
-            margin-bottom: 20px;
-            color: #8e44ad;
             font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .word-display {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: #2196F3;
         }
 
         .letters-grid {
@@ -243,19 +194,18 @@
 
         .letter-button {
             padding: 15px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border: none;
-            border-radius: 10px;
             font-size: 18px;
             font-weight: 600;
-            color: #2c3e50;
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.2s;
         }
 
         .letter-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
         .letter-button:disabled {
@@ -263,257 +213,269 @@
             cursor: not-allowed;
         }
 
-        .celebration {
-            text-align: center;
-            padding: 30px;
-        }
-
-        .celebration h2 {
-            color: #8e44ad;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-
-        .celebration p {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .celebration-buttons {
+        .control-buttons {
             display: flex;
             gap: 10px;
             justify-content: center;
-            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
-        .celebration-button {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        .control-button {
+            padding: 10px 20px;
             border: none;
-            padding: 12px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            color: #2c3e50;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            transition: transform 0.2s;
         }
 
-        .celebration-button:hover {
+        .back-button {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+        }
+
+        .control-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .completion-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .completion-reward {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e17055;
         }
 
         .draw-result {
             text-align: center;
-            padding: 30px;
-        }
-
-        .draw-result h2 {
-            color: #8e44ad;
+            padding: 20px;
+            background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            border-radius: 15px;
             margin-bottom: 20px;
-            font-size: 24px;
         }
 
-        .reward-display {
+        .draw-animation {
             font-size: 48px;
             margin-bottom: 15px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .reward-text {
             font-size: 18px;
             font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(180deg); }
-        }
-
-        .sparkle {
-            animation: sparkle 0.6s ease-in-out;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        .bounce {
-            animation: bounce 1s ease-in-out;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="title">🌟 스펠링 마스터 게임</div>
-            <div class="sticker-info">
-                <div class="sticker-count">⭐ 스티커: <span id="stickerCount">0</span>개</div>
-                <button class="draw-button" id="drawButton" disabled onclick="performDraw()">🔒 뽑기 (5개)</button>
+        <!-- Main Menu -->
+        <div id="mainMenu" class="game-area active">
+            <div class="header">
+                <div class="title">🌟 스펠링 마스터 게임</div>
+                <div class="sticker-info">
+                    ⭐ 스티커: <span id="stickerCount">0</span>개
+                </div>
+                <button id="drawButton" class="draw-button" disabled onclick="performDraw()">
+                    🎰 뽑기 (5개)
+                </button>
+            </div>
+
+            <div class="game-buttons">
+                <button class="game-button" onclick="startMemoryGame()">🧩 메모리 카드 게임</button>
+                <button class="game-button" onclick="startPictureGame()">🖼️ 그림 매칭 게임</button>
+                <button class="game-button" onclick="startFillBlankGame()">✏️ 빈칸 채우기 게임</button>
+            </div>
+
+            <div class="word-list" id="wordList">
+                <!-- 단어 목록이 여기에 표시됩니다 -->
             </div>
         </div>
 
-        <div id="mainScreen">
-            <div class="words-grid" id="wordsGrid"></div>
-            
-            <div class="games-section">
-                <button class="game-button" onclick="startMemoryGame()">
-                    🎴<br>메모리 카드<br>게임
-                </button>
-                <button class="game-button" onclick="startPictureGame()">
-                    🖼️<br>그림 매칭<br>게임
-                </button>
-                <button class="game-button" onclick="startFillBlankGame()">
-                    ✏️<br>빈칸 채우기<br>게임
-                </button>
+        <!-- Memory Card Game -->
+        <div id="memoryGame" class="game-area">
+            <div class="game-title">🧩 메모리 카드 게임</div>
+            <div class="progress">매칭: <span id="memoryProgress">0/6</span></div>
+            <div class="cards-grid" id="memoryCards"></div>
+            <div class="control-buttons">
+                <button class="control-button back-button" onclick="backToMenu()">← 돌아가기</button>
             </div>
         </div>
 
-        <div id="gameArea" class="game-area hidden">
-            <button class="back-button" onclick="goHome()">← 돌아가기</button>
-            
-            <div id="memoryGame" class="hidden">
-                <div class="game-title">🎴 메모리 카드 게임</div>
-                <div class="progress">매칭: <span id="memoryProgress">0/6</span></div>
-                <div class="cards-grid" id="memoryCards"></div>
+        <!-- Picture Matching Game -->
+        <div id="pictureGame" class="game-area">
+            <div class="game-title">🖼️ 그림 매칭 게임</div>
+            <div class="progress">매칭: <span id="pictureProgress">0/6</span></div>
+            <div class="cards-grid" id="pictureCards"></div>
+            <div class="control-buttons">
+                <button class="control-button back-button" onclick="backToMenu()">← 돌아가기</button>
             </div>
+        </div>
 
-            <div id="pictureGame" class="hidden">
-                <div class="game-title">🖼️ 그림 매칭 게임</div>
-                <div class="progress">매칭: <span id="pictureProgress">0/6</span></div>
-                <div class="cards-grid" id="pictureCards"></div>
+        <!-- Fill Blank Game -->
+        <div id="fillBlankGame" class="game-area">
+            <div class="game-title">✏️ 빈칸 채우기 게임</div>
+            <div class="progress">문제 <span id="fillBlankProgress">1/5</span></div>
+            <div class="fill-blank-area">
+                <div class="question" id="koreanMeaning"></div>
+                <div class="word-display" id="wordDisplay"></div>
+                <div class="letters-grid" id="lettersGrid"></div>
             </div>
+            <div class="control-buttons">
+                <button class="control-button back-button" onclick="backToMenu()">← 돌아가기</button>
+            </div>
+        </div>
 
-            <div id="fillBlankGame" class="hidden">
-                <div class="game-title">✏️ 빈칸 채우기 게임</div>
-                <div class="progress">문제 <span id="questionNumber">1</span>/5</div>
-                <div class="fill-blank-area">
-                    <div class="question" id="questionText"></div>
-                    <div class="word-display" id="wordDisplay"></div>
-                    <div class="letters-grid" id="lettersGrid"></div>
-                </div>
-            </div>
+        <!-- Completion Messages -->
+        <div id="completionMessage" class="completion-message" style="display: none;">
+            <div class="completion-title">🎉 축하합니다! 🎉</div>
+            <div id="completionText"></div>
+            <div class="completion-reward" id="rewardText">⭐ 스티커 3개 획득! ⭐</div>
+        </div>
 
-            <div id="celebration" class="celebration hidden">
-                <h2>🎉 축하합니다! 🎉</h2>
-                <p id="celebrationText"></p>
-                <p id="rewardText"></p>
-                <div class="celebration-buttons">
-                    <button class="celebration-button" onclick="restartCurrentGame()">🔄 다시 시작</button>
-                    <button class="celebration-button" onclick="goHome()">🏠 메뉴로</button>
-                </div>
-            </div>
-
-            <div id="drawResult" class="draw-result hidden">
-                <h2>🎰 뽑기 결과</h2>
-                <div class="reward-display" id="rewardIcon"></div>
-                <div class="reward-text" id="rewardDescription"></div>
-                <button class="celebration-button" onclick="closeDraw()">확인</button>
-            </div>
+        <!-- Draw Result -->
+        <div id="drawResult" class="draw-result" style="display: none;">
+            <div class="game-title">🎰 뽑기 결과</div>
+            <div class="draw-animation" id="drawAnimation">🎰</div>
+            <div class="reward-text" id="drawRewardText"></div>
         </div>
     </div>
 
     <script>
+        // 게임 상태
+        let stickers = 0;
+        let currentGame = null;
+        let flippedCards = [];
+        let matchedCards = [];
+        let currentLevel = 1;
+        let fillBlankQuestionIndex = 0;
+        let currentWord = null;
+        let correctAnswers = 0;
+
+        // 단어 목록 (50개)
         const words = [
-            {word: 'dig', meaning: '파다', difficulty: 'easy'},
-            {word: 'hot', meaning: '뜨거운', difficulty: 'easy'},
-            {word: 'jam', meaning: '잼', difficulty: 'easy'},
-            {word: 'kid', meaning: '아이', difficulty: 'easy'},
-            {word: 'leg', meaning: '다리', difficulty: 'easy'},
-            {word: 'map', meaning: '지도', difficulty: 'easy'},
-            {word: 'nut', meaning: '견과류', difficulty: 'easy'},
-            {word: 'red', meaning: '빨간색', difficulty: 'easy'},
-            {word: 'six', meaning: '여섯', difficulty: 'easy'},
-            {word: 'top', meaning: '위', difficulty: 'easy'},
-            {word: 'tub', meaning: '욕조', difficulty: 'easy'},
-            {word: 'wet', meaning: '젖은', difficulty: 'easy'},
-            {word: 'bake', meaning: '굽다', difficulty: 'medium'},
-            {word: 'cone', meaning: '원뿔', difficulty: 'medium'},
-            {word: 'cute', meaning: '귀여운', difficulty: 'medium'},
-            {word: 'five', meaning: '다섯', difficulty: 'medium'},
-            {word: 'game', meaning: '게임', difficulty: 'medium'},
-            {word: 'home', meaning: '집', difficulty: 'medium'},
-            {word: 'mule', meaning: '노새', difficulty: 'medium'},
-            {word: 'ride', meaning: '타다', difficulty: 'medium'},
-            {word: 'rose', meaning: '장미', difficulty: 'medium'},
-            {word: 'time', meaning: '시간', difficulty: 'medium'},
-            {word: 'tube', meaning: '관', difficulty: 'medium'},
-            {word: 'wave', meaning: '파도', difficulty: 'medium'},
-            {word: 'blade', meaning: '칼날', difficulty: 'medium'},
-            {word: 'brave', meaning: '용감한', difficulty: 'hard'},
-            {word: 'drive', meaning: '운전하다', difficulty: 'hard'},
-            {word: 'flute', meaning: '플루트', difficulty: 'hard'},
-            {word: 'grape', meaning: '포도', difficulty: 'hard'},
-            {word: 'plane', meaning: '비행기', difficulty: 'hard'},
-            {word: 'price', meaning: '가격', difficulty: 'hard'},
-            {word: 'skate', meaning: '스케이트', difficulty: 'hard'},
-            {word: 'slide', meaning: '미끄럼틀', difficulty: 'hard'},
-            {word: 'smile', meaning: '웃다', difficulty: 'hard'},
-            {word: 'snake', meaning: '뱀', difficulty: 'hard'},
-            {word: 'space', meaning: '공간', difficulty: 'hard'},
-            {word: 'happy', meaning: '행복한', difficulty: 'hard'},
-            {word: 'robot', meaning: '로봇', difficulty: 'hard'},
-            {word: 'funny', meaning: '재미있는', difficulty: 'hard'},
-            {word: 'horse', meaning: '말', difficulty: 'hard'},
-            {word: 'again', meaning: '다시', difficulty: 'hard'},
-            {word: 'color', meaning: '색깔', difficulty: 'hard'},
-            {word: 'quiet', meaning: '조용한', difficulty: 'hard'},
-            {word: 'pizza', meaning: '피자', difficulty: 'hard'},
-            {word: 'short', meaning: '짧은', difficulty: 'hard'},
-            {word: 'water', meaning: '물', difficulty: 'hard'},
-            {word: 'bread', meaning: '빵', difficulty: 'hard'},
-            {word: 'share', meaning: '나누다', difficulty: 'hard'},
-            {word: 'cherry', meaning: '체리', difficulty: 'hard'},
-            {word: 'flower', meaning: '꽃', difficulty: 'hard'},
-            {word: 'friend', meaning: '친구', difficulty: 'hard'},
-            {word: 'little', meaning: '작은', difficulty: 'hard'},
-            {word: 'parent', meaning: '부모', difficulty: 'hard'},
-            {word: 'purple', meaning: '보라색', difficulty: 'hard'},
-            {word: 'yellow', meaning: '노란색', difficulty: 'hard'}
+            { word: 'dig', meaning: '파다' },
+            { word: 'hot', meaning: '뜨거운' },
+            { word: 'jam', meaning: '잼' },
+            { word: 'kid', meaning: '아이' },
+            { word: 'leg', meaning: '다리' },
+            { word: 'map', meaning: '지도' },
+            { word: 'nut', meaning: '견과류' },
+            { word: 'red', meaning: '빨간색' },
+            { word: 'six', meaning: '여섯' },
+            { word: 'top', meaning: '위쪽' },
+            { word: 'tub', meaning: '욕조' },
+            { word: 'wet', meaning: '젖은' },
+            { word: 'bake', meaning: '굽다' },
+            { word: 'cone', meaning: '원뿔' },
+            { word: 'cute', meaning: '귀여운' },
+            { word: 'five', meaning: '다섯' },
+            { word: 'game', meaning: '게임' },
+            { word: 'home', meaning: '집' },
+            { word: 'mule', meaning: '노새' },
+            { word: 'ride', meaning: '타다' },
+            { word: 'rose', meaning: '장미' },
+            { word: 'time', meaning: '시간' },
+            { word: 'tube', meaning: '관' },
+            { word: 'wave', meaning: '파도' },
+            { word: 'blade', meaning: '칼날' },
+            { word: 'brave', meaning: '용감한' },
+            { word: 'drive', meaning: '운전하다' },
+            { word: 'flute', meaning: '플루트' },
+            { word: 'grape', meaning: '포도' },
+            { word: 'plane', meaning: '비행기' },
+            { word: 'price', meaning: '가격' },
+            { word: 'skate', meaning: '스케이트' },
+            { word: 'slide', meaning: '미끄럼틀' },
+            { word: 'smile', meaning: '웃다' },
+            { word: 'snake', meaning: '뱀' },
+            { word: 'space', meaning: '공간' },
+            { word: 'happy', meaning: '행복한' },
+            { word: 'robot', meaning: '로봇' },
+            { word: 'funny', meaning: '재미있는' },
+            { word: 'horse', meaning: '말' },
+            { word: 'again', meaning: '다시' },
+            { word: 'color', meaning: '색깔' },
+            { word: 'quiet', meaning: '조용한' },
+            { word: 'pizza', meaning: '피자' },
+            { word: 'short', meaning: '짧은' },
+            { word: 'water', meaning: '물' },
+            { word: 'bread', meaning: '빵' },
+            { word: 'share', meaning: '나누다' },
+            { word: 'cherry', meaning: '체리' },
+            { word: 'flower', meaning: '꽃' },
+            { word: 'friend', meaning: '친구' },
+            { word: 'little', meaning: '작은' },
+            { word: 'parent', meaning: '부모' },
+            { word: 'purple', meaning: '보라색' },
+            { word: 'yellow', meaning: '노란색' }
         ];
 
-        const pictures = {
-            'cat': '🐱', 'hot': '🔥', 'sun': '☀️', 'water': '💧', 'bread': '🍞',
-            'flower': '🌸', 'horse': '🐎', 'pizza': '🍕', 'cherry': '🍒', 'grape': '🍇',
-            'snake': '🐍', 'smile': '😊', 'happy': '😊', 'robot': '🤖', 'friend': '👫'
+        // 그림 매칭용 이모지
+        const pictureEmojis = {
+            'hot': '🔥', 'cat': '🐱', 'dog': '🐶', 'sun': '☀️', 'tree': '🌳',
+            'water': '💧', 'bread': '🍞', 'pizza': '🍕', 'flower': '🌸', 'horse': '🐎',
+            'happy': '😊', 'robot': '🤖', 'cherry': '🍒', 'grape': '🍇', 'home': '🏠',
+            'time': '⏰', 'game': '🎮', 'space': '🚀', 'plane': '✈️', 'snake': '🐍'
         };
 
-        let stickers = parseInt(localStorage.getItem('stickers')) || 0;
-        let currentGame = '';
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let gameWords = [];
-        let currentQuestion = 0;
-        let fillBlankWords = [];
-        let currentWord = '';
-        let currentAnswer = '';
+        // 초기화
+        function init() {
+            displayWordList();
+            updateStickerDisplay();
+        }
 
+        // 단어 목록 표시
+        function displayWordList() {
+            const wordListEl = document.getElementById('wordList');
+            wordListEl.innerHTML = '';
+            
+            words.forEach(wordObj => {
+                const wordEl = document.createElement('div');
+                wordEl.className = 'word-item';
+                wordEl.textContent = wordObj.word.toUpperCase();
+                wordListEl.appendChild(wordEl);
+            });
+        }
+
+        // 스티커 표시 업데이트
         function updateStickerDisplay() {
             document.getElementById('stickerCount').textContent = stickers;
             const drawButton = document.getElementById('drawButton');
+            
             if (stickers >= 5) {
                 drawButton.disabled = false;
-                drawButton.textContent = '🎰 뽑기 (5개)';
-                drawButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                drawButton.style.opacity = '1';
             } else {
                 drawButton.disabled = true;
-                drawButton.textContent = '🔒 뽑기 (5개)';
-                drawButton.style.background = '#cccccc';
+                drawButton.style.opacity = '0.5';
             }
         }
 
-        function saveStickers() {
-            localStorage.setItem('stickers', stickers.toString());
-        }
-
+        // 배열 셔플 함수
         function shuffleArray(array) {
             const shuffled = [...array];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -523,78 +485,54 @@
             return shuffled;
         }
 
+        // 랜덤 단어 선택
         function getRandomWords(count) {
             const shuffled = shuffleArray(words);
             return shuffled.slice(0, count);
         }
 
-        function displayWords() {
-            const grid = document.getElementById('wordsGrid');
-            grid.innerHTML = '';
-            words.forEach(wordObj => {
-                const card = document.createElement('div');
-                card.className = `word-card ${wordObj.difficulty}`;
-                card.innerHTML = `<div style="font-weight: 600;">${wordObj.word.toUpperCase()}</div><div style="font-size: 10px; color: #666;">${wordObj.meaning}</div>`;
-                grid.appendChild(card);
-            });
-        }
-
-        function goHome() {
-            document.getElementById('mainScreen').classList.remove('hidden');
-            document.getElementById('gameArea').classList.add('hidden');
-            hideAllGames();
-        }
-
-        function hideAllGames() {
-            document.getElementById('memoryGame').classList.add('hidden');
-            document.getElementById('pictureGame').classList.add('hidden');
-            document.getElementById('fillBlankGame').classList.add('hidden');
-            document.getElementById('celebration').classList.add('hidden');
-            document.getElementById('drawResult').classList.add('hidden');
-        }
-
+        // 메모리 카드 게임 시작
         function startMemoryGame() {
             currentGame = 'memory';
-            gameWords = getRandomWords(6);
-            matchedPairs = 0;
-            flippedCards = [];
-            
-            document.getElementById('mainScreen').classList.add('hidden');
-            document.getElementById('gameArea').classList.remove('hidden');
-            hideAllGames();
-            document.getElementById('memoryGame').classList.remove('hidden');
-            
-            setupMemoryCards();
-            updateMemoryProgress();
+            hideAllScreens();
+            document.getElementById('memoryGame').classList.add('active');
+            setupMemoryGame();
         }
 
-        function setupMemoryCards() {
-            const container = document.getElementById('memoryCards');
-            container.innerHTML = '';
-            
+        // 메모리 카드 게임 설정
+        function setupMemoryGame() {
+            const gameWords = getRandomWords(6);
             const cards = [];
+            
+            // 각 단어를 2개씩 추가
             gameWords.forEach(wordObj => {
-                cards.push(wordObj.word, wordObj.word);
+                cards.push(wordObj.word.toUpperCase());
+                cards.push(wordObj.word.toUpperCase());
             });
             
             const shuffledCards = shuffleArray(cards);
+            const cardsContainer = document.getElementById('memoryCards');
+            cardsContainer.innerHTML = '';
             
             shuffledCards.forEach((word, index) => {
                 const card = document.createElement('button');
                 card.className = 'card';
                 card.textContent = '?';
-                card.dataset.word = word;
-                card.dataset.index = index;
-                card.onclick = () => flipMemoryCard(card, index);
-                container.appendChild(card);
+                card.onclick = () => flipCard(card, word, index);
+                cardsContainer.appendChild(card);
             });
+            
+            flippedCards = [];
+            matchedCards = [];
+            updateMemoryProgress();
         }
 
-        function flipMemoryCard(card, index) {
-            if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
-                card.classList.add('flipped');
-                card.textContent = card.dataset.word.toUpperCase();
-                flippedCards.push({element: card, word: card.dataset.word});
+        // 카드 뒤집기
+        function flipCard(cardElement, word, index) {
+            if (flippedCards.length < 2 && !cardElement.classList.contains('flipped') && !cardElement.classList.contains('matched')) {
+                cardElement.classList.add('flipped');
+                cardElement.textContent = word;
+                flippedCards.push({element: cardElement, word: word, index: index});
                 
                 if (flippedCards.length === 2) {
                     setTimeout(checkMemoryMatch, 600);
@@ -602,18 +540,24 @@
             }
         }
 
+        // 매칭 확인
         function checkMemoryMatch() {
             const [card1, card2] = flippedCards;
+            
             if (card1.word === card2.word) {
+                // 매칭 성공
                 card1.element.classList.add('matched');
                 card2.element.classList.add('matched');
-                matchedPairs++;
-                updateMemoryProgress();
+                matchedCards.push(card1.index, card2.index);
                 
-                if (matchedPairs === 6) {
-                    setTimeout(() => showCelebration('메모리 카드 게임 완료!', 3), 500);
+                if (matchedCards.length === 12) {
+                    // 게임 완료
+                    setTimeout(() => {
+                        showCompletion('메모리 카드 게임 완료!', 3, 'memory');
+                    }, 500);
                 }
             } else {
+                // 매칭 실패
                 setTimeout(() => {
                     card1.element.classList.remove('flipped');
                     card2.element.classList.remove('flipped');
@@ -621,62 +565,60 @@
                     card2.element.textContent = '?';
                 }, 1200);
             }
+            
             flippedCards = [];
+            updateMemoryProgress();
         }
 
+        // 메모리 게임 진행률 업데이트
         function updateMemoryProgress() {
-            document.getElementById('memoryProgress').textContent = `${matchedPairs}/6`;
+            const matched = matchedCards.length / 2;
+            document.getElementById('memoryProgress').textContent = `${matched}/6`;
         }
 
+        // 그림 매칭 게임 시작
         function startPictureGame() {
             currentGame = 'picture';
-            gameWords = getRandomWords(6).filter(wordObj => pictures[wordObj.word]);
-            if (gameWords.length < 6) {
-                const pictureWords = words.filter(wordObj => pictures[wordObj.word]);
-                gameWords = shuffleArray(pictureWords).slice(0, 6);
-            }
-            matchedPairs = 0;
-            flippedCards = [];
-            
-            document.getElementById('mainScreen').classList.add('hidden');
-            document.getElementById('gameArea').classList.remove('hidden');
-            hideAllGames();
-            document.getElementById('pictureGame').classList.remove('hidden');
-            
-            setupPictureCards();
-            updatePictureProgress();
+            hideAllScreens();
+            document.getElementById('pictureGame').classList.add('active');
+            setupPictureGame();
         }
 
-        function setupPictureCards() {
-            const container = document.getElementById('pictureCards');
-            container.innerHTML = '';
-            
+        // 그림 매칭 게임 설정
+        function setupPictureGame() {
+            const availableWords = words.filter(w => pictureEmojis[w.word]);
+            const gameWords = shuffleArray(availableWords).slice(0, 6);
             const cards = [];
+            
+            // 영어 단어와 그림을 각각 추가
             gameWords.forEach(wordObj => {
-                cards.push({type: 'word', content: wordObj.word});
-                cards.push({type: 'picture', content: pictures[wordObj.word], word: wordObj.word});
+                cards.push({type: 'word', content: wordObj.word.toUpperCase(), match: wordObj.word});
+                cards.push({type: 'picture', content: pictureEmojis[wordObj.word], match: wordObj.word});
             });
             
             const shuffledCards = shuffleArray(cards);
+            const cardsContainer = document.getElementById('pictureCards');
+            cardsContainer.innerHTML = '';
             
             shuffledCards.forEach((cardData, index) => {
                 const card = document.createElement('button');
                 card.className = 'card';
                 card.textContent = '?';
-                card.dataset.type = cardData.type;
-                card.dataset.word = cardData.word || cardData.content;
-                card.dataset.content = cardData.content;
-                card.dataset.index = index;
-                card.onclick = () => flipPictureCard(card, index);
-                container.appendChild(card);
+                card.onclick = () => flipPictureCard(card, cardData, index);
+                cardsContainer.appendChild(card);
             });
+            
+            flippedCards = [];
+            matchedCards = [];
+            updatePictureProgress();
         }
 
-        function flipPictureCard(card, index) {
-            if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
-                card.classList.add('flipped');
-                card.textContent = card.dataset.type === 'word' ? card.dataset.content.toUpperCase() : card.dataset.content;
-                flippedCards.push({element: card, word: card.dataset.word, type: card.dataset.type});
+        // 그림 카드 뒤집기
+        function flipPictureCard(cardElement, cardData, index) {
+            if (flippedCards.length < 2 && !cardElement.classList.contains('flipped') && !cardElement.classList.contains('matched')) {
+                cardElement.classList.add('flipped');
+                cardElement.textContent = cardData.content;
+                flippedCards.push({element: cardElement, data: cardData, index: index});
                 
                 if (flippedCards.length === 2) {
                     setTimeout(checkPictureMatch, 600);
@@ -684,18 +626,24 @@
             }
         }
 
+        // 그림 매칭 확인
         function checkPictureMatch() {
             const [card1, card2] = flippedCards;
-            if (card1.word === card2.word && card1.type !== card2.type) {
+            
+            if (card1.data.match === card2.data.match) {
+                // 매칭 성공
                 card1.element.classList.add('matched');
                 card2.element.classList.add('matched');
-                matchedPairs++;
-                updatePictureProgress();
+                matchedCards.push(card1.index, card2.index);
                 
-                if (matchedPairs === 6) {
-                    setTimeout(() => showCelebration('그림 매칭 게임 완료!', 5), 500);
+                if (matchedCards.length === 12) {
+                    // 게임 완료
+                    setTimeout(() => {
+                        showCompletion('그림 매칭 게임 완료!', 5, 'picture');
+                    }, 500);
                 }
             } else {
+                // 매칭 실패
                 setTimeout(() => {
                     card1.element.classList.remove('flipped');
                     card2.element.classList.remove('flipped');
@@ -703,187 +651,229 @@
                     card2.element.textContent = '?';
                 }, 1200);
             }
+            
             flippedCards = [];
+            updatePictureProgress();
         }
 
+        // 그림 게임 진행률 업데이트
         function updatePictureProgress() {
-            document.getElementById('pictureProgress').textContent = `${matchedPairs}/6`;
+            const matched = matchedCards.length / 2;
+            document.getElementById('pictureProgress').textContent = `${matched}/6`;
         }
 
+        // 빈칸 채우기 게임 시작
         function startFillBlankGame() {
-            currentGame = 'fillblank';
-            fillBlankWords = getRandomWords(5);
-            currentQuestion = 0;
-            
-            document.getElementById('mainScreen').classList.add('hidden');
-            document.getElementById('gameArea').classList.remove('hidden');
-            hideAllGames();
-            document.getElementById('fillBlankGame').classList.remove('hidden');
-            
-            showNextQuestion();
+            currentGame = 'fillBlank';
+            hideAllScreens();
+            document.getElementById('fillBlankGame').classList.add('active');
+            fillBlankQuestionIndex = 0;
+            correctAnswers = 0;
+            setupFillBlankGame();
         }
 
-        function showNextQuestion() {
-            if (currentQuestion >= 5) {
-                showCelebration('빈칸 채우기 완료!', 5);
-                return;
-            }
+        // 빈칸 채우기 게임 설정
+        function setupFillBlankGame() {
+            const randomWords = getRandomWords(5);
+            currentWord = randomWords[fillBlankQuestionIndex];
             
-            const wordObj = fillBlankWords[currentQuestion];
-            currentWord = wordObj.word;
-            currentAnswer = '';
+            document.getElementById('koreanMeaning').textContent = `뜻: ${currentWord.meaning}`;
             
-            document.getElementById('questionNumber').textContent = currentQuestion + 1;
-            document.getElementById('questionText').textContent = `"${wordObj.meaning}"의 영어 단어는?`;
+            // 빈칸 만들기
+            const word = currentWord.word.toUpperCase();
+            const blankIndex = Math.floor(Math.random() * word.length);
+            const displayWord = word.split('').map((letter, index) => 
+                index === blankIndex ? '_' : letter
+            ).join('');
             
-            const blanks = currentWord.split('').map((letter, index) => 
-                index === 0 || index === currentWord.length - 1 ? letter.toUpperCase() : '_'
-            ).join(' ');
-            document.getElementById('wordDisplay').textContent = blanks;
+            document.getElementById('wordDisplay').textContent = displayWord;
             
-            setupLetterButtons();
-        }
-
-        function setupLetterButtons() {
-            const container = document.getElementById('lettersGrid');
-            container.innerHTML = '';
+            // 선택할 글자들 생성
+            const correctLetter = word[blankIndex];
+            const wrongLetters = ['A', 'E', 'I', 'O', 'U', 'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
+                .filter(l => l !== correctLetter);
             
-            const correctLetters = currentWord.split('').slice(1, -1);
-            const wrongLetters = ['A', 'E', 'I', 'O', 'U', 'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'];
+            const shuffledWrongLetters = shuffleArray(wrongLetters).slice(0, 7);
+            const allLetters = shuffleArray([correctLetter, ...shuffledWrongLetters]);
             
-            const letters = [...correctLetters.map(l => l.toUpperCase())];
-            while (letters.length < 8) {
-                const randomLetter = wrongLetters[Math.floor(Math.random() * wrongLetters.length)];
-                if (!letters.includes(randomLetter)) {
-                    letters.push(randomLetter);
-                }
-            }
+            const lettersContainer = document.getElementById('lettersGrid');
+            lettersContainer.innerHTML = '';
             
-            const shuffledLetters = shuffleArray(letters);
-            
-            shuffledLetters.forEach(letter => {
+            allLetters.forEach(letter => {
                 const button = document.createElement('button');
                 button.className = 'letter-button';
                 button.textContent = letter;
-                button.onclick = () => selectLetter(letter, button);
-                container.appendChild(button);
+                button.onclick = () => checkFillBlankAnswer(letter, correctLetter, blankIndex);
+                lettersContainer.appendChild(button);
             });
+            
+            updateFillBlankProgress();
         }
 
-        function selectLetter(letter, button) {
-            const correctLetters = currentWord.split('').slice(1, -1).map(l => l.toUpperCase());
-            
-            if (correctLetters.includes(letter)) {
-                button.disabled = true;
-                button.style.background = '#4CAF50';
-                button.style.color = 'white';
+        // 빈칸 채우기 답 확인
+        function checkFillBlankAnswer(selectedLetter, correctLetter, blankIndex) {
+            if (selectedLetter === correctLetter) {
+                correctAnswers++;
+                fillBlankQuestionIndex++;
                 
-                currentAnswer += letter;
-                updateWordDisplay();
+                // 정답 표시
+                const word = currentWord.word.toUpperCase();
+                document.getElementById('wordDisplay').textContent = word;
                 
-                if (currentAnswer.length === correctLetters.length) {
+                if (fillBlankQuestionIndex < 5) {
                     setTimeout(() => {
-                        currentQuestion++;
-                        showNextQuestion();
-                    }, 1000);
+                        setupFillBlankGame();
+                    }, 1500);
+                } else {
+                    setTimeout(() => {
+                        showCompletion('빈칸 채우기 완료!', 5, 'fillBlank');
+                    }, 1500);
                 }
             } else {
-                button.style.background = '#f44336';
-                button.style.color = 'white';
-                setTimeout(() => {
-                    button.style.background = 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)';
-                    button.style.color = '#2c3e50';
-                }, 1000);
+                // 틀린 답 - 버튼 비활성화
+                event.target.disabled = true;
             }
         }
 
-        function updateWordDisplay() {
-            const letters = currentWord.split('');
-            const display = letters.map((letter, index) => {
-                if (index === 0 || index === letters.length - 1) {
-                    return letter.toUpperCase();
-                } else {
-                    const answerIndex = index - 1;
-                    return answerIndex < currentAnswer.length ? currentAnswer[answerIndex] : '_';
-                }
-            }).join(' ');
-            
-            document.getElementById('wordDisplay').textContent = display;
+        // 빈칸 채우기 진행률 업데이트
+        function updateFillBlankProgress() {
+            document.getElementById('fillBlankProgress').textContent = `${fillBlankQuestionIndex + 1}/5`;
         }
 
-        function showCelebration(message, reward) {
-            hideAllGames();
-            document.getElementById('celebration').classList.remove('hidden');
-            document.getElementById('celebrationText').textContent = message;
-            document.getElementById('rewardText').textContent = `⭐ 스티커 ${reward}개 획득! ⭐`;
+        // 완료 메시지 표시
+        function showCompletion(message, stickerReward, gameType) {
+            hideAllScreens();
             
-            stickers += reward;
-            saveStickers();
+            const completionEl = document.getElementById('completionMessage');
+            document.getElementById('completionText').textContent = message;
+            document.getElementById('rewardText').textContent = `⭐ 스티커 ${stickerReward}개 획득! ⭐`;
+            completionEl.style.display = 'block';
+            
+            // 스티커 추가
+            stickers += stickerReward;
             updateStickerDisplay();
+            
+            // 다시 시작 버튼 추가
+            setTimeout(() => {
+                const restartButton = document.createElement('button');
+                restartButton.className = 'control-button restart-button';
+                restartButton.textContent = '🔄 다시 시작';
+                restartButton.onclick = () => {
+                    completionEl.style.display = 'none';
+                    if (gameType === 'memory') startMemoryGame();
+                    else if (gameType === 'picture') startPictureGame();
+                    else if (gameType === 'fillBlank') startFillBlankGame();
+                };
+                
+                const backButton = document.createElement('button');
+                backButton.className = 'control-button back-button';
+                backButton.textContent = '🏠 메뉴로';
+                backButton.onclick = () => {
+                    completionEl.style.display = 'none';
+                    backToMenu();
+                };
+                
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'control-buttons';
+                buttonContainer.style.marginTop = '15px';
+                buttonContainer.appendChild(restartButton);
+                buttonContainer.appendChild(backButton);
+                completionEl.appendChild(buttonContainer);
+            }, 1000);
         }
 
-        function restartCurrentGame() {
-            if (currentGame === 'memory') {
-                startMemoryGame();
-            } else if (currentGame === 'picture') {
-                startPictureGame();
-            } else if (currentGame === 'fillblank') {
-                startFillBlankGame();
-            }
-        }
-
+        // 뽑기 실행
         function performDraw() {
-            if (stickers >= 5) {
+            if (stickers < 5) return;
+            
+            hideAllScreens();
+            const drawResultEl = document.getElementById('drawResult');
+            drawResultEl.style.display = 'block';
+            
+            // 애니메이션 시작
+            const animationEl = document.getElementById('drawAnimation');
+            animationEl.style.animation = 'spin 2s linear infinite';
+            
+            setTimeout(() => {
+                animationEl.style.animation = 'none';
+                
+                // 보상 결정
+                const random = Math.random() * 100;
+                let reward = '';
+                
+                if (random < 0.5) {
+                    reward = '🧸 장난감 사주기! 대박!';
+                    animationEl.textContent = '🧸';
+                } else if (random < 15) {
+                    reward = '🤗 엄마랑 쎄쎄쎄!';
+                    animationEl.textContent = '🤗';
+                } else if (random < 30) {
+                    reward = '🐎 아빠 말타기 놀이!';
+                    animationEl.textContent = '🐎';
+                } else if (random < 65) {
+                    reward = '🍪 맛있는 간식!';
+                    animationEl.textContent = '🍪';
+                } else {
+                    reward = '📚 잠들기 전 책 한 권 추가!';
+                    animationEl.textContent = '📚';
+                }
+                
+                document.getElementById('drawRewardText').textContent = reward;
+                
+                // 스티커 차감
                 stickers -= 5;
-                saveStickers();
                 updateStickerDisplay();
                 
-                const rewards = [
-                    {icon: '📚', text: '잠들기 전 책 한 권 추가!', chance: 35},
-                    {icon: '🍪', text: '맛있는 간식 시간!', chance: 35},
-                    {icon: '🤗', text: '엄마랑 쎄쎄쎄 놀이!', chance: 14},
-                    {icon: '🐎', text: '아빠 말타기 놀이!', chance: 15},
-                    {icon: '🧸', text: '잭팟! 원하는 장난감 하나!', chance: 0.5}
-                ];
+                // 메뉴로 돌아가기 버튼
+                setTimeout(() => {
+                    const backButton = document.createElement('button');
+                    backButton.className = 'control-button back-button';
+                    backButton.textContent = '🏠 메뉴로';
+                    backButton.onclick = () => {
+                        drawResultEl.style.display = 'none';
+                        backToMenu();
+                    };
+                    drawResultEl.appendChild(backButton);
+                }, 2000);
                 
-                const random = Math.random() * 100;
-                let cumulative = 0;
-                let selectedReward = rewards[0];
-                
-                for (const reward of rewards) {
-                    cumulative += reward.chance;
-                    if (random <= cumulative) {
-                        selectedReward = reward;
-                        break;
-                    }
-                }
-                
-                hideAllGames();
-                document.getElementById('drawResult').classList.remove('hidden');
-                document.getElementById('rewardIcon').textContent = selectedReward.icon;
-                document.getElementById('rewardDescription').textContent = selectedReward.text;
-                
-                const rewardIcon = document.getElementById('rewardIcon');
-                rewardIcon.classList.add('bounce');
-                setTimeout(() => rewardIcon.classList.remove('bounce'), 1000);
-            }
+            }, 3000);
         }
 
-        function closeDraw() {
-            document.getElementById('drawResult').classList.add('hidden');
+        // 메뉴로 돌아가기
+        function backToMenu() {
+            hideAllScreens();
+            document.getElementById('mainMenu').classList.add('active');
         }
 
-        // Initialize
-        displayWords();
-        updateStickerDisplay();
+        // 모든 화면 숨기기
+        function hideAllScreens() {
+            document.querySelectorAll('.game-area').forEach(area => {
+                area.classList.remove('active');
+            });
+            document.getElementById('completionMessage').style.display = 'none';
+            document.getElementById('drawResult').style.display = 'none';
+            
+            // 뽑기 결과에서 추가된 버튼들 제거
+            const drawResult = document.getElementById('drawResult');
+            const extraButtons = drawResult.querySelectorAll('.control-button');
+            extraButtons.forEach(btn => btn.remove());
+            
+            // 완료 메시지에서 추가된 버튼들 제거
+            const completion = document.getElementById('completionMessage');
+            const completionButtons = completion.querySelectorAll('.control-buttons');
+            completionButtons.forEach(container => container.remove());
+        }
+
+        // 페이지 로드시 초기화
+        window.onload = init;
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDiQkoOv7dxtmCZyxoRG6WTfdDEy55pi6ScgN73STHVxE84dEf1IXOEJrsM5YWMvc%2B9VDZGZnG4ypJ7Tg2oJAQzrKXIOdG%2FXAMg6HIUdw52LuWAFJxNkO1qhHvCCgWByda3re42iS%2BjP%2Bs6xMebXPXNdR%2FjIlIPVqxTZ%2BmA09VV2qJVSoXMgMnwSgGL1pn5o1iKsvNUDbRQaME5aOPxV6eZ4ZnM2kxq8MRXXxy%2Fz9pQxJKkMRlv62NUS6UcSosa3ZZQIMLEbJ1KaGeo%2Ft%2BOEq643qdkzZo0rA17gkwf7OvnE1be6StbAIxE%2FDiIQJWSuMLVC2wt1TjS2czkUMsf6%2BybWK4qs2Vysaxnf73qpRUX%2FPNhW8tWVhV6BUI21yAQ7nFk816xNewW%2B8Qg6IizYa2XvE8jTiYhyILHmIW%2FFejl7Gu4bXCiWp2IKWhL7tOpsuohZbt%2Bkiv%2Fxac5qzIbdMQZM7JI6FvSxOkgrtU9CYeCCpjxQcDl4wkqMCKD3y6xqRFjEMwlROVrolRXCEa%2FuK%2FwU%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDgpUVRVyM7oNHnMnGPF1pZhY%2Fd%2B9MihrEQs%2Foq5SbsnuvS9DvM1EvvhxJGAsfVLa%2BSrET1lFQ0GwFVRqFSogdDsaSyqUI9OH7U1Dy4ABwUw5n2slk%2BZn0cmgs01FSTJAbIvpvk2PdacIoPGbaOMm8okpwMQ9KCXQqmtWNJrqDFDHw5jmbNZiQmq%2BwSN2SnmOtxjTzDRnbi0khhwQDMtj6Nr6knupH7Lw%2Bl%2BssPZ%2BFGYPmVX8%2F8a6NXEZxLcf5r3hmiby3RqncoUTv%2F35i%2BTLrB8jJPrrv0lOnvaFvXmxQ0RWasEactnxosnvCRfTK2ca3trw70Sw5OSpwn%2BxNHud7SjBEV8HEDbdM7j2kPWtvPpIUJqlOj%2F1os4WtNrNGPCQL1VnX5xFXsEHOWcXODKZaikIHrAgABIsWtr%2BHYBkVDJw79c%2FRVvTJ8F8B3fZXJ2TkX1n2rljvlHAWUwHDoo7xzjBeCuZoNyLuc5gLvrj%2BnzmpTJHEvp8bnIJgvMpGAbbR4LVf1ntHgmGycAj7BilgNg%3D";
         window.__genspark_locale = "ko-KR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDiQkoOv7dxtmCZyxoRG6WTfdDEy55pi6ScgN73STHVxE84dEf1IXOEJrsM5YWMvc+9VDZGZnG4ypJ7Tg2oJAQzrKXIOdG/XAMg6HIUdw52LuWAFJxNkO1qhHvCCgWByda3re42iS+jP+s6xMebXPXNdR/jIlIPVqxTZ+mA09VV2qJVSoXMgMnwSgGL1pn5o1iKsvNUDbRQaME5aOPxV6eZ4ZnM2kxq8MRXXxy/z9pQxJKkMRlv62NUS6UcSosa3ZZQIMLEbJ1KaGeo/t+OEq643qdkzZo0rA17gkwf7OvnE1be6StbAIxE/DiIQJWSuMLVC2wt1TjS2czkUMsf6+ybWK4qs2Vysaxnf73qpRUX/PNhW8tWVhV6BUI21yAQ7nFk816xNewW+8Qg6IizYa2XvE8jTiYhyILHmIW/Fejl7Gu4bXCiWp2IKWhL7tOpsuohZbt+kiv/xac5qzIbdMQZM7JI6FvSxOkgrtU9CYeCCpjxQcDl4wkqMCKD3y6xqRFjEMwlROVrolRXCEa/uK/wU=";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDgpUVRVyM7oNHnMnGPF1pZhY/d+9MihrEQs/oq5SbsnuvS9DvM1EvvhxJGAsfVLa+SrET1lFQ0GwFVRqFSogdDsaSyqUI9OH7U1Dy4ABwUw5n2slk+Zn0cmgs01FSTJAbIvpvk2PdacIoPGbaOMm8okpwMQ9KCXQqmtWNJrqDFDHw5jmbNZiQmq+wSN2SnmOtxjTzDRnbi0khhwQDMtj6Nr6knupH7Lw+l+ssPZ+FGYPmVX8/8a6NXEZxLcf5r3hmiby3RqncoUTv/35i+TLrB8jJPrrv0lOnvaFvXmxQ0RWasEactnxosnvCRfTK2ca3trw70Sw5OSpwn+xNHud7SjBEV8HEDbdM7j2kPWtvPpIUJqlOj/1os4WtNrNGPCQL1VnX5xFXsEHOWcXODKZaikIHrAgABIsWtr+HYBkVDJw79c/RVvTJ8F8B3fZXJ2TkX1n2rljvlHAWUwHDoo7xzjBeCuZoNyLuc5gLvrj+nzmpTJHEvp8bnIJgvMpGAbbR4LVf1ntHgmGycAj7BilgNg=";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
