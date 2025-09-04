@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇪🇬 이집트 가족 여행 완벽 가이드 - 4박 5일 플랜</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .destination-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .destination-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="hero-gradient text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-4">🇪🇬 이집트 가족 여행 완벽 가이드</h1>
+            <p class="text-xl mb-8">출장 후 가족과 함께하는 4박 5일 고대 문명 탐험</p>
+            <div class="flex justify-center space-x-8 text-sm">
+                <div class="flex items-center">
+                    <i class="fas fa-users mr-2"></i>
+                    가족 친화적
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt mr-2"></i>
+                    안전한 여행
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-language mr-2"></i>
+                    한국어 가이드
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- 일정 개요 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">📅 4박 5일 추천 일정</h2>
+            <div class="grid md:grid-cols-5 gap-6">
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-blue-600">1</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">도착 & 나일강</h3>
+                        <p class="text-sm text-gray-600">카이로 도착<br>나일강 디너 크루즈</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-green-600">2</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">기자 피라미드</h3>
+                        <p class="text-sm text-gray-600">세계 7대 불가사의<br>스핑크스 관람</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-yellow-600">3</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">사카라 & 멤피스</h3>
+                        <p class="text-sm text-gray-600">계단식 피라미드<br>고대 수도 유적</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-purple-600">4</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">박물관 & 크루즈</h3>
+                        <p class="text-sm text-gray-600">이집트 박물관<br>나일강 주간 크루즈</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <div class="text-center">
+                        <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-red-600">5</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">바자르 & 시타델</h3>
+                        <p class="text-sm text-gray-600">칸 엘-할릴리<br>카이로 시타델</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 주요 관광지 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">🏛️ 주요 관광지 (클릭하여 상세 정보)</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 기자 피라미드 -->
+                <div class="destination-card bg-white rounded-lg shadow-lg overflow-hidden" onclick="openModal('giza-modal')">
+                    <img src="https://7wayfinders.com/wp-content/uploads/2024/04/D1EF50E2-7729-4046-9B45-A8EA32269F9F_1_102_o.jpeg" alt="기자 피라미드" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">기자 피라미드</h3>
+                        <div class="text-sm text-gray-600 mb-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                카이로 중심에서 18km
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                차로 30-40분
+                            </div>
+                        </div>
+                        <p class="text-gray-700">세계 7대 불가사의 중 유일하게 남은 고대 건축물</p>
+                    </div>
+                </div>
+
+                <!-- 사카라 -->
+                <div class="destination-card bg-white rounded-lg shadow-lg overflow-hidden" onclick="openModal('saqqara-modal')">
+                    <img src="https://www.egypttoursportal.com/images/2017/11/Saqqara-The-Step-Pyramid-Egypt-Tours-Portal-1-e1511902396901.jpg" alt="사카라 계단식 피라미드" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">사카라 계단식 피라미드</h3>
+                        <div class="text-sm text-gray-600 mb-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                카이로 중심에서 30km
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                차로 45-60분
+                            </div>
+                        </div>
+                        <p class="text-gray-700">세계 최초의 석조 건물 복합단지, 조세르 왕의 무덤</p>
+                    </div>
+                </div>
+
+                <!-- 멤피스 -->
+                <div class="destination-card bg-white rounded-lg shadow-lg overflow-hidden" onclick="openModal('memphis-modal')">
+                    <img src="https://www.ancientworldmagazine.com/site/assets/files/1272/colossal.jpg" alt="멤피스 람세스 2세 석상" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">멤피스</h3>
+                        <div class="text-sm text-gray-600 mb-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                사카라에서 10분
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                카이로에서 35km
+                            </div>
+                        </div>
+                        <p class="text-gray-700">고대 이집트의 첫 번째 수도, 람세스 2세의 거대한 석상</p>
+                    </div>
+                </div>
+
+                <!-- 이집트 박물관 -->
+                <div class="destination-card bg-white rounded-lg shadow-lg overflow-hidden" onclick="openModal('museum-modal')">
+                    <img src="https://www.inside-egypt.com/img/thumbs/w1200h800q85/news/d76b5c6be0f238a4b410.jpeg" alt="이집트 박물관" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">이집트 박물관</h3>
+                        <div class="text-sm text-gray-600 mb-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                카이로 중심부 (타흐리르 광장)
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                도보 접근 가능
+                            </div>
+                        </div>
+                        <p class="text-gray-700">투탕카멘의 황금 마스크와 방대한 고대 유물 컬렉션</p>
+                    </div>
+                </div>
+
+                <!-- 칸 엘-할릴리 -->
+                <div class="destination-card bg-white rounded-lg shadow-lg overflow-hidden" onclick="openModal('khan-modal')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/%D8%AE%D8%A7%D9%86_%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D9%84%D9%8A_1.jpg/1200px-%D8%AE%D8%A7%D9%86_%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D9%84%D9%8A_1.jpg" alt="칸 엘-할릴리 바자르" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">칸 엘-할릴리 바자르</h3>
+                        <div class="text-sm text-gray-600 mb-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                카이로 구시가지
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                중심에서 차로 15-20분
+                            </div>
+                        </div>
+                        <p class="text-gray-700">600년 전통의 이슬람 시장, 전통 수공예품 쇼핑</p>
+                    </div>
+                </div>
+
+                <!-- 왕가의 계곡 -->
+                <div class="destination-card bg-white rounded-lg shadow-lg overflow-hidden" onclick="openModal('valley-modal')">
+                    <img src="https://www.egypttoursportal.com/images/2025/05/Valley-of-the-Kings-Egypt-Tours-Portal_1.jpg" alt="왕가의 계곡" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">왕가의 계곡 (룩소르)</h3>
+                        <div class="text-sm text-gray-600 mb-3">
+                            <div class="flex items-center mb-1">
+                                <i class="fas fa-plane mr-2 text-red-500"></i>
+                                카이로에서 비행기 1시간
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-train mr-2 text-blue-500"></i>
+                                기차로 10-12시간
+                            </div>
+                        </div>
+                        <p class="text-gray-700">파라오들의 무덤, 투탕카멘 무덤 발견지</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 현지 여행사 정보 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">🏢 추천 현지 여행사</h2>
+            
+            <!-- 국제 여행사 -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700">🌍 검증된 국제 여행사</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-crown text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Memphis Tours Egypt</h4>
+                                <div class="text-sm text-gray-600">⭐ 11,881 리뷰</div>
+                            </div>
+                        </div>
+                        <ul class="text-sm space-y-2">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>1999년 설립 (25년 경험)</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>TripAdvisor 1위 여행사</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>가족 여행 전문</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>정부 인증 가이드</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-star text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Egypt Tours Portal</h4>
+                                <div class="text-sm text-gray-600">⭐ 5,203 리뷰</div>
+                            </div>
+                        </div>
+                        <ul class="text-sm space-y-2">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>33년 운영 경험</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>카이로 3위 랭킹</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>가족 맞춤형 투어</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>다국어 서비스</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-shield-alt text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Rimo Tours</h4>
+                                <div class="text-sm text-gray-600">⭐ 3,189 리뷰</div>
+                            </div>
+                        </div>
+                        <ul class="text-sm space-y-2">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>전국 지점 보유</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>280명 전문 직원</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>속도 제한 시스템</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>수상 경력 업체</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 한국어 가이드 서비스 -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700">🇰🇷 한국어 가이드 서비스</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 rounded-lg shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">모마 투어</h4>
+                                <div class="text-sm text-gray-600">이집트인 한국어 가이드</div>
+                            </div>
+                        </div>
+                        <ul class="text-sm space-y-2">
+                            <li><i class="fas fa-language text-blue-500 mr-2"></i>완벽한 한국어 구사</li>
+                            <li><i class="fas fa-dollar-sign text-green-500 mr-2"></i>합리적인 비용</li>
+                            <li><i class="fas fa-map text-purple-500 mr-2"></i>카이로 시티 투어 전문</li>
+                            <li><i class="fas fa-users text-orange-500 mr-2"></i>개인/그룹 투어</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 rounded-lg shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user-tie text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">아무르 투어</h4>
+                                <div class="text-sm text-gray-600">룩소르 전문 가이드</div>
+                            </div>
+                        </div>
+                        <ul class="text-sm space-y-2">
+                            <li><i class="fas fa-map-marked-alt text-red-500 mr-2"></i>룩소르 서안/동안 투어</li>
+                            <li><i class="fas fa-balloon text-yellow-500 mr-2"></i>열기구 투어 연계</li>
+                            <li><i class="fas fa-history text-blue-500 mr-2"></i>고대 역사 전문</li>
+                            <li><i class="fas fa-certificate text-purple-500 mr-2"></i>정부 인증 가이드</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-star text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">에즈 엘 딘</h4>
+                                <div class="text-sm text-gray-600">트라브코 협력 가이드</div>
+                            </div>
+                        </div>
+                        <ul class="text-sm space-y-2">
+                            <li><i class="fas fa-handshake text-blue-500 mr-2"></i>대형 여행사 협력</li>
+                            <li><i class="fas fa-language text-green-500 mr-2"></i>유창한 한국어</li>
+                            <li><i class="fas fa-award text-yellow-500 mr-2"></i>우수 가이드 인증</li>
+                            <li><i class="fas fa-heart text-red-500 mr-2"></i>친근한 서비스</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안전 정보 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">🛡️ 가족 여행 안전 가이드</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-green-600">
+                        <i class="fas fa-check-circle mr-2"></i>안전 여행 팁
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-thermometer-half text-orange-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>최적 여행 시기:</strong> 10월-4월 (온화한 기온)
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-tint text-blue-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>건강 관리:</strong> 생수만 마시고 현지 음식 주의
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-tshirt text-purple-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>복장:</strong> 종교적 장소 방문 시 적절한 복장 착용
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>연락망:</strong> 현지 가이드 연락처 항상 확보
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">
+                        <i class="fas fa-child mr-2"></i>어린이 동반 시 주의사항
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-pills text-red-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>의약품:</strong> 기본 상비약 및 개인 처방약 준비
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-sun text-yellow-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>더위 대책:</strong> 충분한 수분 섭취와 자외선 차단
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bed text-indigo-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>휴식 시간:</strong> 어린이 체력을 고려한 일정 조정
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-eye text-teal-500 mr-3 mt-1"></i>
+                            <div>
+                                <strong>안전 수칙:</strong> 항상 보호자와 함께 행동
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 예상 비용 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">💰 예상 여행 비용 (4인 가족 기준)</h2>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-green-600">💵 현지 투어 패키지</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                <span>Memphis Tours 4박5일</span>
+                                <span class="font-bold">$800-1,200/인</span>
+                            </div>
+                            <div class="text-sm text-gray-600 ml-4">
+                                ✅ 전용차량, 가이드, 입장료, 일부 식사 포함<br>
+                                ❌ 항공료, 숙박비, 개인 경비 불포함
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-4 mt-6 text-blue-600">🏨 추가 예상 비용</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-2 border-b">
+                                <span>숙박 (4박, 가족실)</span>
+                                <span>$400-800</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 border-b">
+                                <span>식사 (현지 레스토랑)</span>
+                                <span>$200-400</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 border-b">
+                                <span>쇼핑/기념품</span>
+                                <span>$100-300</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 border-b">
+                                <span>팁 (가이드, 드라이버)</span>
+                                <span>$100-150</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-purple-800">총 예상 비용</h3>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-purple-600 mb-2">$4,000 - 6,000</div>
+                            <div class="text-lg text-gray-700 mb-4">4인 가족 기준 (항공료 제외)</div>
+                            <div class="bg-white rounded-lg p-4 text-sm">
+                                <div class="text-green-600 font-bold mb-2">💡 절약 팁</div>
+                                <ul class="text-left space-y-1">
+                                    <li>• 사전 예약으로 할인 혜택</li>
+                                    <li>• 패키지 투어가 개별 예약보다 경제적</li>
+                                    <li>• 현지 식당 이용으로 식비 절약</li>
+                                    <li>• 그룹 투어 참여 시 비용 분할</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 추가 팁 -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">💡 추가 여행 팁</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-calendar-alt text-3xl text-orange-600"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3 text-center">예약 가이드</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>• 여행 2-3주 전 온라인 예약</li>
+                        <li>• 성수기(12-2월) 사전 예약 필수</li>
+                        <li>• 가이드 언어 사전 확인</li>
+                        <li>• 취소 정책 반드시 확인</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-green-100 to-teal-100 rounded-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-camera text-3xl text-teal-600"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3 text-center">촬영 팁</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>• 피라미드: 이른 아침이 최고</li>
+                        <li>• 무덤 내부: 플래시 촬영 금지</li>
+                        <li>• 별도 촬영 티켓 구매 필요</li>
+                        <li>• 가족 사진: 가이드에게 요청</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shopping-bag text-3xl text-purple-600"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-3 text-center">쇼핑 가이드</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>• 칸 엘-할릴리에서 흥정 필수</li>
+                        <li>• 파피루스, 향신료 인기</li>
+                        <li>• 가격 비교 후 구매</li>
+                        <li>• 신용카드보다 현금 선호</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal Templates -->
+    <!-- 기자 피라미드 모달 -->
+    <div id="giza-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('giza-modal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">🏛️ 기자 피라미드</h2>
+            <img src="https://7wayfinders.com/wp-content/uploads/2024/04/D1EF50E2-7729-4046-9B45-A8EA32269F9F_1_102_o.jpeg" alt="기자 피라미드" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">📍 위치 및 접근성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>카이로 중심에서 18km</li>
+                        <li><i class="fas fa-car text-blue-500 mr-2"></i>차로 30-40분 소요</li>
+                        <li><i class="fas fa-clock text-green-500 mr-2"></i>운영시간: 08:00-17:00</li>
+                        <li><i class="fas fa-ticket-alt text-purple-500 mr-2"></i>입장료: 성인 200 EGP</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">👨‍👩‍👧‍👦 가족 여행 적합성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-child text-yellow-500 mr-2"></i>어린이 동반 안전</li>
+                        <li><i class="fas fa-horse text-brown-500 mr-2"></i>낙타/말 타기 체험</li>
+                        <li><i class="fas fa-sun text-orange-500 mr-2"></i>더위 주의 (충분한 수분)</li>
+                        <li><i class="fas fa-camera text-teal-500 mr-2"></i>최고의 포토 스팟</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="font-bold text-lg mb-2 text-purple-600">✨ 주요 볼거리</h3>
+                <p class="text-sm text-gray-700">쿠푸의 대피라미드 (세계 7대 불가사의), 카프레 피라미드, 멘카우레 피라미드, 스핑크스, 밸리 템플. 피라미드 내부 탐험 가능하나 좁은 공간이므로 폐쇄공포증 있는 분은 주의 필요.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 사카라 모달 -->
+    <div id="saqqara-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('saqqara-modal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">⛰️ 사카라 계단식 피라미드</h2>
+            <img src="https://www.egypttoursportal.com/images/2017/11/Saqqara-The-Step-Pyramid-Egypt-Tours-Portal-1-e1511902396901.jpg" alt="사카라" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">📍 위치 및 접근성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>카이로 중심에서 30km</li>
+                        <li><i class="fas fa-car text-blue-500 mr-2"></i>차로 45-60분 소요</li>
+                        <li><i class="fas fa-clock text-green-500 mr-2"></i>운영시간: 08:00-17:00</li>
+                        <li><i class="fas fa-ticket-alt text-purple-500 mr-2"></i>입장료: 성인 180 EGP</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">👨‍👩‍👧‍👦 가족 여행 적합성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>넓은 야외 공간</li>
+                        <li><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>무덤 내부는 좁음</li>
+                        <li><i class="fas fa-walking text-blue-500 mr-2"></i>적당한 도보 거리</li>
+                        <li><i class="fas fa-history text-purple-500 mr-2"></i>교육적 가치 높음</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="font-bold text-lg mb-2 text-purple-600">✨ 주요 볼거리</h3>
+                <p class="text-sm text-gray-700">조세르 왕의 계단식 피라미드 (세계 최초 석조 건물), 남북 피라미드, 우나스 피라미드, 피라미드 텍스트. 고대 이집트 건축의 진화 과정을 보여주는 중요한 유적지.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 멤피스 모달 -->
+    <div id="memphis-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('memphis-modal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">🏛️ 멤피스</h2>
+            <img src="https://www.ancientworldmagazine.com/site/assets/files/1272/colossal.jpg" alt="멤피스" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">📍 위치 및 접근성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>사카라에서 10분</li>
+                        <li><i class="fas fa-car text-blue-500 mr-2"></i>카이로에서 35km</li>
+                        <li><i class="fas fa-clock text-green-500 mr-2"></i>운영시간: 08:00-17:00</li>
+                        <li><i class="fas fa-ticket-alt text-purple-500 mr-2"></i>입장료: 성인 80 EGP</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">👨‍👩‍👧‍👦 가족 여행 적합성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>야외 박물관</li>
+                        <li><i class="fas fa-child text-yellow-500 mr-2"></i>어린이 안전</li>
+                        <li><i class="fas fa-camera text-teal-500 mr-2"></i>사진 촬영 자유</li>
+                        <li><i class="fas fa-clock text-blue-500 mr-2"></i>짧은 관람 시간</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="font-bold text-lg mb-2 text-purple-600">✨ 주요 볼거리</h3>
+                <p class="text-sm text-gray-700">람세스 2세의 거대한 석회암 조각상 (13m), 알라바스터 스핑크스, 프타 신전 유적. 고대 이집트의 첫 번째 수도였던 멤피스의 영광을 보여주는 야외 박물관.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이집트 박물관 모달 -->
+    <div id="museum-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('museum-modal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">🏛️ 이집트 박물관</h2>
+            <img src="https://www.inside-egypt.com/img/thumbs/w1200h800q85/news/d76b5c6be0f238a4b410.jpeg" alt="이집트 박물관" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">📍 위치 및 접근성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>타흐리르 광장</li>
+                        <li><i class="fas fa-walking text-blue-500 mr-2"></i>도보 접근 가능</li>
+                        <li><i class="fas fa-clock text-green-500 mr-2"></i>운영시간: 09:00-17:00</li>
+                        <li><i class="fas fa-ticket-alt text-purple-500 mr-2"></i>입장료: 성인 200 EGP</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">👨‍👩‍👧‍👦 가족 여행 적합성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-graduation-cap text-blue-500 mr-2"></i>교육적 가치 높음</li>
+                        <li><i class="fas fa-child text-yellow-500 mr-2"></i>어린이 할인</li>
+                        <li><i class="fas fa-wheelchair text-green-500 mr-2"></i>접근성 좋음</li>
+                        <li><i class="fas fa-users text-purple-500 mr-2"></i>가이드 투어 추천</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="font-bold text-lg mb-2 text-purple-600">✨ 주요 볼거리</h3>
+                <p class="text-sm text-gray-700">투탕카멘의 황금 마스크와 보물, 파라오들의 미라, 파피루스, 고대 이집트 예술품 120,000점. 세계에서 가장 중요한 고대 이집트 유물 컬렉션을 소장.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 칸 엘-할릴리 모달 -->
+    <div id="khan-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('khan-modal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">🛒 칸 엘-할릴리 바자르</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/%D8%AE%D8%A7%D9%86_%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D9%84%D9%8A_1.jpg/1200px-%D8%AE%D8%A7%D9%86_%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D9%84%D9%8A_1.jpg" alt="칸 엘-할릴리" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">📍 위치 및 접근성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>카이로 구시가지</li>
+                        <li><i class="fas fa-car text-blue-500 mr-2"></i>중심에서 15-20분</li>
+                        <li><i class="fas fa-clock text-green-500 mr-2"></i>운영시간: 09:00-23:00</li>
+                        <li><i class="fas fa-parking text-purple-500 mr-2"></i>주차장 이용 가능</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">👨‍👩‍👧‍👦 가족 여행 적합성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-shopping-cart text-teal-500 mr-2"></i>쇼핑 천국</li>
+                        <li><i class="fas fa-coffee text-brown-500 mr-2"></i>카페 휴식 공간</li>
+                        <li><i class="fas fa-eye text-yellow-500 mr-2"></i>소매치기 주의</li>
+                        <li><i class="fas fa-handshake text-blue-500 mr-2"></i>흥정 문화 체험</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="font-bold text-lg mb-2 text-purple-600">✨ 주요 쇼핑 아이템</h3>
+                <p class="text-sm text-gray-700">파피루스, 향신료, 전통 공예품, 금은 장신구, 카펫, 이집트 전통 의상, 아라비안 램프. 600년 전통의 이슬람 시장에서 현지 문화를 체험할 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 왕가의 계곡 모달 -->
+    <div id="valley-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('valley-modal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">👑 왕가의 계곡 (룩소르)</h2>
+            <img src="https://www.egypttoursportal.com/images/2025/05/Valley-of-the-Kings-Egypt-Tours-Portal_1.jpg" alt="왕가의 계곡" class="w-full h-64 object-cover rounded-lg mb-4">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-blue-600">📍 위치 및 접근성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-plane text-red-500 mr-2"></i>카이로에서 비행기 1시간</li>
+                        <li><i class="fas fa-train text-blue-500 mr-2"></i>기차로 10-12시간</li>
+                        <li><i class="fas fa-clock text-green-500 mr-2"></i>운영시간: 06:00-17:00</li>
+                        <li><i class="fas fa-ticket-alt text-purple-500 mr-2"></i>입장료: 3개 무덤 240 EGP</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-green-600">👨‍👩‍👧‍👦 가족 여행 적합성</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>대부분 평지 접근</li>
+                        <li><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>무덤 내부 좁음</li>
+                        <li><i class="fas fa-child text-blue-500 mr-2"></i>보호자 동반 필수</li>
+                        <li><i class="fas fa-thermometer text-red-500 mr-2"></i>더위 주의</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="font-bold text-lg mb-2 text-purple-600">✨ 주요 무덤</h3>
+                <p class="text-sm text-gray-700">투탕카멘 무덤 (KV62), 람세스 4세 무덤 (KV2), 람세스 9세 무덤 (KV6), 세티 1세 무덤 (KV17, 별도 요금). 고대 파라오들의 화려한 벽화와 부장품을 감상할 수 있습니다.</p>
+                
+                <h3 class="font-bold text-lg mb-2 mt-4 text-red-600">⚠️ 가족 여행 시 주의사항</h3>
+                <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• 무덤 내부는 좁고 어두운 공간으로 어린이 보호자 동반 필수</li>
+                    <li>• 플래시 촬영 금지, 별도 촬영 티켓 구매 필요</li>
+                    <li>• 더위가 심하므로 충분한 수분 섭취와 휴식</li>
+                    <li>• 계단과 경사로가 있어 거동 불편한 분들 주의</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="hero-gradient text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold mb-4">🌟 안전하고 즐거운 이집트 가족 여행 되세요!</h3>
+                <p class="text-lg">고대 문명의 신비를 가족과 함께 체험하는 특별한 추억을 만들어보세요.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 text-sm">
+                <div>
+                    <h4 class="font-bold mb-2">📞 긴급 연락처</h4>
+                    <p>한국 영사관: +20-2-2739-6419<br>
+                    관광 경찰: 126<br>
+                    응급실: 123</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-2">🌐 유용한 정보</h4>
+                    <p>시차: 한국보다 6시간 늦음<br>
+                    통화: 이집트 파운드 (EGP)<br>
+                    전압: 220V (C/F타입)</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-2">📋 체크리스트</h4>
+                    <p>비자 준비 ✓<br>
+                    여행자 보험 ✓<br>
+                    현지 가이드 예약 ✓<br>
+                    응급약품 준비 ✓</p>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-6 pt-4">
+                <p>&copy; 2024 이집트 가족 여행 가이드. 안전하고 즐거운 여행을 위한 완벽한 정보를 제공합니다.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // 부드러운 스크롤 효과
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 애니메이션 효과
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const cardVisible = 150;
+                
+                if (cardTop < window.innerHeight - cardVisible) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // 초기 설정
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDqIuk72K193fg6RsjMRpjo1c7w8cYuEZZHQezDdZM5xEYDBSacUdjOMKqsCgxwEg5hzm0nxYnsPH9FWYEjO6LQJb9ZFcBKfxD4d82ZWOh%2FDOxAzI8SU44s%2FrvDx77d2ZxhgIKVBM2Lh%2F36t%2ByHcnRZ2jgela5qYfXylW7CRa7jQy0mH98AmWtNnVvOBn0x6GIRVkBuWlyal58kAzG%2BcG5HB7id9hXu9mtW%2BNd4KAIw7bOgnhB7%2BAgsU2N3LWVmhX%2B26tQTi4zlqDWuYimWxob9nQerv5adMF0muSHeDBHZlR%2FULqPZbQgesNyDJtZLn%2BvJM2kEWr%2Bpu3%2Fhbl89iWqRhS8UEMzhW8MbEe%2FOioxx8wR2EXxd8TtmSKLEzDNvFtgnEghHaTS9kz7LmqSrdoZb8aGSk%2BB0hwb9CEIi28dd9zlmN%2BAK%2B3K8ycdIlWlUl7eOX0PQ8uv2qsm6f8CCn4YDqUpLOjrlCWIM5hwanrcDmD6kGhx0mWqUj3k9uJVwj25bx6p4yEUJu9aFKkM6p9dBU%3D";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDqIuk72K193fg6RsjMRpjo1c7w8cYuEZZHQezDdZM5xEYDBSacUdjOMKqsCgxwEg5hzm0nxYnsPH9FWYEjO6LQJb9ZFcBKfxD4d82ZWOh/DOxAzI8SU44s/rvDx77d2ZxhgIKVBM2Lh/36t+yHcnRZ2jgela5qYfXylW7CRa7jQy0mH98AmWtNnVvOBn0x6GIRVkBuWlyal58kAzG+cG5HB7id9hXu9mtW+Nd4KAIw7bOgnhB7+AgsU2N3LWVmhX+26tQTi4zlqDWuYimWxob9nQerv5adMF0muSHeDBHZlR/ULqPZbQgesNyDJtZLn+vJM2kEWr+pu3/hbl89iWqRhS8UEMzhW8MbEe/Oioxx8wR2EXxd8TtmSKLEzDNvFtgnEghHaTS9kz7LmqSrdoZb8aGSk+B0hwb9CEIi28dd9zlmN+AK+3K8ycdIlWlUl7eOX0PQ8uv2qsm6f8CCn4YDqUpLOjrlCWIM5hwanrcDmD6kGhx0mWqUj3k9uJVwj25bx6p4yEUJu9aFKkM6p9dBU=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
