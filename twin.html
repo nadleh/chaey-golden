@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27개월 쌍둥이 육아 가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .intro {
+            background: #fff9e6;
+            border-left: 4px solid #ffa500;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .section-title:hover {
+            transform: translateX(5px);
+        }
+
+        .section-title h2 {
+            font-size: 1.4em;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .section-title.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .strategy-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .strategy-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .tip-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .good-example {
+            background: #d4edda;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #28a745;
+        }
+
+        .bad-example {
+            background: #f8d7da;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #dc3545;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .checklist li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .checklist li.checked {
+            background: #d4edda;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            font-size: 1.5em;
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .checklist li.checked::before {
+            content: '✓';
+            color: #28a745;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 8px;
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #c82333;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .section-title h2 {
+                font-size: 1.1em;
+            }
+        }
+
+        strong {
+            color: #667eea;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👶👶 27개월 쌍둥이 육아 가이드</h1>
+            <p>마의 두 살, 전략적으로 대처하기</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h3>💪 힘내세요, 부모님!</h3>
+                <p>27개월 쌍둥이 육아라니, 정말 고생이 많으십니다. 이 시기는 자아가 폭발하는 이른바 <strong>'마의 두 살(Terrible Two)'</strong> 인데다, 쌍둥이라 서로 눈치를 보고 분위기에 휩쓸려 행동이 강화되는 경향이 있어 난이도가 배로 높습니다.</p>
+                <p style="margin-top: 10px;">아이들의 행동은 <strong>"내가 할 거야!", "내 마음대로 하고 싶어!"라는 독립심의 표현</strong>이기도 합니다. 억지로 시키면 더 드러눕는 이 시기, 아이들이 <strong>'놀이'처럼 느끼게 하고 '통제권'을 주는 전략</strong>으로 접근해야 합니다.</p>
+            </div>
+
+            <!-- 기본 원칙 -->
+            <div class="section">
+                <div class="section-title" onclick="toggleSection(this)">
+                    <h2>1️⃣ 기본 원칙: "해야 해"가 아니라 "어떻게 할까?"</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <p>27개월 아이들에게 논리적인 설득은 통하지 않습니다. 대신 <strong>선택권</strong>을 주어 본인이 결정했다고 착각하게 만들어야 합니다.</p>
+                    
+                    <div class="bad-example">
+                        <strong>❌ 나쁜 예:</strong> "손 씻어." (명령 → 거부감)
+                    </div>
+                    
+                    <div class="good-example">
+                        <strong>✅ 좋은 예:</strong> "공룡 비누로 씻을까, 자동차 비누로 씻을까?", "누가 먼저 씻으러 뛰어갈까?" (선택 & 놀이)
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 핵심 TIP:</strong> 명령이 아닌 질문으로, 지시가 아닌 선택으로 대화하세요. 아이가 스스로 결정한다고 느끼게 하는 것이 핵심입니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상황별 솔루션 -->
+            <div class="section">
+                <div class="section-title" onclick="toggleSection(this)">
+                    <h2>2️⃣ 구체적인 상황별 솔루션 (가정 훈련법)</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <p>어린이집에서의 행동을 교정하려면, 집에서 <strong>즐거운 루틴</strong>으로 먼저 자리 잡아야 합니다.</p>
+
+                    <div class="strategy-card">
+                        <h3>🧼 손 씻기 & 세수 (물놀이로 변신)</h3>
+                        <p><strong>문제:</strong> 물이 닿는 감각이 싫거나, 놀던 흐름이 끊기는 게 싫은 것</p>
+                        
+                        <ul class="checklist" id="wash-checklist">
+                            <li onclick="toggleCheck(this)">아이들이 좋아하는 캐릭터 피규어를 세면대에 둡니다</li>
+                            <li onclick="toggleCheck(this)">"어? 뽀로로가 목욕하고 싶대! 우리가 씻겨주자" 역할극 활용</li>
+                            <li onclick="toggleCheck(this)">거품이 바로 나오는 핸드워시 또는 색깔이 변하는 비누 사용</li>
+                            <li onclick="toggleCheck(this)">스스로 올라갈 수 있는 안전한 발 받침대 설치</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <h3>🦷 양치질 (상호 역할극)</h3>
+                        <p><strong>문제:</strong> 입안에 이물질이 들어오는 공포감</p>
+                        
+                        <ul class="checklist" id="brush-checklist">
+                            <li onclick="toggleCheck(this)">"엄마 이에도 벌레가 있네? OO이가 먼저 엄마 닦아줘" - 서로 닦아주기</li>
+                            <li onclick="toggleCheck(this)">아이에게 먼저 칫솔을 쥐여주고 엄마 이를 닦게 함</li>
+                            <li onclick="toggleCheck(this)">"이제 엄마가 OO이 벌레 잡아줄게!" 하며 교대</li>
+                            <li onclick="toggleCheck(this)">거울 앞에서 자신의 입 속을 보며 닦게 하기</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <h3>🧴 로션 바르기 (스킨십 놀이)</h3>
+                        <p><strong>문제:</strong> 가만히 누워있거나 서 있는 게 지루함</p>
+                        
+                        <ul class="checklist" id="lotion-checklist">
+                            <li onclick="toggleCheck(this)">얼굴과 몸에 로션을 콕콕 찍어두기</li>
+                            <li onclick="toggleCheck(this)">"우와 달마시안 강아지 같다! 문질러서 없애볼까?" 게임화</li>
+                            <li onclick="toggleCheck(this)">간지럼 태우기 놀이와 섞어서 마사지</li>
+                            <li onclick="toggleCheck(this)">로션 바르는 시간을 '장난치는 시간'으로 인식시키기</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <h3>🧷 기저귀 갈기 (빠르고 서서)</h3>
+                        <p><strong>문제:</strong> 27개월은 누워서 가는 것을 극도로 싫어함</p>
+                        
+                        <ul class="checklist" id="diaper-checklist">
+                            <li onclick="toggleCheck(this)">팬티형 기저귀 사용하여 서서 갈기</li>
+                            <li onclick="toggleCheck(this)">기저귀 갈 때만 만질 수 있는 특별한 장난감 준비</li>
+                            <li onclick="toggleCheck(this)">소리 나는 것, 불빛 나는 것 등 흥미로운 아이템 활용</li>
+                            <li onclick="toggleCheck(this)">기저귀 가는 순간에만 특별 장난감 제공</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 쌍둥이 맞춤 전략 -->
+            <div class="section">
+                <div class="section-title" onclick="toggleSection(this)">
+                    <h2>3️⃣ 쌍둥이 맞춤 전략: '따로 또 같이'</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <p>쌍둥이는 한 명이 울면 "나도 울어야지!" 하고 따라 하고, 한 명이 도망가면 "나도 도망가야지!" 하는 군중심리가 있습니다.</p>
+
+                    <div class="strategy-card">
+                        <h3>🏃 경쟁 심리 활용 (긍정적)</h3>
+                        <p>"누가 더 빨리 기차(세면대)에 도착하나 시~작!"</p>
+                        <div class="warning-box">
+                            <strong>⚠️ 주의:</strong> 승패를 가르지 말고 둘 다 칭찬해 주세요.
+                        </div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <h3>🎯 1:1 분리 공략</h3>
+                        <p>한 명이 드러누워 떼를 쓸 때, 그 아이를 설득하려 하지 말고 <strong>말 잘 듣는 아이를 과하게 칭찬하며 데려가세요.</strong></p>
+                        
+                        <div class="good-example">
+                            <strong>예시:</strong> "와! OO이는 벌써 손 씻으러 가네? 정말 멋지다! 엄마랑 비누 놀이하러 가자~"
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>💡 효과:</strong> 남겨진 아이는 '나만 재미있는 거 못한다'는 생각에 스스로 울음을 그치고 따라올 확률이 높습니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 시각적 루틴 차트 -->
+            <div class="section">
+                <div class="section-title" onclick="toggleSection(this)">
+                    <h2>4️⃣ 시각적 루틴 차트 만들기 (매우 중요)</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <p>말로만 하면 잔소리가 됩니다. 아이들 눈높이에 <strong>'그림 일과표'</strong>를 붙여주세요.</p>
+
+                    <ul class="checklist" id="chart-checklist">
+                        <li onclick="toggleCheck(this)">손 씻기, 밥 먹기, 양치하기 등의 사진이나 그림을 벽에 붙이기</li>
+                        <li onclick="toggleCheck(this)">해당 행동을 완료하면 스티커를 붙이게 하기</li>
+                        <li onclick="toggleCheck(this)">그림을 뒤집는 행위를 아이가 직접 하게 하기</li>
+                        <li onclick="toggleCheck(this)">"엄마가 시키는 게 아니라, 그림이 지금 손 씻을 시간이라고 하네?" - 제3자에게 권위 넘기기</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <strong>💡 추천 자료:</strong> 인터넷에서 '유아 루틴 차트', '일과표 그림' 등을 검색하면 무료 템플릿을 다운로드할 수 있습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 떼쓸 때 대처법 -->
+            <div class="section">
+                <div class="section-title" onclick="toggleSection(this)">
+                    <h2>5️⃣ 떼쓸 때의 대처법 (훈육)</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <p>선생님이 말씀하신 "드러눕고 울고불고" 할 때, 집에서의 대처가 중요합니다.</p>
+
+                    <div class="strategy-card">
+                        <h3>📋 4단계 대응 프로세스</h3>
+                        <ol style="padding-left: 20px;">
+                            <li><strong>감정 읽어주기 (짧게):</strong> "더 놀고 싶은데 손 씻자고 해서 화가 났구나."</li>
+                            <li><strong>원칙 말하기 (단호하게):</strong> "그래도 밥 먹기 전엔 손을 씻어야 해."</li>
+                            <li><strong>기다리기:</strong> 아이가 진정될 때까지 아무 말 없이 기다립니다. (관심을 주지 않음)</li>
+                            <li><strong>전환하기:</strong> 조금이라도 진정되면 "안아서 갈까, 걸어서 갈까?"라고 선택권을 주며 상황을 전환합니다.</li>
+                        </ol>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 어린이집 소통:</strong> "집에서도 이런 방법으로 훈련 중이니, 조금만 더 기다려주세요. 죄송하고 감사합니다"라고 소통하며, 가정과 원이 일관된 태도를 보이는 것이 좋습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 진행 상황 트래커 -->
+            <div class="progress-tracker">
+                <h3>📊 오늘의 육아 실천 현황</h3>
+                <p>체크리스트를 클릭하여 완료 표시를 하세요!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <button class="reset-btn" onclick="resetAll()">전체 초기화</button>
+            </div>
+
+            <div class="warning-box" style="margin-top: 30px;">
+                <h3>🎯 마지막 당부</h3>
+                <p>아이 둘이 동시에 드러누우면 정말 멘탈 잡기 힘드실 겁니다. 하지만 지금 이 습관을 잡지 않으면 4~5살이 되어 더 힘들어질 수 있습니다.</p>
+                <p style="margin-top: 10px;"><strong>'통제'하려 하지 말고 '유혹'한다고 생각해주세요.</strong></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💙 육아는 마라톤입니다. 오늘도 고생 많으셨어요!</p>
+            <p style="margin-top: 5px; font-size: 0.9em;">힘들 때는 언제든 이 가이드를 다시 확인하세요.</p>
+        </div>
+    </div>
+
+    <script>
+        // 섹션 토글 기능
+        function toggleSection(element) {
+            const content = element.nextElementSibling;
+            const isActive = content.classList.contains('active');
+            
+            // 모든 섹션 닫기
+            document.querySelectorAll('.section-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.section-title').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 클릭한 섹션만 열기 (이미 열려있지 않은 경우)
+            if (!isActive) {
+                content.classList.add('active');
+                element.classList.add('active');
+            }
+        }
+
+        // 체크리스트 토글 기능
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+            updateProgress();
+            saveProgress();
+        }
+
+        // 진행률 업데이트
+        function updateProgress() {
+            const allItems = document.querySelectorAll('.checklist li');
+            const checkedItems = document.querySelectorAll('.checklist li.checked');
+            const percentage = Math.round((checkedItems.length / allItems.length) * 100);
+            
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = percentage + '%';
+            progressFill.textContent = percentage + '%';
+        }
+
+        // 전체 초기화
+        function resetAll() {
+            if (confirm('모든 체크 표시를 초기화하시겠습니까?')) {
+                document.querySelectorAll('.checklist li').forEach(el => {
+                    el.classList.remove('checked');
+                });
+                updateProgress();
+                saveProgress();
+            }
+        }
+
+        // 로컬 스토리지에 저장
+        function saveProgress() {
+            const checkedItems = [];
+            document.querySelectorAll('.checklist li.checked').forEach(el => {
+                checkedItems.push(el.textContent);
+            });
+            localStorage.setItem('twinParentingProgress', JSON.stringify(checkedItems));
+        }
+
+        // 로컬 스토리지에서 불러오기
+        function loadProgress() {
+            const saved = localStorage.getItem('twinParentingProgress');
+            if (saved) {
+                const checkedItems = JSON.parse(saved);
+                document.querySelectorAll('.checklist li').forEach(el => {
+                    if (checkedItems.includes(el.textContent)) {
+                        el.classList.add('checked');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // 페이지 로드 시 첫 섹션 자동 열기 및 저장된 진행 상황 불러오기
+        window.addEventListener('load', function() {
+            document.querySelector('.section-title').click();
+            loadProgress();
+        });
+    </script>
+</body>
+</html>
