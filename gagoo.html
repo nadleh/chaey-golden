@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D:H방배 59A — 배치 플래너 v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090f;--s1:#0d1120;--s2:#111827;--s3:#161e2e;
+  --b1:#1c2538;--b2:#243044;--b3:#2e3d58;
+  --acc:#4fc3f7;--acc2:#ff6b9d;--acc3:#7bed9f;--acc4:#ffd32a;--acc5:#c084fc;
+  --txt:#dde6f5;--mut:#5c6e8a;--mut2:#3d4f68;--danger:#ff4d6d;
+  --edit:#ff9f43;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'Noto Sans KR',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:13px;}
+
+/* ── HEADER ── */
+.hdr{background:var(--s1);border-bottom:1px solid var(--b1);padding:7px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;}
+.htitle{font-size:13px;font-weight:700;color:var(--acc);}
+.hsub{font-size:9px;color:var(--mut);margin-top:1px;}
+.sep{width:1px;height:22px;background:var(--b2);flex-shrink:0;}
+.tabs{display:flex;gap:3px;}
+.tab{background:var(--s3);border:1px solid var(--b2);color:var(--mut);border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.tab:hover{border-color:var(--acc);color:var(--acc);}
+.tab.active{background:var(--acc);color:#07090f;border-color:var(--acc);font-weight:700;}
+.hbtn{background:var(--s3);border:1px solid var(--b2);color:var(--txt);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;white-space:nowrap;}
+.hbtn:hover{border-color:var(--acc);color:var(--acc);}
+.hbtn.g{border-color:var(--acc3);color:var(--acc3);}
+.hbtn.g:hover{background:var(--acc3);color:#07090f;}
+/* 구조 편집 모드 버튼 */
+.hbtn.edit-mode{border-color:var(--edit);color:var(--edit);font-weight:700;}
+.hbtn.edit-mode:hover{background:var(--edit);color:#07090f;}
+.hbtn.edit-active{background:var(--edit);color:#07090f;border-color:var(--edit);font-weight:700;}
+.hbtn.lock{border-color:var(--acc3);color:var(--acc3);}
+.hbtn.lock:hover{background:var(--acc3);color:#07090f;}
+.kbd{background:var(--b2);color:var(--txt);border-radius:3px;padding:1px 5px;font-size:9px;font-family:'JetBrains Mono',monospace;}
+
+/* 커스텀 가구 색상 칩 */
+.cc{width:16px;height:16px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:border-color .12s,transform .1s;flex-shrink:0;}
+.cc:hover{transform:scale(1.2);}
+.cc.sel-c{border-color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.3);}
+
+/* 구조 편집 배너 */
+#EDITBANNER{display:none;background:rgba(255,159,67,.12);border-bottom:1px solid var(--edit);padding:5px 14px;font-size:11px;color:var(--edit);flex-shrink:0;text-align:center;font-weight:600;}
+#EDITBANNER.show{display:block;}
+
+/* ── LAYOUT ── */
+.body{flex:1;display:flex;overflow:hidden;}
+
+/* LEFT PANEL */
+.lp{width:186px;background:var(--s1);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+.lp-s{border-bottom:1px solid var(--b1);}
+.lp-t{padding:7px 10px;font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em;font-weight:500;display:flex;align-items:center;justify-content:space-between;}
+.lp-t button{background:none;border:1px solid var(--b2);color:var(--mut);border-radius:4px;padding:1px 6px;font-size:9px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.lp-t button:hover{border-color:var(--acc3);color:var(--acc3);}
+.fsc{overflow-y:auto;max-height:230px;}
+.fi{padding:5px 10px;display:flex;align-items:center;gap:7px;cursor:pointer;border-bottom:1px solid var(--b1);transition:background .1s;}
+.fi:hover{background:rgba(255,255,255,.03);}
+.fdot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.fn{font-size:11px;font-weight:600;color:var(--txt);}
+.fd{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--mut);}
+/* 구조 편집 모드일때 가구 패널 dimming */
+.lp.edit-dim{opacity:.35;pointer-events:none;}
+
+/* SLOT */
+.slist{overflow-y:auto;flex:1;}
+.si{padding:6px 10px;display:flex;align-items:center;gap:5px;border-bottom:1px solid var(--b1);transition:all .1s;}
+.si:hover{background:rgba(255,255,255,.03);}
+.sn{font-size:11px;color:var(--txt);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ss{font-size:9px;color:var(--mut);font-family:'JetBrains Mono',monospace;}
+.sdel{background:none;border:none;color:var(--mut2);cursor:pointer;font-size:12px;padding:0 2px;}
+.sdel:hover{color:var(--acc2);}
+.newslot{width:calc(100% - 20px);margin:6px 10px;padding:6px;background:rgba(79,195,247,.05);border:1px dashed var(--b3);color:var(--acc);border-radius:6px;font-size:11px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.newslot:hover{background:rgba(79,195,247,.1);}
+
+/* CANVAS */
+.ca{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:44px;background:var(--bg);background-image:radial-gradient(rgba(79,195,247,.018) 1px,transparent 1px);background-size:20px 20px;}
+.ca.editmode{background-image:radial-gradient(rgba(255,159,67,.03) 1px,transparent 1px);}
+#RW{position:relative;flex-shrink:0;}
+#RSV{display:block;}
+#FL{position:absolute;overflow:visible;pointer-events:none;}
+#DSV{position:absolute;top:0;left:0;pointer-events:none;z-index:40;}
+/* 구조 편집 핸들 레이어 */
+#EL{position:absolute;top:0;left:0;pointer-events:none;z-index:60;}
+
+/* FURNITURE */
+.fp{position:absolute;cursor:grab;user-select:none;display:flex;align-items:center;justify-content:center;border-radius:4px;pointer-events:all;border:1.5px solid;transition:box-shadow .1s,border-color .1s;}
+.fp:hover{box-shadow:0 0 0 1px rgba(255,255,255,.2),0 2px 14px rgba(0,0,0,.5);}
+.fp.sel{box-shadow:0 0 0 2.5px #fff,0 0 22px rgba(255,255,255,.15);z-index:50!important;}
+.fp.drag{cursor:grabbing;opacity:.82;z-index:200!important;}
+.fp.coll{border-color:var(--danger)!important;box-shadow:0 0 0 2px var(--danger),0 0 16px rgba(255,77,109,.35)!important;}
+.fp.wsnap{border-color:var(--acc3)!important;box-shadow:0 0 0 1px var(--acc3)!important;}
+.fp-in{text-align:center;padding:3px;pointer-events:none;width:100%;}
+.fp-nm{font-size:10px;font-weight:700;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fp-dm{font-size:8px;font-family:'JetBrains Mono',monospace;opacity:.6;margin-top:1px;}
+.fp-mo{font-size:8px;opacity:.7;margin-top:1px;font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* 편집 모드에서 가구 dimming */
+body.editmode .fp{opacity:.2;pointer-events:none;}
+
+/* RIGHT PANEL */
+.rp{width:176px;background:var(--s1);border-left:1px solid var(--b1);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.rp-s{border-bottom:1px solid var(--b1);padding:10px;}
+.rp-t{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+.rp-r{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.rp-l{font-size:10px;color:var(--mut);}
+.rp-v{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--acc);font-weight:600;}
+.rb{width:100%;padding:7px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .14s;border:1.5px solid;margin-bottom:5px;}
+.rb:last-child{margin-bottom:0;}
+.rb:disabled{opacity:.25;cursor:default;}
+.rb-rot{background:var(--acc);color:#07090f;border-color:var(--acc);}
+.rb-rot:hover:not(:disabled){opacity:.8;}
+.rb-mo{background:transparent;color:var(--acc5);border-color:var(--acc5);}
+.rb-mo:hover:not(:disabled){background:var(--acc5);color:#fff;}
+.rb-del{background:transparent;color:var(--acc2);border-color:var(--acc2);}
+.rb-del:hover:not(:disabled){background:var(--acc2);color:#fff;}
+.dl{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--mut);line-height:1.9;}
+.dl span{color:var(--acc3);}
+.dl.edit span{color:var(--edit);}
+.nosel{font-size:10px;color:var(--mut);text-align:center;padding:14px 0;line-height:1.9;}
+#SELB{display:none;}
+
+/* 구조 편집 모드 우측패널 */
+#EDITPANEL{display:none;padding:10px;}
+#EDITPANEL.show{display:block;}
+.ep-t{font-size:9px;color:var(--edit);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-weight:700;}
+.ep-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ep-l{font-size:10px;color:var(--mut);}
+.ep-v{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--edit);font-weight:700;}
+.ep-hint{font-size:9px;color:var(--mut2);line-height:1.8;margin-top:8px;}
+
+/* STATUS */
+.sb{background:var(--s1);border-top:1px solid var(--b1);padding:4px 12px;display:flex;align-items:center;gap:14px;font-size:10px;color:var(--mut);flex-shrink:0;flex-wrap:wrap;}
+.sv{font-family:'JetBrains Mono',monospace;color:var(--acc);font-weight:600;}
+.sv.edit{color:var(--edit);}
+
+/* MODAL */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;align-items:center;justify-content:center;}
+.mbg.show{display:flex;}
+.mbox{background:var(--s2);border:1px solid var(--b3);border-radius:12px;padding:22px 24px;min-width:320px;max-width:500px;box-shadow:0 0 40px rgba(79,195,247,.12);max-height:85vh;overflow-y:auto;}
+.mbox h2{font-size:14px;color:var(--acc);margin-bottom:12px;}
+.msub{font-size:10px;color:var(--mut);line-height:1.7;margin-bottom:12px;}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.mf{display:flex;flex-direction:column;gap:3px;}
+.mf label{font-size:10px;color:var(--mut);}
+.mf input,.mf select{background:var(--bg);border:1px solid var(--b2);color:var(--txt);border-radius:5px;padding:6px 8px;font-size:12px;font-family:'JetBrains Mono',monospace;}
+.mf input:focus,.mf select:focus{outline:none;border-color:var(--acc);}
+.mf.full{grid-column:1/-1;}
+.mrow{display:flex;gap:8px;margin-top:6px;}
+.mb{flex:1;padding:8px;border-radius:7px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.mb-ok{background:var(--acc);color:#07090f;}.mb-ok:hover{opacity:.85;}
+.mb-ca{background:var(--b2);color:var(--txt);}
+
+#TOAST{position:fixed;bottom:48px;left:50%;transform:translateX(-50%);border-radius:8px;padding:8px 20px;font-size:12px;font-weight:700;z-index:600;display:none;pointer-events:none;white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="htitle">🏠 D:H방배 59A — 배치 플래너 v4</div>
+    <div class="hsub" id="HSUB">침실3 · 3,400×3,500mm</div>
+  </div>
+  <div class="sep"></div>
+  <div class="tabs">
+    <button class="tab" onclick="switchRoom(0)">침실1</button>
+    <button class="tab" onclick="switchRoom(1)">침실2</button>
+    <button class="tab active" onclick="switchRoom(2)">침실3</button>
+  </div>
+  <div class="sep"></div>
+  <!-- 구조 편집 모드 버튼 -->
+  <button class="hbtn edit-mode" id="BTN_EDIT" onclick="toggleEditMode()">⚙ 구조 편집 모드</button>
+  <button class="hbtn lock" id="BTN_LOCK" style="display:none" onclick="lockStructure()">🔒 구조 고정 저장</button>
+  <div class="sep"></div>
+  <button class="hbtn g" onclick="doExportJSON()">💾 JSON 저장</button>
+  <button class="hbtn g" onclick="document.getElementById('FIMP').click()">📂 JSON 열기</button>
+  <input type="file" id="FIMP" accept=".json" style="display:none" onchange="doImportJSON(this)">
+  <button class="hbtn g" onclick="doExportPNG()">🖼 PNG</button>
+  <div class="sep"></div>
+  <span style="font-size:10px;color:var(--mut)" id="KEYHELP">
+    <kbd class="kbd">R</kbd> 회전&nbsp;
+    <kbd class="kbd">Del</kbd> 삭제&nbsp;
+    <kbd class="kbd">Esc</kbd> 해제
+  </span>
+</div>
+
+<!-- 구조 편집 배너 -->
+<div id="EDITBANNER">
+  ⚙ 구조 편집 모드 — 벽/창문/욕실 경계를 드래그해서 조절하세요. 완료 후 "구조 고정 저장" 클릭.
+</div>
+
+<div class="body">
+  <!-- LEFT -->
+  <div class="lp" id="LP">
+    <div class="lp-s"><div class="lp-t">가구 추가</div><div class="fsc" id="CATALOG"></div></div>
+
+    <!-- 커스텀 가구 만들기 -->
+    <div class="lp-s" style="flex-shrink:0;">
+      <div class="lp-t" style="color:var(--acc5);">✦ 커스텀 가구</div>
+      <div style="padding:7px 10px 10px;display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;gap:5px;align-items:center;">
+          <span style="font-size:9px;color:var(--mut);width:24px;">W</span>
+          <input type="number" id="CW_W" value="1000" min="100" max="9000" step="50"
+            style="flex:1;background:var(--bg);border:1px solid var(--b2);color:var(--txt);border-radius:4px;padding:4px 6px;font-size:11px;font-family:'JetBrains Mono',monospace;">
+          <span style="font-size:9px;color:var(--mut);">mm</span>
+        </div>
+        <div style="display:flex;gap:5px;align-items:center;">
+          <span style="font-size:9px;color:var(--mut);width:24px;">D</span>
+          <input type="number" id="CW_H" value="1000" min="100" max="9000" step="50"
+            style="flex:1;background:var(--bg);border:1px solid var(--b2);color:var(--txt);border-radius:4px;padding:4px 6px;font-size:11px;font-family:'JetBrains Mono',monospace;">
+          <span style="font-size:9px;color:var(--mut);">mm</span>
+        </div>
+        <div style="display:flex;gap:5px;align-items:center;">
+          <span style="font-size:9px;color:var(--mut);width:24px;">이름</span>
+          <input type="text" id="CW_NM" value="" maxlength="14" placeholder="TV콘솔, 피아노…"
+            style="flex:1;background:var(--bg);border:1px solid var(--b2);color:var(--txt);border-radius:4px;padding:4px 6px;font-size:11px;font-family:'Noto Sans KR',sans-serif;">
+        </div>
+        <div style="display:flex;gap:5px;align-items:center;">
+          <span style="font-size:9px;color:var(--mut);width:24px;">메모</span>
+          <input type="text" id="CW_MO" value="" maxlength="20" placeholder="위치 메모…"
+            style="flex:1;background:var(--bg);border:1px solid var(--b2);color:var(--txt);border-radius:4px;padding:4px 6px;font-size:11px;font-family:'Noto Sans KR',sans-serif;">
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px;">
+          <span style="font-size:9px;color:var(--mut);">색상</span>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;">
+            <div class="cc sel-c" data-c="#c084fc" data-bg="rgba(192,132,252,.13)" onclick="pickColor(this)" style="background:#c084fc;" title="보라"></div>
+            <div class="cc" data-c="#4fc3f7" data-bg="rgba(79,195,247,.13)"  onclick="pickColor(this)" style="background:#4fc3f7;" title="하늘"></div>
+            <div class="cc" data-c="#7bed9f" data-bg="rgba(123,237,159,.12)" onclick="pickColor(this)" style="background:#7bed9f;" title="초록"></div>
+            <div class="cc" data-c="#ffd32a" data-bg="rgba(255,211,42,.12)"  onclick="pickColor(this)" style="background:#ffd32a;" title="노랑"></div>
+            <div class="cc" data-c="#ff6b9d" data-bg="rgba(255,107,157,.12)" onclick="pickColor(this)" style="background:#ff6b9d;" title="핑크"></div>
+            <div class="cc" data-c="#fd9644" data-bg="rgba(253,150,68,.13)"  onclick="pickColor(this)" style="background:#fd9644;" title="주황"></div>
+            <div class="cc" data-c="#a29bfe" data-bg="rgba(162,155,254,.12)" onclick="pickColor(this)" style="background:#a29bfe;" title="라벤더"></div>
+            <div class="cc" data-c="#ff9ff3" data-bg="rgba(255,159,243,.12)" onclick="pickColor(this)" style="background:#ff9ff3;" title="연핑크"></div>
+          </div>
+        </div>
+        <button onclick="addCustomPiece()"
+          style="width:100%;margin-top:2px;padding:7px;background:var(--acc5);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;opacity:1;transition:opacity .15s;"
+          onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+          ＋ 방에 추가
+        </button>
+      </div>
+    </div>
+
+    <div class="lp-s"><div class="lp-t">저장 슬롯 <button onclick="saveSlotNamed()">+ 저장</button></div></div>
+    <div class="slist" id="SLOTS"></div>
+    <button class="newslot" onclick="quickSave()">＋ 빠른 저장</button>
+  </div>
+
+  <!-- CANVAS -->
+  <div class="ca" id="CA">
+    <div id="RW">
+      <svg id="RSV"></svg>
+      <div id="FL"></div>
+      <svg id="DSV"></svg>
+      <svg id="EL"></svg><!-- 구조 편집 핸들 레이어 -->
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="rp" id="RP">
+    <!-- 가구 배치 모드 패널 -->
+    <div id="FURNPANEL">
+      <div class="rp-s">
+        <div class="rp-t">선택 가구</div>
+        <div class="nosel" id="NOSEL">가구 클릭시<br>정보 표시<br><small style="font-size:9px;color:var(--mut2)">더블클릭→크기편집</small></div>
+        <div id="SELB">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;" id="SN"></div>
+          <div class="rp-r"><span class="rp-l">가로 W</span><span class="rp-v" id="SW">—</span></div>
+          <div class="rp-r"><span class="rp-l">세로 D</span><span class="rp-v" id="SH">—</span></div>
+          <div class="rp-r"><span class="rp-l">X</span><span class="rp-v" id="SX">—</span></div>
+          <div class="rp-r"><span class="rp-l">Y</span><span class="rp-v" id="SY">—</span></div>
+          <div class="rp-r"><span class="rp-l">회전</span><span class="rp-v" id="SROT">0°</span></div>
+          <div id="SMEMO" style="font-size:10px;color:var(--acc5);margin:4px 0 8px;font-style:italic;min-height:14px;"></div>
+          <button class="rb rb-rot" id="BROT" onclick="doRotate()">↻ 90° 회전</button>
+          <button class="rb rb-mo"  id="BMO"  onclick="openMemo()">✎ 메모</button>
+          <button class="rb rb-del" id="BDEL" onclick="doDelete()">✕ 삭제</button>
+        </div>
+      </div>
+      <div class="rp-s"><div class="rp-t">벽까지 거리</div><div class="dl" id="DLIST">—</div></div>
+      <div class="rp-s" style="flex:1;"><div class="rp-t">방 정보</div><div class="dl" id="RINFO"></div></div>
+    </div>
+
+    <!-- 구조 편집 모드 패널 -->
+    <div id="EDITPANEL">
+      <div class="ep-t">⚙ 구조 편집 중</div>
+      <div class="ep-row"><span class="ep-l">방 가로 W</span><span class="ep-v" id="EP_W">—</span></div>
+      <div class="ep-row"><span class="ep-l">방 세로 H</span><span class="ep-v" id="EP_H">—</span></div>
+      <div class="ep-row"><span class="ep-l">창문 오프셋</span><span class="ep-v" id="EP_WX">—</span></div>
+      <div class="ep-row"><span class="ep-l">창문 너비</span><span class="ep-v" id="EP_WW">—</span></div>
+      <div id="EP_CT" style="display:none">
+        <div style="height:1px;background:var(--b2);margin:8px 0;"></div>
+        <div style="font-size:9px;color:var(--mut2);margin-bottom:6px;">욕실2 (ㄱ자 영역)</div>
+        <div class="ep-row"><span class="ep-l">경계 X</span><span class="ep-v" id="EP_CTX">—</span></div>
+        <div class="ep-row"><span class="ep-l">경계 Y</span><span class="ep-v" id="EP_CTY">—</span></div>
+      </div>
+      <div style="height:1px;background:var(--b2);margin:8px 0;"></div>
+      <div class="ep-hint">
+        🟠 <b>주황 핸들</b> 드래그 → 벽 이동<br>
+        🔵 <b>파란 핸들</b> 드래그 → 창문 이동<br>
+        ◀▶ <b>창문 끝 핸들</b> → 너비 조절<br>
+        🟣 <b>보라 핸들</b> → 욕실 경계
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="sb">
+  <span>방: <span class="sv" id="SBROOM">—</span></span>
+  <span>가구: <span class="sv" id="SBCNT">0</span>개</span>
+  <span id="SBCOLL" style="display:none">⚠ <span style="color:var(--acc4);font-weight:700">충돌</span></span>
+  <span id="SBCUR">커서: <span class="sv">—</span></span>
+  <span style="margin-left:auto;font-size:9px;color:var(--mut2)">1px=5mm · 스냅 100mm</span>
+</div>
+
+<div id="TOAST"></div>
+
+<!-- FURN EDIT MODAL -->
+<div class="mbg" id="MFURN">
+  <div class="mbox">
+    <h2>✏ 가구 크기 편집</h2>
+    <div class="msub" id="FMSUB"></div>
+    <div class="mgrid">
+      <div class="mf"><label>가로 W (mm)</label><input type="number" id="FM_W"></div>
+      <div class="mf"><label>세로 D (mm)</label><input type="number" id="FM_H"></div>
+      <div class="mf full"><label>이름</label><input type="text" id="FM_NAME" maxlength="20"></div>
+    </div>
+    <div class="mrow">
+      <button class="mb mb-ok" onclick="applyFurn()">✓ 적용</button>
+      <button class="mb mb-ca" onclick="closeM('MFURN')">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMO MODAL -->
+<div class="mbg" id="MMEMO">
+  <div class="mbox">
+    <h2>✎ 메모 편집</h2>
+    <div class="mgrid">
+      <div class="mf full"><label>메모</label><input type="text" id="MEMO_INP" maxlength="30" placeholder="예: 에떼 이층침대 A안"></div>
+    </div>
+    <div class="mrow">
+      <button class="mb mb-ok" onclick="applyMemo()">✓ 저장</button>
+      <button class="mb mb-ca" onclick="closeM('MMEMO')">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLOT MODAL -->
+<div class="mbg" id="MSLOT">
+  <div class="mbox">
+    <h2>💾 배치안 이름</h2>
+    <div class="mgrid">
+      <div class="mf full"><label>이름</label><input type="text" id="SL_NAME" maxlength="20" placeholder="예: 1차 배치안, 와이프 안"></div>
+    </div>
+    <div class="mrow">
+      <button class="mb mb-ok" onclick="confirmSlot()">✓ 저장</button>
+      <button class="mb mb-ca" onclick="closeM('MSLOT')">취소</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ══════════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════════
+const S      = 0.2;   // px/mm
+const SNAP   = 100;   // furniture snap mm
+const ESNAP  = 50;    // structure edit snap mm
+const WALL   = 150;   // wall thickness mm
+const WPX    = 30;    // wall px
+const WSTH   = 100;   // wall-snap threshold mm
+const HW     = 16;    // handle half-width px — 32×32px로 클릭 쉽게
+const NS     = 'http://www.w3.org/2000/svg';
+
+// ══════════════════════════════════════════════
+// ROOM DEFINITIONS
+// ══════════════════════════════════════════════
+const RDEF = [
+  { name:'침실1', w:3400, h:3000,
+    win:  { x:900, ww:1600, wall:'top' },
+    doors:[
+      { id:1, label:'침실문', wall:'bottom', x:200,  w:950  },
+      { id:2, label:'화장실', wall:'left',   x:200,  w:800  },
+      { id:3, label:'발코니', wall:'top',    x:1400, w:1200 },
+    ],
+    cutout:null, extra:[], locked:false },
+  { name:'침실2', w:3150, h:3000,
+    win:  { x:700, ww:1400, wall:'bottom' },  // 창문 하단
+    doors:[
+      { id:1, label:'침실문', wall:'left', x:200, w:980 },
+    ],
+    cutout:null, extra:[], locked:false },
+  { name:'침실3', w:3400, h:3500,
+    win:  { x:700, ww:2100, wall:'top' },
+    doors:[
+      { id:1, label:'침실문', wall:'left', x:2600, w:900 },
+    ],
+    cutout:{ x:2440, y:2900, w:960, h:600 },
+    extra:[], locked:false },
+];
+
+// ══════════════════════════════════════════════
+// CATALOG
+// ══════════════════════════════════════════════
+const CAT = [
+  {t:'bunk', nm:'에떼 이층침대',sh:'이층침대',w:2300,h:1200,c:'#4fc3f7',bg:'rgba(79,195,247,.12)'},
+  {t:'desk', nm:'에떼 책상',    sh:'책상',    w:1200,h:500, c:'#7bed9f',bg:'rgba(123,237,159,.11)'},
+  {t:'w12',  nm:'옷장 1200',    sh:'옷장',    w:1200,h:600, c:'#ffd32a',bg:'rgba(255,211,42,.1)'},
+  {t:'w18',  nm:'옷장 1800',    sh:'옷장',    w:1800,h:600, c:'#ffd32a',bg:'rgba(255,211,42,.1)'},
+  {t:'w24',  nm:'옷장 2400',    sh:'옷장',    w:2400,h:600, c:'#ffd32a',bg:'rgba(255,211,42,.1)'},
+  {t:'sh8',  nm:'수납장 800',   sh:'수납장',  w:800, h:400, c:'#ff9ff3',bg:'rgba(255,159,243,.1)'},
+  {t:'sgl',  nm:'싱글침대',     sh:'싱글',    w:1000,h:2000,c:'#a29bfe',bg:'rgba(162,155,254,.11)'},
+  {t:'twn',  nm:'트윈침대',     sh:'트윈',    w:900, h:1900,c:'#a29bfe',bg:'rgba(162,155,254,.11)'},
+  {t:'dbl',  nm:'더블침대',     sh:'더블',    w:1400,h:2000,c:'#a29bfe',bg:'rgba(162,155,254,.11)'},
+  {t:'dsk2', nm:'책상 일반',    sh:'책상',    w:1000,h:500, c:'#7bed9f',bg:'rgba(123,237,159,.11)'},
+  {t:'chr',  nm:'의자',         sh:'의자',    w:500, h:500, c:'#fd9644',bg:'rgba(253,150,68,.12)'},
+  {t:'toy',  nm:'장난감 수납',  sh:'장난감',  w:600, h:400, c:'#ff6b9d',bg:'rgba(255,107,157,.1)'},
+  {t:'cust', nm:'커스텀',       sh:'커스텀',  w:1000,h:1000,c:'#c084fc',bg:'rgba(192,132,252,.1)'},
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let CUR    = 2;
+let ROOMS  = [];
+let PCS    = [[], [], []];
+let SLOTS  = [];
+let SEL    = null;
+let UID    = 1;
+let DRAG   = null;    // furniture drag
+let EDRAG  = null;    // structure edit drag  {type, ...}
+let EFID   = null;    // editing furn id
+let EDITMODE = false; // structure edit mode active
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  ROOMS = JSON.parse(JSON.stringify(RDEF));
+  _loadStore();
+  _buildCatalog();
+  switchRoom(2);
+  _attachEvents();
+  document.querySelectorAll('.mbg').forEach(bg =>
+    bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('show'); })
+  );
+});
+
+// ══════════════════════════════════════════════
+// STORAGE
+// ══════════════════════════════════════════════
+function _save() {
+  try {
+    localStorage.setItem('dhb5_rooms', JSON.stringify(ROOMS));
+    localStorage.setItem('dhb5_pcs',   JSON.stringify(PCS));
+    localStorage.setItem('dhb5_slots', JSON.stringify(SLOTS));
+    localStorage.setItem('dhb5_uid',   String(UID));
+  } catch(e) {}
+}
+function _loadStore() {
+  try {
+    const r=localStorage.getItem('dhb5_rooms'),
+          p=localStorage.getItem('dhb5_pcs'),
+          s=localStorage.getItem('dhb5_slots'),
+          u=localStorage.getItem('dhb5_uid');
+    if(r) ROOMS=JSON.parse(r);
+    if(p) { PCS=JSON.parse(p); while(PCS.length<3)PCS.push([]); }
+    if(s) SLOTS=JSON.parse(s);
+    if(u) UID=parseInt(u)||1;
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════════
+// FORMAT
+// ══════════════════════════════════════════════
+function fmt(mm) { return Math.round(mm).toLocaleString('ko-KR')+'mm'; }
+function snap(v, g) { return Math.round(v/g)*g; }
+
+// ══════════════════════════════════════════════
+// SVG HELPER
+// ══════════════════════════════════════════════
+function mk(tag, at, par) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k,v] of Object.entries(at)) el.setAttribute(k, String(v));
+  if (par) par.appendChild(el);
+  return el;
+}
+
+// ══════════════════════════════════════════════
+// BUILD ROOM SVG (main drawing)
+// ══════════════════════════════════════════════
+function buildRoom(ri) {
+  const rm  = ROOMS[ri];
+  const RWp = rm.w * S;
+  const RHp = rm.h * S;
+  const CW  = RWp + 2*WPX;
+  const CH  = RHp + 2*WPX;
+  const RX  = WPX, RY = WPX;
+
+  const ct   = rm.cutout;
+  const ctxp = ct ? ct.x*S : 0;
+  const ctyp = ct ? ct.y*S : 0;
+  const ctwp = ct ? ct.w*S : 0;
+  const cthp = ct ? ct.h*S : 0;
+
+  const wn  = rm.win;
+  const wop = wn.x  * S;
+  const wwp = wn.ww * S;
+
+  const svg = document.getElementById('RSV');
+  const dsv = document.getElementById('DSV');
+  const fl  = document.getElementById('FL');
+  const el  = document.getElementById('EL');
+  const rw  = document.getElementById('RW');
+
+  svg.innerHTML = '';
+  dsv.innerHTML = '';
+  el.innerHTML  = '';
+
+  [svg, dsv, el].forEach(e => {
+    e.setAttribute('width',   CW);
+    e.setAttribute('height',  CH);
+    e.setAttribute('viewBox', `0 0 ${CW} ${CH}`);
+  });
+  rw.style.width  = (CW + 20) + 'px';
+  rw.style.height = (CH + 20) + 'px';
+  fl.style.cssText = `left:${RX}px;top:${RY}px;width:${RWp}px;height:${RHp}px;position:absolute;overflow:visible;pointer-events:none;`;
+
+  // ── DEFS ──
+  const defs = mk('defs',{},svg);
+  const p10  = mk('pattern',{id:'g10',x:0,y:0,width:10,height:10,patternUnits:'userSpaceOnUse'},defs);
+  mk('path',{d:'M 10 0 L 0 0 0 10',fill:'none',stroke:'rgba(79,195,247,.05)','stroke-width':'.35'},p10);
+  const p20  = mk('pattern',{id:'g20',x:0,y:0,width:20,height:20,patternUnits:'userSpaceOnUse'},defs);
+  mk('rect',{width:20,height:20,fill:'url(#g10)'},p20);
+  mk('path',{d:'M 20 0 L 0 0 0 20',fill:'none',stroke:'rgba(79,195,247,.1)','stroke-width':'.5'},p20);
+  const p1m  = mk('pattern',{id:'g1m',x:0,y:0,width:200,height:200,patternUnits:'userSpaceOnUse'},defs);
+  mk('rect',{width:200,height:200,fill:'url(#g20)'},p1m);
+  mk('path',{d:'M 200 0 L 0 0 0 200',fill:'none',stroke:'rgba(79,195,247,.28)','stroke-width':'.9'},p1m);
+
+  mk('rect',{x:0,y:0,width:CW,height:CH,fill:'#07090f'},svg);
+
+  // ── FLOOR ──
+  function floor(x,y,w,h){
+    mk('rect',{x,y,width:w,height:h,fill:'#090d16'},svg);
+    mk('rect',{x,y,width:w,height:h,fill:'url(#g1m)'},svg);
+  }
+  if (ct) {
+    floor(RX,      RY,       RWp,      ctyp);
+    floor(RX,      RY+ctyp,  ctxp,     cthp);
+  } else {
+    floor(RX, RY, RWp, RHp);
+  }
+
+  // ── WALL HELPER ──
+  const WC='#1a2d4a', WE='rgba(79,195,247,.18)';
+  function wr(x,y,w,h){ if(w>0&&h>0) mk('rect',{x,y,width:w,height:h,fill:WC,stroke:WE,'stroke-width':'.5'},svg); }
+
+  // ── WINDOW GLASS ──
+  function drawWin(x1,y1,x2,y2,label){
+    mk('rect',{x:x1,y:y1,width:x2-x1,height:y2-y1,fill:'rgba(79,195,247,.07)'},svg);
+    mk('line',{x1,y1,x2:x1,y2,stroke:'rgba(79,195,247,.55)','stroke-width':'1.5'},svg);
+    mk('line',{x1:x2,y1,x2,y2,stroke:'rgba(79,195,247,.55)','stroke-width':'1.5'},svg);
+    mk('line',{x1,y1:(y1+y2)/2,x2,y2:(y1+y2)/2,stroke:'rgba(79,195,247,.25)','stroke-width':'.8'},svg);
+    mk('text',{x:(x1+x2)/2,y:y2-3,fill:'rgba(79,195,247,.55)',
+      'font-size':'7','font-family':'JetBrains Mono,monospace','text-anchor':'middle'},svg)
+      .textContent=label;
+  }
+
+  // ── 범용 벽 그리기: wall에 갭(문/창문) 뚫기 ──
+  // gaps: [{x: offset_mm, w: width_mm}] — 해당 벽 방향 기준 오프셋
+  function drawWallWithGaps(wall, gaps, winGap) {
+    // 각 벽의 SVG 좌표 계산
+    // wall: 'top'|'bottom'|'left'|'right'
+    // gaps: 문 갭들 (배열), winGap: 창문 갭 또는 null
+    const allGaps = [...(gaps||[]).map(g=>({...g, isWin:false}))];
+    if (winGap) allGaps.push({...winGap, isWin:true});
+    // 정렬
+    allGaps.sort((a,b)=>a.x-b.x);
+
+    if (wall === 'top') {
+      let cur = 0;
+      for (const g of allGaps) {
+        wr(RX+cur*S, 0, (g.x-cur)*S, WPX);
+        if (g.isWin) drawWin(RX+g.x*S, 0, RX+(g.x+g.w)*S, WPX, `창문 ${fmt(g.w)}`);
+        cur = g.x + g.w;
+      }
+      wr(RX+cur*S, 0, RWp-cur*S, WPX);
+
+    } else if (wall === 'bottom') {
+      let cur = 0;
+      for (const g of allGaps) {
+        wr(RX+cur*S, CH-WPX, (g.x-cur)*S, WPX);
+        if (g.isWin) drawWin(RX+g.x*S, CH-WPX, RX+(g.x+g.w)*S, CH, `창문 ${fmt(g.w)}`);
+        cur = g.x + g.w;
+      }
+      wr(RX+cur*S, CH-WPX, RWp-cur*S, WPX);
+
+    } else if (wall === 'left') {
+      let cur = 0;
+      for (const g of allGaps) {
+        wr(0, RY+cur*S, WPX, (g.x-cur)*S);
+        if (g.isWin) drawWin(0, RY+g.x*S, WPX, RY+(g.x+g.w)*S, `창문 ${fmt(g.w)}`);
+        cur = g.x + g.w;
+      }
+      wr(0, RY+cur*S, WPX, RHp-cur*S);
+
+    } else if (wall === 'right') {
+      let cur = 0;
+      for (const g of allGaps) {
+        wr(CW-WPX, RY+cur*S, WPX, (g.x-cur)*S);
+        if (g.isWin) drawWin(CW-WPX, RY+g.x*S, CW, RY+(g.x+g.w)*S, `창문 ${fmt(g.w)}`);
+        cur = g.x + g.w;
+      }
+      wr(CW-WPX, RY+cur*S, WPX, RHp-cur*S);
+    }
+  }
+
+  // ── 문 갭 목록을 벽별로 분류 ──
+  const doors = rm.doors || [];
+  function doorGapsFor(wallName, maxLen) {
+    return doors
+      .filter(d => d.wall === wallName)
+      .map(d => ({ x: Math.max(0, Math.min(d.x, maxLen-d.w)), w: d.w }));
+  }
+  function winGapFor(wallName) {
+    if (rm.win.wall === wallName && rm.win.ww > 0)
+      return { x: rm.win.x, w: rm.win.ww };
+    return null;
+  }
+
+  // ── DRAW WALLS ──
+  if (!ct) {
+    // ── RECTANGULAR ROOM ──
+    // Corners
+    wr(0,0,WPX,WPX); wr(CW-WPX,0,WPX,WPX); wr(0,CH-WPX,WPX,WPX); wr(CW-WPX,CH-WPX,WPX,WPX);
+    // Left / Right full-height walls
+    wr(0,RY,WPX,RHp); wr(CW-WPX,RY,WPX,RHp);
+    // 4면 벽: 문+창문 갭 반영
+    drawWallWithGaps('top',    doorGapsFor('top',    rm.w), winGapFor('top'));
+    drawWallWithGaps('bottom', doorGapsFor('bottom', rm.w), winGapFor('bottom'));
+    // 좌우 벽은 corners 제외하고 그림 (이미 wr로 그렸으나 갭 뚫어야 하므로 다시)
+    // 좌우 벽은 corners 때문에 별도 처리
+    _drawSideWall('left',  rm.h, doorGapsFor('left',  rm.h), winGapFor('left'));
+    _drawSideWall('right', rm.h, doorGapsFor('right', rm.h), winGapFor('right'));
+
+    mk('rect',{x:RX,y:RY,width:RWp,height:RHp,fill:'none',stroke:'rgba(79,195,247,.22)','stroke-width':'1.2'},svg);
+
+  } else {
+    // ── ㄱ SHAPE (침실3) ──
+    wr(0,0,WPX,WPX); wr(CW-WPX,0,WPX,WPX);
+    drawWallWithGaps('top', doorGapsFor('top', rm.w), winGapFor('top'));
+    // Left wall (full height)
+    wr(0,CH-WPX,WPX,WPX);
+    _drawSideWall('left', rm.h, doorGapsFor('left', rm.h), winGapFor('left'));
+    // Right wall (only up to cutout y)
+    wr(CW-WPX,RY,WPX,ctyp);
+    wr(CW-WPX,RY+ctyp,WPX,WPX);
+    // Bottom wall (only left portion)
+    wr(RX,CH-WPX,ctxp,WPX);
+    // Cutout
+    mk('rect',{x:RX+ctxp,y:RY+ctyp,width:ctwp,height:cthp,fill:'rgba(4,6,12,.92)'},svg);
+    mk('text',{x:RX+ctxp+ctwp/2,y:RY+ctyp+cthp/2,
+      fill:'rgba(79,195,247,.3)','font-size':'11','font-family':'Noto Sans KR,sans-serif',
+      'text-anchor':'middle','dominant-baseline':'middle'},svg).textContent='욕실2';
+    mk('line',{x1:RX+ctxp,y1:RY+ctyp,x2:RX+RWp, y2:RY+ctyp,stroke:'rgba(79,195,247,.65)','stroke-width':'2'},svg);
+    mk('line',{x1:RX+ctxp,y1:RY+ctyp,x2:RX+ctxp,y2:RY+RHp, stroke:'rgba(79,195,247,.65)','stroke-width':'2'},svg);
+    mk('polyline',{
+      points:`${RX},${RY} ${RX+RWp},${RY} ${RX+RWp},${RY+ctyp} ${RX+ctxp},${RY+ctyp} ${RX+ctxp},${RY+RHp} ${RX},${RY+RHp} ${RX},${RY}`,
+      fill:'none',stroke:'rgba(79,195,247,.28)','stroke-width':'1'},svg);
+  }
+
+  // ── 좌우 벽 갭 처리 (corners 제외, RY~RY+RHp 범위) ──
+  function _drawSideWall(side, wallLen, gaps, winGap) {
+    const x0 = (side==='left') ? 0 : CW-WPX;
+    const allG = [...(gaps||[]).map(g=>({...g,isWin:false}))];
+    if (winGap) allG.push({...winGap,isWin:true});
+    allG.sort((a,b)=>a.x-b.x);
+    let cur=0;
+    for (const g of allG) {
+      if(g.x-cur>0) wr(x0, RY+cur*S, WPX, (g.x-cur)*S);
+      if(g.isWin) drawWin(x0, RY+g.x*S, x0+WPX, RY+(g.x+g.w)*S, `창문 ${fmt(g.w)}`);
+      cur = g.x+g.w;
+    }
+    if(wallLen-cur>0) wr(x0, RY+cur*S, WPX, (wallLen-cur)*S);
+  }
+
+  // ── ALWAYS-VISIBLE DIMENSION LABELS ──
+  const da={fill:'rgba(79,195,247,.7)','font-size':'11','font-family':'JetBrains Mono,monospace',
+            'text-anchor':'middle','font-weight':'600','dominant-baseline':'middle'};
+
+  // Horizontal W label (top center inside room)
+  mk('text',{x:RX+RWp/2,y:RY+20,...da},svg).textContent=`W: ${fmt(rm.w)}`;
+
+  // Vertical H label (left center)
+  const hg=mk('g',{transform:`translate(${RX+18},${RY+RHp/2}) rotate(-90)`},svg);
+  mk('text',{x:0,y:0,...da},hg).textContent=`H: ${fmt(rm.h)}`;
+
+  if (ct) {
+    // Right portion height label
+    const rg=mk('g',{transform:`translate(${RX+RWp-18},${RY+ctyp/2}) rotate(90)`},svg);
+    mk('text',{x:0,y:0,...da,fill:'rgba(79,195,247,.45)'},rg).textContent=fmt(ct.y);
+  }
+
+  // Outer dim lines
+  const dm={fill:'rgba(79,195,247,.4)','font-size':'8','font-family':'JetBrains Mono,monospace','text-anchor':'middle'};
+  mk('line',{x1:RX,y1:CH+2,x2:RX+RWp,y2:CH+2,stroke:'rgba(79,195,247,.3)','stroke-width':'.8'},svg);
+  mk('text',{x:RX+RWp/2,y:CH+12,...dm},svg).textContent=fmt(rm.w);
+  const g2=mk('g',{transform:`translate(${CW+12},${RY+RHp/2}) rotate(90)`},svg);
+  mk('text',{x:0,y:0,...dm,'dominant-baseline':'middle'},g2).textContent=fmt(rm.h);
+
+  // Scale bar
+  const sbx=RX+RWp-104, sby=RY+RHp-14;
+  mk('line',{x1:sbx,y1:sby,x2:sbx+100,y2:sby,stroke:'rgba(79,195,247,.5)','stroke-width':'2'},svg);
+  mk('line',{x1:sbx,y1:sby-4,x2:sbx,y2:sby+4,stroke:'rgba(79,195,247,.5)','stroke-width':'1.5'},svg);
+  mk('line',{x1:sbx+100,y1:sby-4,x2:sbx+100,y2:sby+4,stroke:'rgba(79,195,247,.5)','stroke-width':'1.5'},svg);
+  mk('text',{x:sbx+50,y:sby-6,...dm},svg).textContent='500mm';
+
+  // ── SVG cursor tracking ──
+  svg.addEventListener('mousemove', ev => {
+    if (EDRAG) return;
+    const r=svg.getBoundingClientRect();
+    const mx=(ev.clientX-r.left-RX)/S, my=(ev.clientY-r.top-RY)/S;
+    if(mx>=0&&mx<=rm.w&&my>=0&&my<=rm.h)
+      document.getElementById('SBCUR').innerHTML=`커서: <span class="sv">X ${fmt(mx)} Y ${fmt(my)}</span>`;
+  });
+
+  // ── Draw edit handles if in edit mode ──
+  if (EDITMODE) _drawEditHandles(ri, RX, RY, RWp, RHp, CW, CH, ct, ctxp, ctyp, ctwp, cthp, wop, wwp);
+
+  // Update panels
+  _updateRInfo(ri);
+  const label = `${rm.name} · ${fmt(rm.w)}×${fmt(rm.h)}`;
+  document.getElementById('SBROOM').textContent = label;
+  document.getElementById('HSUB').textContent   = `${rm.name} · ${fmt(rm.w)}×${fmt(rm.h)}`;
+  _updateEditPanel(ri);
+}
+
+// ══════════════════════════════════════════════
+// DRAW EDIT HANDLES
+// ══════════════════════════════════════════════
+function _drawEditHandles(ri, RX, RY, RWp, RHp, CW, CH, ct, ctxp, ctyp, ctwp, cthp, wop, wwp) {
+  const el  = document.getElementById('EL');
+  const rm  = ROOMS[ri];
+  el.style.pointerEvents = 'all';
+
+  function handle(x, y, color, type, extra, cursor) {
+    const rect = mk('rect', {
+      x: x-HW, y: y-HW, width: HW*2, height: HW*2,
+      fill: color, rx: 4, cursor: cursor||'pointer',
+      stroke: '#fff', 'stroke-width': '1.5', opacity: '.92'
+    }, el);
+    rect.addEventListener('mousedown', ev => {
+      ev.stopPropagation(); ev.preventDefault();
+      // extra에 v0(시작 원래값) 포함 — 절대값 드래그 방식
+      EDRAG = { type, ri, mx0: ev.clientX, my0: ev.clientY, ...extra };
+    });
+    return rect;
+  }
+
+  // Label over handle
+  function hlabel(x, y, txt, color) {
+    const bg=mk('rect',{x:x-28,y:y-9,width:56,height:14,fill:'rgba(7,9,15,.85)',rx:3},el);
+    mk('text',{x,y:y+2,fill:color||'#ff9f43','font-size':'8','font-family':'JetBrains Mono,monospace',
+      'text-anchor':'middle','dominant-baseline':'middle','pointer-events':'none'},el).textContent=txt;
+  }
+
+  const OC = '#ff9f43'; // orange - wall handles
+  const BC = '#4fc3f7'; // blue   - window handle
+  const PC = '#c084fc'; // purple - cutout handle
+
+  // ── WALL HANDLES ──
+  if (!ct) {
+    handle(RX+RWp/2, RY,          OC, 'wall_top',    {v0:rm.h}, 'ns-resize');
+    hlabel(RX+RWp/2, RY-14,       `↕ 상단벽`, OC);
+    handle(RX+RWp/2, RY+RHp,      OC, 'wall_bottom', {v0:rm.h}, 'ns-resize');
+    hlabel(RX+RWp/2, RY+RHp+18,   `↕ 하단벽`, OC);
+    handle(RX,       RY+RHp/2,    OC, 'wall_left',   {v0:rm.w}, 'ew-resize');
+    handle(RX+RWp,   RY+RHp/2,    OC, 'wall_right',  {v0:rm.w}, 'ew-resize');
+  } else {
+    handle(RX+RWp/2,   RY,             OC, 'wall_top',    {v0:rm.h}, 'ns-resize');
+    handle(RX+ctxp/2,  RY+RHp,         OC, 'wall_bottom', {v0:rm.h}, 'ns-resize');
+    handle(RX,         RY+RHp/2,       OC, 'wall_left',   {v0:rm.w}, 'ew-resize');
+    handle(RX+RWp,     RY+ctyp/2,      OC, 'wall_right',  {v0:rm.w}, 'ew-resize');
+    handle(RX+ctxp+ctwp/2, RY+ctyp,   PC, 'cut_y', {v0:rm.cutout.y}, 'ns-resize');
+    hlabel(RX+ctxp+ctwp/2, RY+ctyp-18,`↕ 욕실 경계`, PC);
+    handle(RX+ctxp, RY+ctyp+cthp/2,   PC, 'cut_x', {v0:rm.cutout.x}, 'ew-resize');
+    hlabel(RX+ctxp-46, RY+ctyp+cthp/2,`↔ 욕실 경계`, PC);
+  }
+
+  // ── WINDOW HANDLES — 창문이 있는 벽에 배치 ──
+  const wwall = rm.win.wall||'top';
+  const wallLen_w = (wwall==='top'||wwall==='bottom') ? rm.w : rm.h;
+  const safeWx = Math.max(0, Math.min(wallLen_w - rm.win.ww, rm.win.x));
+
+  // 창문 중심 핸들 좌표 (벽 방향에 따라)
+  let wh_x1, wh_y1, wh_x2, wh_y2, wh_cx, wh_cy, wh_cursor;
+  switch(wwall) {
+    case 'top':
+      wh_x1=RX+safeWx*S; wh_y1=WPX/2;
+      wh_x2=RX+(safeWx+rm.win.ww)*S; wh_y2=WPX/2;
+      wh_cx=(wh_x1+wh_x2)/2; wh_cy=WPX/2; wh_cursor='ew-resize';
+      break;
+    case 'bottom':
+      wh_x1=RX+safeWx*S; wh_y1=CH-WPX/2;
+      wh_x2=RX+(safeWx+rm.win.ww)*S; wh_y2=CH-WPX/2;
+      wh_cx=(wh_x1+wh_x2)/2; wh_cy=CH-WPX/2; wh_cursor='ew-resize';
+      break;
+    case 'left':
+      wh_x1=WPX/2; wh_y1=RY+safeWx*S;
+      wh_x2=WPX/2; wh_y2=RY+(safeWx+rm.win.ww)*S;
+      wh_cx=WPX/2; wh_cy=(wh_y1+wh_y2)/2; wh_cursor='ns-resize';
+      break;
+    case 'right':
+      wh_x1=CW-WPX/2; wh_y1=RY+safeWx*S;
+      wh_x2=CW-WPX/2; wh_y2=RY+(safeWx+rm.win.ww)*S;
+      wh_cx=CW-WPX/2; wh_cy=(wh_y1+wh_y2)/2; wh_cursor='ns-resize';
+      break;
+  }
+  // 전체 창문 영역 드래그 (위치 이동)
+  const horiz_w = wwall==='top'||wwall==='bottom';
+  handle(wh_cx, wh_cy, BC, 'win_move', {v0:rm.win.x}, wh_cursor);
+  handle(wh_x1, wh_y1, BC, 'win_left',  {v0:rm.win.x},  wh_cursor);
+  handle(wh_x2, wh_y2, BC, 'win_right', {v0:rm.win.ww}, wh_cursor);
+  hlabel(wh_cx, horiz_w ? wh_cy : wh_cy, `창문 ${fmt(rm.win.ww)}`, BC);
+
+  // ── DOOR HANDLES (green) — 문 위치 드래그 이동 ──
+  const DC = '#7bed9f';
+  (rm.doors||[]).forEach((d, di) => {
+    const wallLen = (d.wall==='top'||d.wall==='bottom') ? rm.w : rm.h;
+    const safeX   = Math.max(0, Math.min(wallLen-d.w, d.x));
+    const cx      = safeX + d.w/2; // 문 중심 (벽 방향 오프셋 mm)
+    let hx, hy, cur;
+    switch(d.wall) {
+      case 'top':    hx=RX+cx*S;   hy=HW;           break;
+      case 'bottom': hx=RX+cx*S;   hy=CH-HW;        break;
+      case 'left':   hx=HW;        hy=RY+cx*S;      break;
+      case 'right':  hx=CW-HW;     hy=RY+cx*S;      break;
+      default:       hx=RX; hy=RY;
+    }
+    const horiz = d.wall==='top'||d.wall==='bottom';
+    handle(hx, hy, DC, 'door_move', {di, v0:safeX}, horiz?'ew-resize':'ns-resize');
+    // 라벨: 핸들 옆에 표시
+    const lx = d.wall==='right' ? hx+32 : hx;
+    const ly = d.wall==='bottom' ? hy+18 : d.wall==='top' ? hy-18 : hy;
+    hlabel(lx, ly, `${d.label||'문'} ${fmt(d.w)}`, DC);
+  });
+}
+
+// ══════════════════════════════════════════════
+// EDIT MODE DRAG HANDLING
+// ──────────────────────────────────────────────
+// 핵심 원칙:
+//   - EDRAG에 드래그 시작 시점의 원래 값(v0)을 저장
+//   - 매 프레임: 현재값 = snap(원래값 + 총 이동량)
+//   - origin을 갱신하지 않음 → 스냅이 부드럽게 동작
+// ══════════════════════════════════════════════
+function _processEditDrag(ev) {
+  if (!EDRAG) return;
+  const rm  = ROOMS[EDRAG.ri];
+
+  // 총 이동량 (px → mm)
+  const dx = (ev.clientX - EDRAG.mx0) / S;
+  const dy = (ev.clientY - EDRAG.my0) / S;
+
+  const MIN_DIM = 1500; // 방 최소 치수 mm
+  const MIN_WIN = 300;  // 창문 최소 너비 mm
+  const MIN_CT  = 400;  // cutout 최소 크기 mm
+
+  switch(EDRAG.type) {
+
+    // ── 벽 이동 ──
+    // 원래값(v0_h or v0_w) + 총delta → snap → clamp
+    case 'wall_top':
+      // 상단 벽을 위로 올리면 방이 커짐 (h 증가)
+      rm.h = Math.max(MIN_DIM, snap(EDRAG.v0 - dy, ESNAP));
+      break;
+
+    case 'wall_bottom':
+      // 하단 벽을 아래로 내리면 방이 커짐
+      rm.h = Math.max(MIN_DIM, snap(EDRAG.v0 + dy, ESNAP));
+      if (rm.cutout) rm.cutout.h = rm.h - rm.cutout.y;
+      break;
+
+    case 'wall_left':
+      // 좌측 벽을 왼쪽으로 내리면 방이 커짐
+      rm.w = Math.max(MIN_DIM, snap(EDRAG.v0 - dx, ESNAP));
+      break;
+
+    case 'wall_right':
+      // 우측 벽을 오른쪽으로 밀면 방이 커짐
+      rm.w = Math.max(MIN_DIM, snap(EDRAG.v0 + dx, ESNAP));
+      if (rm.cutout) rm.cutout.w = rm.w - rm.cutout.x;
+      break;
+
+    // ── ㄱ자 cutout 경계 ──
+    case 'cut_y': {
+      if (rm.cutout) {
+        const newY = Math.max(MIN_CT, Math.min(rm.h - MIN_CT, snap(EDRAG.v0 + dy, ESNAP)));
+        rm.cutout.y = newY;
+        rm.cutout.h = rm.h - newY;
+      }
+      break;
+    }
+    case 'cut_x': {
+      if (rm.cutout) {
+        const newX = Math.max(MIN_CT, Math.min(rm.w - MIN_CT, snap(EDRAG.v0 + dx, ESNAP)));
+        rm.cutout.x = newX;
+        rm.cutout.w = rm.w - newX;
+      }
+      break;
+    }
+
+    // ── 창문 위치 이동 ──
+    case 'win_move': {
+      const wwall = rm.win.wall||'top';
+      const wdelta = (wwall==='top'||wwall==='bottom') ? dx : dy;
+      const wLen   = (wwall==='top'||wwall==='bottom') ? rm.w : rm.h;
+      rm.win.x = Math.max(0, Math.min(wLen - rm.win.ww, snap(EDRAG.v0 + wdelta, ESNAP)));
+      break;
+    }
+    // ── 창문 시작 핸들 ──
+    case 'win_left': {
+      const wwall = rm.win.wall||'top';
+      const wdelta = (wwall==='top'||wwall==='bottom') ? dx : dy;
+      const newX = Math.max(0, Math.min(EDRAG.v0 + rm.win.ww - MIN_WIN, snap(EDRAG.v0 + wdelta, ESNAP)));
+      rm.win.ww += (rm.win.x - newX);
+      rm.win.x   = newX;
+      break;
+    }
+    // ── 창문 끝 핸들 ──
+    case 'win_right': {
+      const wwall = rm.win.wall||'top';
+      const wdelta = (wwall==='top'||wwall==='bottom') ? dx : dy;
+      const wLen   = (wwall==='top'||wwall==='bottom') ? rm.w : rm.h;
+      rm.win.ww = Math.max(MIN_WIN, Math.min(wLen - rm.win.x, snap(EDRAG.v0 + wdelta, ESNAP)));
+      break;
+    }
+    // ── 문 위치 이동 ──
+    case 'door_move': {
+      const d = rm.doors && rm.doors[EDRAG.di];
+      if (d) {
+        const wallLen = (d.wall==='top'||d.wall==='bottom') ? rm.w : rm.h;
+        const delta   = (d.wall==='top'||d.wall==='bottom') ? dx : dy;
+        d.x = Math.max(0, Math.min(wallLen - d.w, snap(EDRAG.v0 + delta, ESNAP)));
+      }
+      break;
+    }
+  }
+
+  // origin 갱신 안 함 — 절대값 방식이므로 불필요
+
+  buildRoom(EDRAG.ri);
+  _renderAll();
+  _updateEditPanel(EDRAG.ri);
+}
+
+function _updateEditPanel(ri) {
+  const rm = ROOMS[ri];
+  document.getElementById('EP_W').textContent  = fmt(rm.w);
+  document.getElementById('EP_H').textContent  = fmt(rm.h);
+  document.getElementById('EP_WX').textContent = fmt(rm.win.x);
+  document.getElementById('EP_WW').textContent = fmt(rm.win.ww);
+  const ctEl = document.getElementById('EP_CT');
+  if (rm.cutout) {
+    ctEl.style.display = 'block';
+    document.getElementById('EP_CTX').textContent = fmt(rm.cutout.x);
+    document.getElementById('EP_CTY').textContent = fmt(rm.cutout.y);
+  } else {
+    ctEl.style.display = 'none';
+  }
+}
+
+// ══════════════════════════════════════════════
+// EDIT MODE TOGGLE
+// ══════════════════════════════════════════════
+function toggleEditMode() {
+  EDITMODE = !EDITMODE;
+  const btn  = document.getElementById('BTN_EDIT');
+  const lock = document.getElementById('BTN_LOCK');
+  const banner= document.getElementById('EDITBANNER');
+  const lp   = document.getElementById('LP');
+  const fp   = document.getElementById('FURNPANEL');
+  const ep   = document.getElementById('EDITPANEL');
+  const ca   = document.getElementById('CA');
+
+  if (EDITMODE) {
+    btn.className    = 'hbtn edit-active';
+    btn.textContent  = '✕ 편집 종료';
+    lock.style.display = '';
+    banner.classList.add('show');
+    lp.classList.add('edit-dim');
+    document.body.classList.add('editmode');
+    ca.classList.add('editmode');
+    fp.style.display = 'none';
+    ep.classList.add('show');
+    document.getElementById('KEYHELP').style.display='none';
+    _deSel();
+  } else {
+    btn.className    = 'hbtn edit-mode';
+    btn.textContent  = '⚙ 구조 편집 모드';
+    lock.style.display = 'none';
+    banner.classList.remove('show');
+    lp.classList.remove('edit-dim');
+    document.body.classList.remove('editmode');
+    ca.classList.remove('editmode');
+    fp.style.display = '';
+    ep.classList.remove('show');
+    document.getElementById('KEYHELP').style.display='';
+    // Clear edit handles
+    const elLayer = document.getElementById('EL');
+    elLayer.innerHTML=''; elLayer.style.pointerEvents='none';
+  }
+  buildRoom(CUR);
+  _renderAll();
+}
+
+function lockStructure() {
+  // Save current room structure as "locked"
+  ROOMS[CUR].locked = true;
+  _save();
+  _toast(`"${ROOMS[CUR].name}" 구조 고정 저장됨 🔒`, '#7bed9f');
+  toggleEditMode(); // exit edit mode
+}
+
+// ══════════════════════════════════════════════
+// CUSTOM FURNITURE
+// ══════════════════════════════════════════════
+let _custColor = { c:'#c084fc', bg:'rgba(192,132,252,.13)' };
+
+function pickColor(el) {
+  document.querySelectorAll('.cc').forEach(e => e.classList.remove('sel-c'));
+  el.classList.add('sel-c');
+  _custColor = { c: el.dataset.c, bg: el.dataset.bg };
+}
+
+function addCustomPiece() {
+  if (EDITMODE) return;
+  const w   = parseInt(document.getElementById('CW_W').value)  || 1000;
+  const h   = parseInt(document.getElementById('CW_H').value)  || 1000;
+  const nm  = document.getElementById('CW_NM').value.trim() || `${w}×${h}`;
+  const mo  = document.getElementById('CW_MO').value.trim();
+  const { c, bg } = _custColor;
+
+  const p = {
+    id:UID++, type:'cust',
+    nm, sh: nm.length > 6 ? nm.slice(0,6)+'…' : nm,
+    x:200, y:200, w, h, rot:0,
+    memo: mo, c, bg
+  };
+  PCS[CUR].push(p);
+  _mountPiece(p);
+  _updCnt();
+  _doSel(p.id);
+  _save();
+  _toast(`"${nm}" 추가됨 (${w}×${h}mm)`, c);
+}
+function switchRoom(ri) {
+  CUR=ri; SEL=null;
+  if (EDITMODE) toggleEditMode(); // exit edit mode on room switch
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===ri));
+  buildRoom(ri);
+  _renderAll();
+  _updCnt(); _updPanel(); _clearDist();
+}
+
+// ══════════════════════════════════════════════
+// CATALOG
+// ══════════════════════════════════════════════
+function _buildCatalog() {
+  const el=document.getElementById('CATALOG'); el.innerHTML='';
+  CAT.forEach(ft=>{
+    const d=document.createElement('div'); d.className='fi';
+    d.innerHTML=`<div class="fdot" style="background:${ft.c}"></div><div><div class="fn">${ft.nm}</div><div class="fd">${ft.w}×${ft.h}mm</div></div>`;
+    d.onclick=()=>{ if(EDITMODE) return; addPiece(ft.t,200,200); };
+    el.appendChild(d);
+  });
+}
+
+// ══════════════════════════════════════════════
+// FURNITURE
+// ══════════════════════════════════════════════
+function addPiece(type,x,y) {
+  const ft=CAT.find(f=>f.t===type)||CAT[CAT.length-1];
+  const p={id:UID++,type,nm:ft.nm,sh:ft.sh,x,y,w:ft.w,h:ft.h,rot:0,memo:'',c:ft.c,bg:ft.bg};
+  PCS[CUR].push(p); _mountPiece(p); _updCnt(); _doSel(p.id); _save();
+}
+
+function _mountPiece(p) {
+  const layer=document.getElementById('FL');
+  let el=document.getElementById('FP'+p.id);
+  if(!el){
+    el=document.createElement('div'); el.id='FP'+p.id; el.className='fp';
+    el.dataset.id=String(p.id);
+    el.innerHTML='<div class="fp-in"></div>';
+    layer.appendChild(el);
+    el.addEventListener('mousedown',_onMD);
+    el.addEventListener('click',ev=>{ev.stopPropagation();_doSel(p.id);});
+    el.addEventListener('dblclick',ev=>{ev.stopPropagation();openFurnEdit(p.id);});
+  }
+  _refreshPiece(p,el);
+}
+
+function _refreshPiece(p,el) {
+  el=el||document.getElementById('FP'+p.id); if(!el) return;
+  const wp=p.w*S, hp=p.h*S;
+  el.style.left=p.x*S+'px'; el.style.top=p.y*S+'px';
+  el.style.width=wp+'px'; el.style.height=hp+'px';
+  el.style.color=p.c; el.style.borderColor=p.c; el.style.background=p.bg;
+  const isBed=['bunk','sgl','twn','dbl'].includes(p.type);
+  const isWard=['w12','w18','w24'].includes(p.type);
+  el.style.backgroundImage=isBed
+    ?`repeating-linear-gradient(45deg,${p.c}10 0,${p.c}10 1px,transparent 1px,transparent 9px)`
+    :isWard
+    ?`repeating-linear-gradient(90deg,${p.c}15 0,${p.c}15 1px,transparent 1px,transparent 20px)`
+    :'none';
+  el.querySelector('.fp-in').innerHTML=
+    `<div class="fp-nm" style="max-width:${wp-6}px">${p.sh}</div>`+
+    (wp>70&&hp>30?`<div class="fp-dm">${p.w}×${p.h}</div>`:'')+
+    (p.memo?`<div class="fp-mo">${p.memo}</div>`:'');
+  el.classList.toggle('sel',SEL===p.id);
+  _checkColl(p,el);
+}
+
+function _renderAll() {
+  document.getElementById('FL').innerHTML='';
+  PCS[CUR].forEach(p=>_mountPiece(p));
+}
+
+function _clamp(p) {
+  const rm=ROOMS[CUR];
+  p.x=Math.max(0,Math.min(rm.w-p.w,p.x));
+  p.y=Math.max(0,Math.min(rm.h-p.h,p.y));
+}
+function _wallSnap(p) {
+  const rm=ROOMS[CUR]; const el=document.getElementById('FP'+p.id); let s=false;
+  if(p.x<WSTH){p.x=0;s=true;} if(p.y<WSTH){p.y=0;s=true;}
+  if(rm.w-p.x-p.w<WSTH){p.x=rm.w-p.w;s=true;} if(rm.h-p.y-p.h<WSTH){p.y=rm.h-p.h;s=true;}
+  if(el) el.classList.toggle('wsnap',s);
+}
+function _checkColl(p,el) {
+  el=el||document.getElementById('FP'+p.id); if(!el) return false;
+  const ov=PCS[CUR].filter(q=>q.id!==p.id).some(q=>p.x<q.x+q.w&&p.x+p.w>q.x&&p.y<q.y+q.h&&p.y+p.h>q.y);
+  el.classList.toggle('coll',ov); return ov;
+}
+function _checkAllColl(){let a=false;PCS[CUR].forEach(p=>{if(_checkColl(p))a=true;});document.getElementById('SBCOLL').style.display=a?'inline':'none';}
+
+// ══════════════════════════════════════════════
+// SELECTION
+// ══════════════════════════════════════════════
+function _doSel(id){
+  SEL=id; document.querySelectorAll('.fp').forEach(e=>e.classList.toggle('sel',+e.dataset.id===id));
+  _updPanel(); _drawDist(id);
+}
+function _deSel(){
+  SEL=null; document.querySelectorAll('.fp').forEach(e=>e.classList.remove('sel'));
+  _updPanel(); _clearDist();
+}
+function _updPanel(){
+  const p=SEL?PCS[CUR].find(q=>q.id===SEL):null;
+  document.getElementById('NOSEL').style.display=p?'none':'block';
+  document.getElementById('SELB').style.display=p?'block':'none';
+  document.getElementById('BROT').disabled=!p;
+  document.getElementById('BMO').disabled=!p;
+  document.getElementById('BDEL').disabled=!p;
+  if(!p)return;
+  document.getElementById('SN').textContent=p.nm;
+  document.getElementById('SW').textContent=p.w+'mm';
+  document.getElementById('SH').textContent=p.h+'mm';
+  document.getElementById('SX').textContent=Math.round(p.x)+'mm';
+  document.getElementById('SY').textContent=Math.round(p.y)+'mm';
+  document.getElementById('SROT').textContent=p.rot+'°';
+  document.getElementById('SMEMO').textContent=p.memo||'';
+}
+function _updCnt(){document.getElementById('SBCNT').textContent=PCS[CUR].length;}
+
+function _updateRInfo(ri){
+  const rm=ROOMS[ri];
+  document.getElementById('RINFO').innerHTML=
+    `<div>크기: <span style="color:var(--acc)">${fmt(rm.w)}×${fmt(rm.h)}</span></div>`+
+    `<div>면적: <span style="color:var(--acc)">${((rm.w/1000)*(rm.h/1000)).toFixed(2)}㎡</span></div>`+
+    `<div>창문: <span style="color:var(--acc)">${rm.win.ww?fmt(rm.win.ww):'없음'}</span></div>`+
+    (rm.locked?`<div style="color:var(--acc3);font-weight:700">🔒 구조 고정됨</div>`:'');
+}
+
+// ══════════════════════════════════════════════
+// DISTANCE LINES
+// ══════════════════════════════════════════════
+function _drawDist(id){
+  _clearDist();
+  const p=PCS[CUR].find(q=>q.id===id); if(!p) return;
+  const rm=ROOMS[CUR]; const dsv=document.getElementById('DSV');
+  function fmm(mm){return fmt(mm);}
+  function dline(x1,y1,x2,y2,lbl){
+    mk('line',{x1:WPX+x1,y1:WPX+y1,x2:WPX+x2,y2:WPX+y2,
+      stroke:'rgba(123,237,159,.42)','stroke-width':'1','stroke-dasharray':'4,3'},dsv);
+    mk('text',{x:WPX+(x1+x2)/2,y:WPX+(y1+y2)/2,fill:'rgba(123,237,159,.82)',
+      'font-size':'9','font-family':'JetBrains Mono,monospace',
+      'text-anchor':'middle','dominant-baseline':'middle'},dsv).textContent=lbl;
+  }
+  const pcx=(p.x+p.w/2)*S, pcy=(p.y+p.h/2)*S;
+  dline(pcx,p.y*S,          pcx,0,       fmm(p.y));
+  dline(pcx,(p.y+p.h)*S,    pcx,rm.h*S,  fmm(rm.h-p.y-p.h));
+  dline(p.x*S,pcy,          0,pcy,        fmm(p.x));
+  dline((p.x+p.w)*S,pcy,    rm.w*S,pcy,  fmm(rm.w-p.x-p.w));
+  document.getElementById('DLIST').innerHTML=
+    `<div>↑ 위: <span>${fmm(p.y)}</span></div>`+
+    `<div>↓ 아래: <span>${fmm(rm.h-p.y-p.h)}</span></div>`+
+    `<div>← 좌: <span>${fmm(p.x)}</span></div>`+
+    `<div>→ 우: <span>${fmm(rm.w-p.x-p.w)}</span></div>`;
+}
+function _clearDist(){document.getElementById('DSV').innerHTML='';document.getElementById('DLIST').innerHTML='—';}
+
+// ══════════════════════════════════════════════
+// DRAG (furniture)
+// ══════════════════════════════════════════════
+function _onMD(ev){
+  if(ev.button!==0||EDITMODE) return;
+  ev.preventDefault(); ev.stopPropagation();
+  const id=+ev.currentTarget.dataset.id; _doSel(id);
+  const p=PCS[CUR].find(q=>q.id===id);
+  DRAG={id,mx0:ev.clientX,my0:ev.clientY,px0:p.x,py0:p.y,moved:false};
+  ev.currentTarget.classList.add('drag');
+}
+
+function _attachEvents(){
+  document.addEventListener('mousemove', ev=>{
+    if(EDRAG){ _processEditDrag(ev); return; }
+    if(!DRAG) return;
+    const p=PCS[CUR].find(q=>q.id===DRAG.id); if(!p) return;
+    const dx=(ev.clientX-DRAG.mx0)/S, dy=(ev.clientY-DRAG.my0)/S;
+    if(Math.abs(dx)>5||Math.abs(dy)>5) DRAG.moved=true;
+    p.x=DRAG.px0+dx; p.y=DRAG.py0+dy;
+    _clamp(p); _wallSnap(p);
+    const el=document.getElementById('FP'+p.id);
+    if(el){el.style.left=p.x*S+'px';el.style.top=p.y*S+'px';}
+    document.getElementById('SX').textContent=Math.round(p.x)+'mm';
+    document.getElementById('SY').textContent=Math.round(p.y)+'mm';
+  });
+  document.addEventListener('mouseup', ()=>{
+    if(EDRAG){ EDRAG=null; _save(); return; }
+    if(!DRAG) return;
+    if(DRAG.moved){
+      const p=PCS[CUR].find(q=>q.id===DRAG.id);
+      if(p){
+        p.x=snap(p.x,SNAP); p.y=snap(p.y,SNAP);
+        _clamp(p); _wallSnap(p); _refreshPiece(p);
+        _checkAllColl(); _drawDist(p.id); _save();
+      }
+    }
+    document.getElementById('FP'+DRAG.id)?.classList.remove('drag');
+    DRAG=null;
+  });
+  document.getElementById('RW').addEventListener('click', ev=>{
+    if(ev.target.closest('.fp')||EDITMODE) return; _deSel();
+  });
+  document.addEventListener('keydown', ev=>{
+    const tag=document.activeElement.tagName;
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+    if(document.querySelector('.mbg.show')) return;
+    if(EDITMODE){
+      if(ev.key==='Escape'){ toggleEditMode(); ev.preventDefault(); }
+      return;
+    }
+    if(ev.key==='r'||ev.key==='R'){ doRotate(); ev.preventDefault(); }
+    if(ev.key==='Delete'||ev.key==='Backspace'){ doDelete(); ev.preventDefault(); }
+    if(ev.key==='Escape'){ _deSel(); ev.preventDefault(); }
+  });
+}
+
+// ══════════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════════
+function doRotate(){
+  if(!SEL) return;
+  const p=PCS[CUR].find(q=>q.id===SEL); if(!p) return;
+  const cx=p.x+p.w/2, cy=p.y+p.h/2;
+  [p.w,p.h]=[p.h,p.w]; p.rot=(p.rot+90)%360;
+  p.x=cx-p.w/2; p.y=cy-p.h/2;
+  _clamp(p); _refreshPiece(p); _updPanel(); _drawDist(p.id); _save();
+}
+function doDelete(){
+  if(!SEL) return;
+  document.getElementById('FP'+SEL)?.remove();
+  PCS[CUR]=PCS[CUR].filter(p=>p.id!==SEL);
+  SEL=null; _updCnt(); _updPanel(); _clearDist(); _checkAllColl(); _save();
+}
+
+// ══════════════════════════════════════════════
+// FURN EDIT
+// ══════════════════════════════════════════════
+function openFurnEdit(id){
+  EFID=id; const p=PCS[CUR].find(q=>q.id===id); if(!p) return;
+  document.getElementById('FMSUB').textContent=p.nm;
+  document.getElementById('FM_W').value=p.w;
+  document.getElementById('FM_H').value=p.h;
+  document.getElementById('FM_NAME').value=p.sh||p.nm;
+  document.getElementById('MFURN').classList.add('show');
+}
+function applyFurn(){
+  const p=PCS[CUR].find(q=>q.id===EFID); if(!p) return;
+  p.w=parseInt(document.getElementById('FM_W').value)||p.w;
+  p.h=parseInt(document.getElementById('FM_H').value)||p.h;
+  const nm=document.getElementById('FM_NAME').value.trim();
+  if(nm){p.sh=nm;p.nm=nm;}
+  _clamp(p); _refreshPiece(p); _updPanel(); closeM('MFURN'); _save();
+}
+
+// ══════════════════════════════════════════════
+// MEMO
+// ══════════════════════════════════════════════
+function openMemo(){
+  if(!SEL) return;
+  const p=PCS[CUR].find(q=>q.id===SEL);
+  document.getElementById('MEMO_INP').value=p?.memo||'';
+  document.getElementById('MMEMO').classList.add('show');
+}
+function applyMemo(){
+  const p=PCS[CUR].find(q=>q.id===SEL); if(!p) return;
+  p.memo=document.getElementById('MEMO_INP').value.trim();
+  _refreshPiece(p); _updPanel(); closeM('MMEMO'); _save();
+}
+
+// ══════════════════════════════════════════════
+// SLOTS
+// ══════════════════════════════════════════════
+function quickSave(){_commitSlot(`슬롯 ${SLOTS.length+1} (${ROOMS[CUR].name})`);}
+function saveSlotNamed(){document.getElementById('SL_NAME').value='';document.getElementById('MSLOT').classList.add('show');}
+function confirmSlot(){const nm=document.getElementById('SL_NAME').value.trim()||`슬롯 ${SLOTS.length+1}`;_commitSlot(nm);closeM('MSLOT');}
+function _commitSlot(name){
+  SLOTS.push({id:Date.now(),name,room:CUR,
+    pcs:JSON.parse(JSON.stringify(PCS[CUR])),
+    ts:new Date().toLocaleString('ko-KR')});
+  _renderSlots(); _save(); _toast(`"${name}" 저장됨`,'#7bed9f');
+}
+function _renderSlots(){
+  const el=document.getElementById('SLOTS'); el.innerHTML='';
+  SLOTS.forEach((s,i)=>{
+    const d=document.createElement('div'); d.className='si';
+    d.innerHTML=`<div style="flex:1;min-width:0"><div class="sn">${s.name}</div><div class="ss">${ROOMS[s.room]?.name||'?'} · ${s.pcs?.length||0}개 · ${s.ts||''}</div></div>`+
+      `<button class="sdel" title="불러오기" onclick="loadSlot(${i})">↺</button>`+
+      `<button class="sdel" title="삭제" onclick="delSlot(${i})">×</button>`;
+    el.appendChild(d);
+  });
+}
+function loadSlot(i){
+  const s=SLOTS[i]; if(!s) return;
+  if(!confirm(`"${s.name}"을 불러올까요?`)) return;
+  CUR=s.room;
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===CUR));
+  PCS[CUR]=JSON.parse(JSON.stringify(s.pcs));
+  buildRoom(CUR); _renderAll(); _updCnt(); _updPanel();
+  _toast(`"${s.name}" 불러옴`,'#4fc3f7'); _save();
+}
+function delSlot(i){if(!confirm('삭제할까요?')) return;SLOTS.splice(i,1);_renderSlots();_save();}
+
+// ══════════════════════════════════════════════
+// JSON I/O
+// ══════════════════════════════════════════════
+function doExportJSON(){
+  const blob=new Blob([JSON.stringify({rooms:ROOMS,pcs:PCS,slots:SLOTS,uid:UID,v:'5.0',ts:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`DHbangbae_${new Date().toLocaleDateString('ko-KR').replace(/[.\s]/g,'')}.json`;
+  a.click(); _toast('JSON 저장됨','#7bed9f');
+}
+function doImportJSON(inp){
+  const f=inp.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.rooms) ROOMS=d.rooms;
+      if(d.pcs){PCS=d.pcs;while(PCS.length<3)PCS.push([]);}
+      if(d.slots) SLOTS=d.slots;
+      if(d.uid)   UID=d.uid;
+      switchRoom(CUR); _renderSlots(); _save();
+      _toast('불러오기 완료','#4fc3f7');
+    }catch(e){_toast('JSON 오류','#ff4d6d');}
+  };
+  r.readAsText(f); inp.value='';
+}
+
+// ══════════════════════════════════════════════
+// PNG
+// ══════════════════════════════════════════════
+function doExportPNG(){
+  const rm=ROOMS[CUR], CW=rm.w*S+2*WPX, CH=rm.h*S+2*WPX;
+  const canvas=document.createElement('canvas'); canvas.width=CW; canvas.height=CH;
+  const ctx=canvas.getContext('2d');
+  const blob=new Blob([new XMLSerializer().serializeToString(document.getElementById('RSV'))],{type:'image/svg+xml'});
+  const url=URL.createObjectURL(blob); const img=new Image();
+  img.onload=()=>{
+    ctx.drawImage(img,0,0); URL.revokeObjectURL(url);
+    PCS[CUR].forEach(p=>{
+      const px=WPX+p.x*S,py=WPX+p.y*S,pw=p.w*S,ph=p.h*S;
+      ctx.fillStyle=p.bg; ctx.fillRect(px,py,pw,ph);
+      ctx.strokeStyle=p.c; ctx.lineWidth=1.5; ctx.strokeRect(px,py,pw,ph);
+      ctx.fillStyle=p.c; ctx.font='bold 10px Noto Sans KR,sans-serif';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(p.sh||p.nm,px+pw/2,py+ph/2);
+      if(p.memo){ctx.font='9px Noto Sans KR,sans-serif';ctx.fillText(p.memo,px+pw/2,py+ph/2+13);}
+    });
+    ctx.fillStyle='rgba(79,195,247,.9)'; ctx.font='bold 10px JetBrains Mono,monospace';
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(`D:H방배 59A · ${rm.name} · ${fmt(rm.w)}×${fmt(rm.h)}`,5,3);
+    const a=document.createElement('a'); a.href=canvas.toDataURL('image/png');
+    a.download=`DHbangbae_${rm.name}.png`; a.click(); _toast('PNG 저장됨','#7bed9f');
+  };
+  img.src=url;
+}
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+function closeM(id){document.getElementById(id).classList.remove('show');}
+let _tT=null;
+function _toast(msg,col){
+  const t=document.getElementById('TOAST');
+  t.textContent=msg; t.style.background=col||'var(--acc)';
+  t.style.color=(col==='#7bed9f'||col==='#ffd32a')?'#07090f':'#fff';
+  t.style.display='block'; clearTimeout(_tT);
+  _tT=setTimeout(()=>t.style.display='none',2400);
+}
+
+// Expose globals
+Object.assign(window,{
+  switchRoom,toggleEditMode,lockStructure,
+  doRotate,doDelete,openFurnEdit,applyFurn,
+  openMemo,applyMemo,closeM,
+  quickSave,saveSlotNamed,confirmSlot,loadSlot,delSlot,
+  doExportJSON,doImportJSON,doExportPNG,
+  addCustomPiece, pickColor,
+});
+
+setTimeout(_renderSlots,0);
+</script>
+</body>
+</html>
