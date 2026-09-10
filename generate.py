@@ -1,11 +1,11 @@
 import os
-import google.generativeai as genai
+from google import genai
 from datetime import datetime
 import pytz
 
+# 최신 google-genai 패키지 방식으로 클라이언트 생성
 API_KEY = os.environ.get("GEMINI_API_KEY")
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+client = genai.Client(api_key=API_KEY)
 
 kr_time = datetime.now(pytz.timezone('Asia/Seoul')).strftime("%Y년 %m월 %d일")
 
@@ -20,7 +20,11 @@ prompt = """
 조각3: go to the park.
 """
 
-response = model.generate_content(prompt)
+# 최신 API 호출 방식 적용
+response = client.models.generate_content(
+    model='gemini-1.5-flash',
+    contents=prompt
+)
 lines = response.text.strip().split('\n')
 
 original = lines[0].replace("원본: ", "").strip()
@@ -53,13 +57,13 @@ html_content = f"""
         <div class="chunked" id="chunked">
             <span class="chunk-1">{chunk1}</span> <span class="slash">/</span> 
             <span class="chunk-2">{chunk2}</span> <span class="slash">/</span> 
-            <span class="chunk3">{chunk3}</span>
+            <span class="chunk-3">{chunk3}</span>
         </div>
     </div>
 </body>
 </html>
 """
 
-# english.html 파일로 생성 (기존 index.html 보호)
+# english.html 파일로 생성
 with open("english.html", "w", encoding="utf-8") as file:
     file.write(html_content)
