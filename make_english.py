@@ -1,4 +1,5 @@
 import os
+import sys
 import requests
 import re
 from datetime import datetime
@@ -24,7 +25,14 @@ headers = {'Content-Type': 'application/json'}
 data = {"contents": [{"parts": [{"text": prompt}]}]}
 
 response = requests.post(url, headers=headers, json=data)
-result_text = response.json()['candidates'][0]['content']['parts'][0]['text']
+response_data = response.json()
+
+# 구글이 정상적인 답변을 주지 않았을 경우, 에러 메시지를 화면에 출력하고 멈춥니다.
+if 'candidates' not in response_data:
+    print("🚨 구글 API 거절 에러 발생! 상세 내용:", response.text)
+    sys.exit(1)
+
+result_text = response_data['candidates'][0]['content']['parts'][0]['text']
 
 original = re.search(r'원본:\s*(.*)', result_text).group(1).strip()
 chunk1 = re.search(r'조각1:\s*(.*)', result_text).group(1).strip()
