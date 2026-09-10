@@ -95,14 +95,10 @@ def validate(data):
     sentences = data.get("sentences") or []
     dialogue = data.get("dialogue") or []
     quizzes = data.get("quizzes") or []
-    if len(words) < 8:
-        raise ValueError("need 8 words")
-    if len(sentences) < 12:
-        raise ValueError("need 12 sentences")
-    if len(dialogue) < 6:
-        raise ValueError("need 6 dialogue lines")
-    if len(quizzes) < 6:
-        raise ValueError("need 6 quizzes")
+    if len(words) < 8: raise ValueError("need 8 words")
+    if len(sentences) < 12: raise ValueError("need 12 sentences")
+    if len(dialogue) < 6: raise ValueError("need 6 dialogue lines")
+    if len(quizzes) < 6: raise ValueError("need 6 quizzes")
     for w in words[:8]:
         if not w.get("en") or not w.get("emo"):
             raise ValueError("bad word")
@@ -137,11 +133,10 @@ def ask_gemini(api_key):
 테마: {THEME['emoji']} {THEME['title']}
 키워드 힌트: {THEME['hint']}
 
-한국 6살 아이(영어권 4~5살 말투)가 20~30분 영어 놀이할 콘텐츠를 만들어라.
-짧고 입으로 나오는 말만. I would like, however, because 같은 긴 절 금지.
-Let's / I want / Can I / Look / This is / I'm 위주.
-
-반드시 JSON 객체만 출력. 마크다운 금지.
+한국 6살 아이 쳄이(영어권 4~5살 말투)가 20~30분 영어 놀이할 콘텐츠를 만들어라.
+이름은 반드시 쳄이. 쳄이/체이/책이 금지.
+짧고 입으로 나오는 말만. Let's / I want / Can I / Look / This is / I'm 위주.
+반드시 JSON 객체만 출력.
 """
     models = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.0-flash"]
     last_err = None
