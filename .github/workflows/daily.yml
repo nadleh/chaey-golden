@@ -1,36 +1,38 @@
-name: Daily English Generator 2.0
+name: Daily English Generator 3.0
 
 on:
   schedule:
-    - cron: '0 22 * * *'
+    - cron: "0 22 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-page:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests pytz
+        run: pip install requests
 
-      - name: Generate new HTML
+      - name: Generate english.html
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        # 방금 새로 만든 스크립트(make_english.py)를 실행합니다.
         run: python make_english.py
 
-      - name: Commit and push changes
+      - name: Commit and push
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add english.html
-          git commit -m "🤖 오늘의 영어 문장 자동 업데이트 완료" || exit 0
+          git diff --cached --quiet && echo "no content change" && exit 0
+          git commit -m "🤖 ${{ github.run_id }} 오늘의 영어 놀이 업데이트"
           git push

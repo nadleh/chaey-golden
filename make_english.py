@@ -1,75 +1,62 @@
+#!/usr/bin/env python3
+# 매일 GitHub Actions가 실행.
+# Gemini는 JSON만 만들고, template.html 껍데기에 넣어 english.html을 덮어쓴다.
+import json
 import os
 import sys
-import requests
-import re
 from datetime import datetime
-import pytz
+from zoneinfo import ZoneInfo
 
-API_KEY = os.environ.get("GEMINI_API_KEY")
-# 구글 최신 모델인 3.5 버전으로 주소를 수정했습니다.
-url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={API_KEY}"
+import requests
 
-kr_time = datetime.now(pytz.timezone('Asia/Seoul')).strftime("%Y년 %m월 %d일")
+SEOUL = ZoneInfo("Asia/Seoul")
+NOW = datetime.now(SEOUL)
+DATE_KR = NOW.strftime("%Y년 %m월 %d일")
+DATE_KEY = NOW.strftime("%Y-%m-%d")
 
-prompt = """
-초등학생 아이가 영어 끊어 읽기를 연습하려고 합니다. 
-매일 일상에서 자주 쓰는 새로운 영어 문장 1개를 만들어주고, 의미 단위로 3부분으로 끊어주세요.
-반드시 아래와 같은 형식으로만 답변하세요. 다른 말은 절대 추가하지 마세요.
+THEMES = [
+    {
+        "emoji": "🌳",
+        "title": "공원에서 놀자!",
+        "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요.",
+        "hint": "park, slide, swing, ball, run, friend, outside, happy",
+    },
+    {
+        "emoji": "🍎",
+        "title": "맛있는 간식!",
+        "subtitle": "배고파요. 사과, 주스, 쿠키를 먹어요.",
+        "hint": "apple, juice, cookie, hungry, yummy, water, please, thank you",
+    },
+    {
+        "emoji": "🧸",
+        "title": "장난감이랑 놀자!",
+        "subtitle": "곰돌이, 블록, 차. 같이 만들어요.",
+        "hint": "teddy, block, car, toy, share, build, mine, play",
+    },
+    {
+        "emoji": "🏠",
+        "title": "우리 집에서!",
+        "subtitle": "엄마, 아빠, 동생. 집에 있는 말이에요.",
+        "hint": "mom, dad, baby, home, door, wash, sleep, love",
+    },
+    {
+        "emoji": "🐶",
+        "title": "동물 친구들!",
+        "subtitle": "강아지, 고양이, 새. 소리를 내봐요.",
+        "hint": "dog, cat, bird, fish, hop, fly, soft, cute",
+    },
+    {
+        "emoji": "🌅",
+        "title": "아침이에요!",
+        "subtitle": "이 닮기, 옷 입기, 안녕. 하루를 시작해요.",
+        "hint": "morning, teeth, clothes, shoes, hello, breakfast, ready, go",
+    },
+    {
+        "emoji": "☔",
+        "title": "오늘 날씨는?",
+        "subtitle": "비, 해, 바람, 옷. 밖에 나가기 전에 봐요.",
+        "hint": "sun, rain, wind, cold, hot, coat, hat, wow",
+    },
+]
 
-원본: I would like to go to the park.
-조각1: I
-조각2: would like to
-조각3: go to the park.
-"""
-
-headers = {'Content-Type': 'application/json'}
-data = {"contents": [{"parts": [{"text": prompt}]}]}
-
-response = requests.post(url, headers=headers, json=data)
-response_data = response.json()
-
-if 'candidates' not in response_data:
-    print("🚨 구글 API 거절 에러 발생! 상세 내용:", response.text)
-    sys.exit(1)
-
-result_text = response_data['candidates'][0]['content']['parts'][0]['text']
-
-original = re.search(r'원본:\s*(.*)', result_text).group(1).strip()
-chunk1 = re.search(r'조각1:\s*(.*)', result_text).group(1).strip()
-chunk2 = re.search(r'조각2:\s*(.*)', result_text).group(1).strip()
-chunk3 = re.search(r'조각3:\s*(.*)', result_text).group(1).strip()
-
-html_content = f"""
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘의 끊어 읽기 🌟</title>
-    <style>
-        body {{ font-family: 'Comic Sans MS', sans-serif; text-align: center; margin-top: 10vh; background-color: #f4f9f4; }}
-        .card {{ background: white; padding: 50px; border-radius: 25px; display: inline-block; box-shadow: 0 10px 20px rgba(0,0,0,0.05); max-width: 90%; }}
-        .sentence {{ font-size: 2.5em; margin: 30px 0; color: #34495e; font-weight: bold; }}
-        .chunked {{ font-size: 2.5em; display: none; margin-top: 30px; font-weight: bold; }}
-        .chunk-1 {{ color: #e74c3c; }} .chunk-2 {{ color: #2980b9; }} .chunk-3 {{ color: #27ae60; }}
-        .slash {{ color: #bdc3c7; margin: 0 15px; }}
-        button {{ font-size: 1.5em; padding: 15px 30px; background-color: #f39c12; color: white; border: none; border-radius: 15px; cursor: pointer; }}
-    </style>
-</head>
-<body>
-    <div class="card">
-        <h1>{kr_time} 오늘의 문장 🌟</h1>
-        <div class="sentence" id="original">{original}</div>
-        <button onclick="document.getElementById('original').style.display='none'; document.getElementById('chunked').style.display='block';">어떻게 끊어 읽을까?</button>
-        <div class="chunked" id="chunked">
-            <span class="chunk-1">{chunk1}</span> <span class="slash">/</span> 
-            <span class="chunk-2">{chunk2}</span> <span class="slash">/</span> 
-            <span class="chunk-3">{chunk3}</span>
-        </div>
-    </div>
-</body>
-</html>
-"""
-
-with open("english.html", "w", encoding="utf-8") as file:
-    file.write(html_content)
+THEME = THEMES[NOW.timetuple().tm_yday % len(THEMES)]
