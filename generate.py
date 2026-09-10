@@ -3,7 +3,6 @@ from google import genai
 from datetime import datetime
 import pytz
 
-# 최신 google-genai 패키지 방식으로 클라이언트 생성
 API_KEY = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=API_KEY)
 
@@ -20,7 +19,6 @@ prompt = """
 조각3: go to the park.
 """
 
-# 최신 API 호출 방식 적용
 response = client.models.generate_content(
     model='gemini-1.5-flash',
     contents=prompt
@@ -64,6 +62,5 @@ html_content = f"""
 </html>
 """
 
-# english.html 파일로 생성
 with open("english.html", "w", encoding="utf-8") as file:
     file.write(html_content)
