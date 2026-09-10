@@ -2,7 +2,8 @@ name: Daily English Generator 3.0
 
 on:
   schedule:
-    - cron: "0 22 * * *"
+    # 15:00 Asia/Seoul = 06:00 UTC
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
