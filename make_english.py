@@ -6,7 +6,8 @@ from datetime import datetime
 import pytz
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
-url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+# 구글 최신 모델인 3.5 버전으로 주소를 수정했습니다.
+url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={API_KEY}"
 
 kr_time = datetime.now(pytz.timezone('Asia/Seoul')).strftime("%Y년 %m월 %d일")
 
@@ -27,7 +28,6 @@ data = {"contents": [{"parts": [{"text": prompt}]}]}
 response = requests.post(url, headers=headers, json=data)
 response_data = response.json()
 
-# 구글이 정상적인 답변을 주지 않았을 경우, 에러 메시지를 화면에 출력하고 멈춥니다.
 if 'candidates' not in response_data:
     print("🚨 구글 API 거절 에러 발생! 상세 내용:", response.text)
     sys.exit(1)
