@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-# 매일 GitHub Actions가 실행.
-# Gemini는 JSON만 만들고, template.html 껍데기에 넣어 english.html을 덮어쓴다.
+# Daily GitHub Actions generator
 import json
 import os
-import sys
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
 import requests
 
 SEOUL = ZoneInfo("Asia/Seoul")
 NOW = datetime.now(SEOUL)
 DATE_KR = NOW.strftime("%Y년 %m월 %d일")
 DATE_KEY = NOW.strftime("%Y-%m-%d")
+NAME = "채이"
 
 THEMES = [
     {"emoji": "\U0001f333", "title": "공원에서 놀자!", "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요.", "hint": "park, slide, swing, ball, run, friend, outside, happy"},
@@ -23,22 +21,16 @@ THEMES = [
     {"emoji": "\U0001f305", "title": "아침이에요!", "subtitle": "이 닥기, 옷 입기, 안녕. 하루를 시작해요.", "hint": "morning, teeth, clothes, shoes, hello, breakfast, ready, go"},
     {"emoji": "\u2614", "title": "오늘 날씨는?", "subtitle": "비, 해, 바람, 옷. 밖에 나가기 전에 봐요.", "hint": "sun, rain, wind, cold, hot, coat, hat, wow"},
 ]
-
 THEME = THEMES[NOW.timetuple().tm_yday % len(THEMES)]
 
 FALLBACK = {
-    "date": DATE_KR,
-    "dateKey": DATE_KEY,
+    "date": DATE_KR, "dateKey": DATE_KEY,
     "theme": {"emoji": "\U0001f333", "title": "공원에서 놀자!", "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요."},
     "words": [
-        {"en": "park", "ko": "공원", "emo": "\U0001f333"},
-        {"en": "slide", "ko": "미끄럼틀", "emo": "\U0001f6dd"},
-        {"en": "swing", "ko": "그네", "emo": "\U0001f3a0"},
-        {"en": "ball", "ko": "공", "emo": "\u26bd"},
-        {"en": "run", "ko": "달리다", "emo": "\U0001f3c3"},
-        {"en": "friend", "ko": "친구", "emo": "\U0001f467"},
-        {"en": "water", "ko": "물", "emo": "\U0001f4a7"},
-        {"en": "happy", "ko": "기뻘요", "emo": "\U0001f604"},
+        {"en": "park", "ko": "공원", "emo": "\U0001f333"}, {"en": "slide", "ko": "미끄럼틀", "emo": "\U0001f6dd"},
+        {"en": "swing", "ko": "그네", "emo": "\U0001f3a0"}, {"en": "ball", "ko": "공", "emo": "\u26bd"},
+        {"en": "run", "ko": "달리다", "emo": "\U0001f3c3"}, {"en": "friend", "ko": "친구", "emo": "\U0001f467"},
+        {"en": "water", "ko": "물", "emo": "\U0001f4a7"}, {"en": "happy", "ko": "기뻘요", "emo": "\U0001f604"},
     ],
     "sentences": [
         {"en": "Let's go to the park!", "ko": "공원에 가자!", "chunks": [["Let's go", "가자"], ["to the park!", "공원에!"]]},
@@ -56,11 +48,11 @@ FALLBACK = {
     ],
     "dialogue": [
         {"who": "별이", "role": "you", "en": "Let's go to the park!", "ko": "공원에 가자!"},
-        {"who": "쳄이", "role": "me", "en": "Yay! I want to play.", "ko": "예이! 나 놀고 싶어."},
+        {"who": NAME, "role": "me", "en": "Yay! I want to play.", "ko": "예이! 나 놀고 싶어."},
         {"who": "별이", "role": "you", "en": "Slide or swing?", "ko": "미끄럼틀이야, 그네야?"},
-        {"who": "쳄이", "role": "me", "en": "The slide! It's so big!", "ko": "미끄럼틀! 진짜 크다!"},
+        {"who": NAME, "role": "me", "en": "The slide! It's so big!", "ko": "미끄럼틀! 진짜 크다!"},
         {"who": "별이", "role": "you", "en": "Come on. Let's run!", "ko": "자, 달려가자!"},
-        {"who": "쳄이", "role": "me", "en": "I'm so happy!", "ko": "나 너무 기뻘!"},
+        {"who": NAME, "role": "me", "en": "I'm so happy!", "ko": "나 너무 기뻘!"},
     ],
     "quizzes": [
         {"type": "listen-pick", "q": "이 단어는 무엇일까요?", "speak": "slide", "answer": "slide",
@@ -77,7 +69,6 @@ FALLBACK = {
     ],
 }
 
-
 def normalize_chunks(chunks):
     out = []
     for c in chunks:
@@ -87,10 +78,8 @@ def normalize_chunks(chunks):
             out.append([str(c.get("en") or c.get("text") or ""), str(c.get("ko") or c.get("meaning") or "")])
     return out
 
-
 def validate(data):
-    if not isinstance(data, dict):
-        raise ValueError("not an object")
+    if not isinstance(data, dict): raise ValueError("not an object")
     words = data.get("words") or []
     sentences = data.get("sentences") or []
     dialogue = data.get("dialogue") or []
@@ -100,20 +89,19 @@ def validate(data):
     if len(dialogue) < 6: raise ValueError("need 6 dialogue lines")
     if len(quizzes) < 6: raise ValueError("need 6 quizzes")
     for w in words[:8]:
-        if not w.get("en") or not w.get("emo"):
-            raise ValueError("bad word")
+        if not w.get("en") or not w.get("emo"): raise ValueError("bad word")
     for s in sentences[:12]:
         chunks = normalize_chunks(s.get("chunks") or [])
-        if not s.get("en") or len(chunks) < 2:
-            raise ValueError("bad sentence")
+        if not s.get("en") or len(chunks) < 2: raise ValueError("bad sentence")
         s["chunks"] = chunks
         s["ko"] = s.get("ko") or ""
     for line in dialogue[:6]:
-        if not line.get("en"):
-            raise ValueError("bad dialogue")
-        line["who"] = line.get("who") or ("쳄이" if line.get("role") == "me" else "별이")
+        if not line.get("en"): raise ValueError("bad dialogue")
+        line["who"] = line.get("who") or (NAME if line.get("role") == "me" else "별이")
         line["role"] = line.get("role") if line.get("role") in ("me", "you") else "you"
         line["ko"] = line.get("ko") or ""
+        if line["who"] in ("쳄이", "책이", "챙이"):
+            line["who"] = NAME
     data["words"] = words[:8]
     data["sentences"] = sentences[:12]
     data["dialogue"] = dialogue[:6]
@@ -127,56 +115,39 @@ def validate(data):
     }
     return data
 
-
 def ask_gemini(api_key):
     prompt = f"""오늘 날짜: {DATE_KR}
 테마: {THEME['emoji']} {THEME['title']}
 키워드 힌트: {THEME['hint']}
-
-한국 6살 아이 쳄이(영어권 4~5살 말투)가 20~30분 영어 놀이할 콘텐츠를 만들어라.
-이름은 반드시 쳄이. 쳄이/체이/책이 금지.
-짧고 입으로 나오는 말만. Let's / I want / Can I / Look / This is / I'm 위주.
-반드시 JSON 객체만 출력.
+한국 6살 아이 {NAME}(영어권 4~5살 말투)가 20~30분 영어 놀이할 콘텐츠.
+이름은 반드시 {NAME}. 단축 영어만. JSON만.
 """
     models = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.0-flash"]
     last_err = None
     for model in models:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-        body = {
-            "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.9, "responseMimeType": "application/json"},
-        }
+        body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.9, "responseMimeType": "application/json"}}
         try:
             res = requests.post(url, json=body, timeout=90)
             data = res.json()
             if "candidates" not in data:
                 last_err = f"{model}: {res.text[:400]}"
-                print("모델 실패", last_err)
                 continue
             text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
             text = text.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-            parsed = json.loads(text)
-            return validate(parsed)
+            return validate(json.loads(text))
         except Exception as e:
             last_err = f"{model}: {e}"
-            print("파싱/요청 실패", last_err)
     raise RuntimeError(last_err or "gemini failed")
-
 
 def render(content):
     here = os.path.dirname(os.path.abspath(__file__))
-    template_path = os.path.join(here, "template.html")
-    with open(template_path, "r", encoding="utf-8") as f:
-        html = f.read()
-    if "__CONTENT__" not in html:
-        raise RuntimeError("template.html missing __CONTENT__")
-    payload = json.dumps(content, ensure_ascii=False)
-    html = html.replace("__CONTENT__", payload)
-    out = os.path.join(here, "english.html")
-    with open(out, "w", encoding="utf-8") as f:
-        f.write(html)
-    print("wrote", out, "theme=", content["theme"]["title"])
-
+    html = open(os.path.join(here, "template.html"), encoding="utf-8").read()
+    html = html.replace("__CONTENT__", json.dumps(content, ensure_ascii=False))
+    # harden visible name in the shell
+    html = html.replace("쳄이", NAME).replace("책이", NAME).replace("챙이", NAME)
+    open(os.path.join(here, "english.html"), "w", encoding="utf-8").write(html)
+    print("wrote english.html", content["theme"]["title"], NAME)
 
 def main():
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
@@ -187,14 +158,11 @@ def main():
             print("gemini ok")
         except Exception as e:
             print("gemini fallback:", e)
-    else:
-        print("no GEMINI_API_KEY, using fallback")
     if content is None:
         content = FALLBACK
         content["date"] = DATE_KR
         content["dateKey"] = DATE_KEY
     render(content)
-
 
 if __name__ == "__main__":
     main()
