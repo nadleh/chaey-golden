@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="채이 영어" />
+  <meta name="apple-mobile-web-app-title" content="쳄이 영어" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#FFF6EB" />
   <meta name="format-detection" content="telephone=no" />
-  <title>채이의 영어 놀이</title>
+  <title>쳄이의 영어 놀이</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Jua&display=swap" rel="stylesheet" />
@@ -28,11 +28,13 @@
     .brand { font-size: 14px; color: var(--muted); }
     .brand b { color: var(--ink); font-size: 16px; }
     .stars { background: #fff; border-radius: 999px; padding: 5px 11px; box-shadow: 0 6px 16px rgba(43,42,76,.08); font-size: 15px; }
+    .progress-wrap { display: none; }
+    .progress-wrap.on { display: block; }
     .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
     .bar { height: 8px; background: #F0E6D6; border-radius: 999px; overflow: hidden; }
     .bar > i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width .3s ease; }
     .stage { min-height: 0; overflow: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; margin: 10px 0 12px; }
-    .card { background: var(--card); border-radius: 24px; box-shadow: 0 10px 24px rgba(43,42,76,.10); padding: 18px 16px 16px; min-height: 100%; }
+    .card { background: var(--card); border-radius: 24px; box-shadow: 0 10px 24px rgba(43,42,76,.10); padding: 16px 14px 14px; min-height: 100%; }
     h1 { font-size: 26px; line-height: 1.25; margin: 0 0 6px; }
     h2 { font-size: 22px; margin: 0 0 6px; }
     .sub { color: var(--muted); font-size: 15px; line-height: 1.45; margin: 0 0 12px; }
@@ -88,6 +90,30 @@
     .hidden { display: none !important; }
     .rotate-warn { display: none; position: fixed; inset: 0; z-index: 20; background: var(--cream); align-items: center; justify-content: center; text-align: center; padding: 24px; }
     @media (orientation: landscape) and (max-height: 500px) { .app { display: none; } .rotate-warn { display: flex; flex-direction: column; } }
+    .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .cal-head h2 { margin: 0; font-size: 20px; }
+    .nav-btn { width: 40px; height: 40px; border: 0; border-radius: 12px; background: #FFF1D6; color: var(--ink); font-size: 18px; }
+    .dow { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 4px; }
+    .dow span { text-align: center; font-size: 12px; color: var(--muted); padding: 4px 0; }
+    .dow span:first-child { color: #E25B4A; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .day { position: relative; border: 0; background: #FFF8F0; border-radius: 14px; min-height: 48px; padding: 4px 0 6px; color: var(--ink); }
+    .day .n { display: block; font-size: 13px; line-height: 1; }
+    .day .mark { display: block; height: 18px; font-size: 16px; line-height: 18px; }
+    .day.empty { background: transparent; pointer-events: none; }
+    .day.future { color: #C9C3B8; background: #F7F1E8; }
+    .day.today { outline: 3px solid var(--coral); background: #FFE8DF; }
+    .day.done { background: #FFF3C4; }
+    .day.done .mark { animation: pop .35s ease; }
+    .day.past:not(.done) { opacity: .72; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 8px; }
+    .stat { background: #FFF8F0; border-radius: 14px; padding: 10px 8px; text-align: center; }
+    .stat b { display: block; font-size: 20px; }
+    .stat span { font-size: 12px; color: var(--muted); }
+    .today-card { background: #FFF1D6; border-radius: 16px; padding: 10px 12px; }
+    .today-card .t { font-size: 16px; }
+    .today-card .s { font-size: 13px; color: #8A6200; margin-top: 2px; }
+    .flyer-star { position: fixed; z-index: 40; font-size: 72px; pointer-events: none; left: 0; top: 0; line-height: 1; text-shadow: 0 8px 18px rgba(255, 180, 40, .45); transition: transform .9s cubic-bezier(.15,.85,.2,1), opacity .25s linear; }
     @keyframes pop { from { transform: scale(.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-8px); } }
   </style>
@@ -96,18 +122,37 @@
   <div class="rotate-warn"><div style="font-size:48px;">📱</div><h1>세로로 세워 주세요</h1><p class="sub">아이폰 에어는 세워서 하는 놀이에요.</p></div>
   <div class="app">
     <header class="chrome">
-      <div class="top"><div class="brand">⭐ <b>채이의 영어 놀이</b></div><div class="stars">⭐ <span id="star-count">0</span></div></div>
-      <div class="progress-label"><span id="stage-name">시작</span><span id="stage-count">0 / 4</span></div>
-      <div class="bar"><i id="bar"></i></div>
+      <div class="top"><div class="brand">⭐ <b>쳄이의 영어 놀이</b></div><div class="stars" id="star-chip">⭐ <span id="star-count">0</span>일</div></div>
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-label"><span id="stage-name">시작</span><span id="stage-count">0 / 4</span></div>
+        <div class="bar"><i id="bar"></i></div>
+      </div>
     </header>
     <main class="stage" id="stage">
-      <section class="card" id="screen-intro">
+      <section class="card" id="screen-cal">
+        <div class="cal-head">
+          <button class="nav-btn" id="cal-prev" type="button">‹</button>
+          <h2 id="cal-title">2026년 9월</h2>
+          <button class="nav-btn" id="cal-next" type="button">›</button>
+        </div>
+        <div class="dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="stats">
+          <div class="stat"><b id="stat-days">0</b><span>별 받은 날</span></div>
+          <div class="stat"><b id="stat-streak">0</b><span>연속 출석</span></div>
+        </div>
+        <div class="today-card">
+          <div class="t" id="today-theme">오늘의 놀이</div>
+          <div class="s" id="today-sub">끝나고 나면 노란 별이 오늘 날짜에 박혀요.</div>
+        </div>
+      </section>
+      <section class="card hidden" id="screen-intro">
         <div class="theme-chip" id="intro-date">오늘의 영어</div>
         <div class="hero" id="intro-emo">⭐</div>
         <h1 id="intro-title">영어 놀이</h1>
         <p class="sub" id="intro-sub">듣고, 조각을 열고, 따라 말하면 별이 쌓여요.</p>
-        <div class="tips">사파리에서 공유 → 홈 화면에 추가 하면 위·아래 바가 사라져서 더 편해요.</div>
-        <ul class="steps"><li>① 단어 8개</li><li>② 끊어 읽기 12문장</li><li>③ 꼬마 대화</li><li>④ 듣기 퀴즈 6문제</li></ul>
+        <div class="tips">같은 아이콘으로만 열면 달력 별이 계속 남아요. 사파리 기록 삭제는 하지 마세요.</div>
+        <ul class="steps"><li>① 단어 8개</li><li>② 끊어 읽기 12문장</li><li>③ 꾸마 대화</li><li>④ 듣기 퀴즈 6문제</li></ul>
       </section>
       <section class="card hidden" id="screen-words">
         <h2>오늘의 단어</h2>
@@ -121,8 +166,8 @@
         <div class="chunks" id="sen-chunks"></div>
       </section>
       <section class="card hidden" id="screen-dialogue">
-        <h2>꼬마 대화</h2>
-        <p class="sub">말풍선을 눌러 듣고, 채이 차례는 따라 말해 보세요.</p>
+        <h2>꾸마 대화</h2>
+        <p class="sub">말풍선을 눌러 듣고, 쳄이 차례는 따라 말해 보세요.</p>
         <div class="dialog" id="dialog-box"></div>
       </section>
       <section class="card hidden" id="screen-quiz">
@@ -134,9 +179,9 @@
         <div class="choices" id="quiz-choices"></div>
       </section>
       <section class="card hidden finish" id="screen-finish">
-        <div class="medal">🥇</div>
-        <h1>최고예요, 채이!</h1>
-        <p class="sub">오늘 놀이를 끝냈어요. 별 <b id="final-stars">0</b>개!</p>
+        <div class="medal">퇵</div>
+        <h1>최고예요, 쳄이!</h1>
+        <p class="sub">오늘 놀이를 끝냈어요. 별이 달력으로 날아가요.</p>
       </section>
     </main>
     <footer class="dock" id="dock"></footer>
@@ -147,10 +192,50 @@
     const SENTENCES = CONTENT.sentences;
     const DIALOGUE = CONTENT.dialogue;
     const QUIZZES = CONTENT.quizzes;
+    const STORE_KEY = "chaey-english-v1";
+    const TODAY = CONTENT.dateKey || toKey(new Date());
     let stars = 0, senIndex = 0, chunkShown = 0, quizIndex = 0, quizLocked = false;
     let heardWords = new Set();
     let orderPicked = [];
     let audioUnlocked = false;
+    let calCursor = parseKey(TODAY);
+    let justFinished = false;
+    function toKey(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return y + "-" + m + "-" + day;
+    }
+    function parseKey(key) {
+      const [y, m] = (key || TODAY).split("-").map(Number);
+      return { y: y || 2026, m: (m || 1) - 1 };
+    }
+    function loadStore() {
+      try {
+        const raw = localStorage.getItem(STORE_KEY);
+        const data = raw ? JSON.parse(raw) : null;
+        if (data && data.days && typeof data.days === "object") return data;
+      } catch (e) {}
+      return { days: {} };
+    }
+    function saveStore(data) { localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+    function doneDays() { return loadStore().days; }
+    function isDone(key) { return !!doneDays()[key]; }
+    function countDays() { return Object.keys(doneDays()).length; }
+    function streakCount() {
+      const days = doneDays();
+      let n = 0;
+      const d = new Date(TODAY + "T12:00:00");
+      if (!days[toKey(d)]) d.setDate(d.getDate() - 1);
+      while (days[toKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+      return n;
+    }
+    function markTodayDone() {
+      const data = loadStore();
+      const t = CONTENT.theme || {};
+      data.days[TODAY] = { theme: t.title || "영어 놀이", emoji: t.emoji || "⭐", stars: stars, doneAt: new Date().toISOString() };
+      saveStore(data);
+    }
     function unlockAudio() {
       if (audioUnlocked || !("speechSynthesis" in window)) return;
       audioUnlocked = true;
@@ -175,16 +260,20 @@
       window.speechSynthesis.getVoices();
       window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
     }
-    function addStars(n) { stars += n; document.getElementById("star-count").textContent = stars; }
+    function addStars(n) { stars += n; }
     function setProgress(stage, detail) {
-      const map = { intro:[0,"시작"], words:[1,"단어 놀이"], sentences:[2,"끊어 읽기"], dialogue:[3,"꼬마 대화"], quiz:[4,"듣기 퀴즈"], finish:[5,"완료"] };
+      const map = { cal:[0,"달력"], intro:[0,"시작"], words:[1,"단어 놀이"], sentences:[2,"끊어 읽기"], dialogue:[3,"꾸마 대화"], quiz:[4,"듣기 퀴즈"], finish:[5,"완료"] };
       const [n, name] = map[stage];
       document.getElementById("stage-name").textContent = name + (detail ? " · " + detail : "");
       document.getElementById("stage-count").textContent = Math.min(n, 4) + " / 4";
       document.getElementById("bar").style.width = ((stage === "finish" ? 4 : n) / 4 * 100) + "%";
+      document.getElementById("progress-wrap").classList.toggle("on", stage !== "cal");
+      document.getElementById("star-chip").innerHTML = stage === "cal"
+        ? "⭐ <span id=\"star-count\">" + countDays() + "</span>일"
+        : "⭐ <span id=\"star-count\">" + stars + "</span>";
     }
     function showScreen(id) {
-      ["intro","words","sentences","dialogue","quiz","finish"].forEach(s => {
+      ["cal","intro","words","sentences","dialogue","quiz","finish"].forEach(s => {
         document.getElementById("screen-" + s).classList.toggle("hidden", s !== id);
       });
       document.getElementById("stage").scrollTop = 0;
@@ -201,9 +290,52 @@
         dock.appendChild(el);
       });
     }
+    function renderCalendar() {
+      document.getElementById("cal-title").textContent = calCursor.y + "년 " + (calCursor.m + 1) + "월";
+      const grid = document.getElementById("cal-grid");
+      grid.innerHTML = "";
+      const first = new Date(calCursor.y, calCursor.m, 1);
+      const startDow = first.getDay();
+      const lastDate = new Date(calCursor.y, calCursor.m + 1, 0).getDate();
+      const days = doneDays();
+      for (let i = 0; i < startDow; i++) {
+        const empty = document.createElement("div");
+        empty.className = "day empty";
+        grid.appendChild(empty);
+      }
+      for (let d = 1; d <= lastDate; d++) {
+        const key = calCursor.y + "-" + String(calCursor.m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+        const rec = days[key];
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "day";
+        btn.dataset.day = key;
+        if (key === TODAY) btn.classList.add("today");
+        if (key > TODAY) btn.classList.add("future");
+        if (key < TODAY) btn.classList.add("past");
+        if (rec) btn.classList.add("done");
+        btn.innerHTML = "<span class=\"n\">" + d + "</span><span class=\"mark\">" + (rec ? "⭐" : (key === TODAY ? "·" : "")) + "</span>";
+        btn.onclick = () => {
+          if (key > TODAY) return;
+          if (key === TODAY) go("intro");
+          else if (rec) showPast(rec, key);
+        };
+        grid.appendChild(btn);
+      }
+      document.getElementById("stat-days").textContent = countDays();
+      document.getElementById("stat-streak").textContent = streakCount();
+      const t = CONTENT.theme || {};
+      const done = isDone(TODAY);
+      document.getElementById("today-theme").textContent = (t.emoji || "⭐") + " " + (t.title || "오늘의 놀이");
+      document.getElementById("today-sub").textContent = done ? "오늘은 이미 별이 박혀 있어요. 또 해도 돼요." : (t.subtitle || "끝나고 나면 노란 별이 오늘 날짜에 박혀요.");
+    }
+    function showPast(rec, key) {
+      document.getElementById("today-theme").textContent = (rec.emoji || "⭐") + " " + (rec.theme || "그날의 놀이");
+      document.getElementById("today-sub").textContent = key + "에 별을 받았어요.";
+    }
     function fillIntro() {
       const t = CONTENT.theme || {};
-      document.title = "채이의 영어 놀이 · " + (t.title || "");
+      document.title = "쳄이의 영어 놀이 · " + (t.title || "");
       document.getElementById("intro-date").textContent = (CONTENT.date || "") + " · 아이폰 에어";
       document.getElementById("intro-emo").textContent = t.emoji || "⭐";
       document.getElementById("intro-title").textContent = t.title || "영어 놀이";
@@ -212,6 +344,12 @@
     function go(stage) {
       setProgress(stage);
       showScreen(stage);
+      if (stage === "cal") {
+        renderCalendar();
+        const done = isDone(TODAY);
+        setDock([{ label: done ? "오늘 한 번 더 하기" : "오늘 영어 놀이 시작!", cls: done ? "btn-sun" : "btn-primary", fn: () => go("intro") }]);
+        if (justFinished) { justFinished = false; requestAnimationFrame(() => flyStarTo(TODAY)); }
+      }
       if (stage === "intro") {
         fillIntro();
         setDock([{ label: "시작! " + (CONTENT.theme && CONTENT.theme.title || "영어 놀이"), cls: "btn-primary", fn: () => go("words") }]);
@@ -221,10 +359,27 @@
       if (stage === "dialogue") renderDialogue();
       if (stage === "quiz") loadQuiz();
       if (stage === "finish") {
-        document.getElementById("final-stars").textContent = stars;
-        setDock([{ label: "처음부터 한 번 더", cls: "btn-sun", fn: restart }]);
+        markTodayDone();
+        justFinished = true;
         fireConfetti();
+        setDock([{ label: "달력에 별 붙이러 가기 ➜", cls: "btn-sun", fn: () => go("cal") }]);
       }
+    }
+    function flyStarTo(dateKey) {
+      const cell = document.querySelector('[data-day="' + dateKey + '"]');
+      if (!cell) { renderCalendar(); return; }
+      const startX = window.innerWidth / 2;
+      const startY = window.innerHeight * 0.36;
+      const flyer = document.createElement("div");
+      flyer.className = "flyer-star";
+      flyer.textContent = "⭐";
+      flyer.style.transform = "translate(" + startX + "px," + startY + "px) translate(-50%,-50%) scale(1)";
+      document.body.appendChild(flyer);
+      const r = cell.getBoundingClientRect();
+      requestAnimationFrame(() => {
+        flyer.style.transform = "translate(" + (r.left + r.width / 2) + "px," + (r.top + r.height / 2) + "px) translate(-50%,-50%) scale(.28)";
+      });
+      setTimeout(() => { flyer.remove(); renderCalendar(); }, 950);
     }
     function renderWords() {
       const grid = document.getElementById("word-grid");
@@ -232,10 +387,10 @@
       WORDS.forEach(w => {
         const b = document.createElement("button");
         b.className = "word-card" + (heardWords.has(w.en) ? " heard" : "");
-        b.innerHTML = `<span class="emo">${w.emo}</span><div class="en">${w.en}</div><div class="ko">${w.ko}</div>`;
+        b.innerHTML = "<span class=\"emo\">" + w.emo + "</span><div class=\"en\">" + w.en + "</div><div class=\"ko\">" + w.ko + "</div>";
         b.onclick = () => {
           speak(w.en, 0.8);
-          if (!heardWords.has(w.en)) { heardWords.add(w.en); addStars(1); }
+          if (!heardWords.has(w.en)) { heardWords.add(w.en); addStars(1); setProgress("words"); }
           b.classList.add("heard");
           renderWordsDock();
         };
@@ -244,7 +399,7 @@
       renderWordsDock();
     }
     function renderWordsDock() {
-      setDock([{ label: heardWords.size < WORDS.length ? `소리 듣기 ${heardWords.size} / ${WORDS.length}` : "다 들었어요! 문장 놀이 ➜", cls: "btn-teal", disabled: heardWords.size < WORDS.length, fn: () => go("sentences") }]);
+      setDock([{ label: heardWords.size < WORDS.length ? ("소리 듣기 " + heardWords.size + " / " + WORDS.length) : "다 들었어요! 문장 놀이 ➜", cls: "btn-teal", disabled: heardWords.size < WORDS.length, fn: () => go("sentences") }]);
     }
     function loadSentence() {
       const s = SENTENCES[senIndex];
@@ -258,7 +413,7 @@
         const d = document.createElement("div");
         d.className = "chunk c" + (i % 4);
         d.id = "chunk-" + i;
-        d.innerHTML = `<span class="en">${c[0]}</span><span class="ko">${c[1]}</span>`;
+        d.innerHTML = "<span class=\"en\">" + c[0] + "</span><span class=\"ko\">" + c[1] + "</span>";
         box.appendChild(d);
       });
       setProgress("sentences", (senIndex + 1) + "/" + SENTENCES.length);
@@ -298,7 +453,7 @@
       DIALOGUE.forEach(line => {
         const b = document.createElement("button");
         b.className = "bubble " + line.role;
-        b.innerHTML = `<div class="who">${line.who}</div><div class="en">${line.en}</div><div class="ko">${line.ko}</div>`;
+        b.innerHTML = "<div class=\"who\">" + line.who + "</div><div class=\"en\">" + line.en + "</div><div class=\"ko\">" + line.ko + "</div>";
         b.onclick = () => {
           document.querySelectorAll(".bubble").forEach(x => x.classList.remove("active"));
           b.classList.add("active");
@@ -352,10 +507,10 @@
         });
       } else {
         choices.classList.remove("hidden");
-        q.options.forEach((opt, idx) => {
+        q.options.forEach(opt => {
           const b = document.createElement("button");
           b.className = "choice";
-          b.innerHTML = `${opt.emo}<span>${opt.label}</span>`;
+          b.innerHTML = opt.emo + "<span>" + opt.label + "</span>";
           b.onclick = () => {
             if (quizLocked) return;
             quizLocked = true;
@@ -382,11 +537,6 @@
       if (quizIndex < QUIZZES.length - 1) { quizIndex++; loadQuiz(); }
       else go("finish");
     }
-    function restart() {
-      stars = 0; heardWords = new Set(); senIndex = 0; chunkShown = 0; quizIndex = 0;
-      document.getElementById("star-count").textContent = "0";
-      go("intro");
-    }
     function fireConfetti() {
       for (let i = 0; i < 36; i++) {
         const el = document.createElement("div");
@@ -395,11 +545,21 @@
         el.style.background = ["#FF7A59","#2EC4B6","#FFD166","#5EC4FF","#C9B6FF"][i % 5];
         document.body.appendChild(el);
         const x = (Math.random() - .5) * 140;
-        const a = el.animate([{ transform: "translate(0,0)", opacity: 1 }, { transform: `translate(${x}px, ${window.innerHeight}px) rotate(360deg)`, opacity: 0 }], { duration: 1300 + Math.random() * 800, easing: "cubic-bezier(.37,0,.63,1)" });
+        const a = el.animate([{ transform: "translate(0,0)", opacity: 1 }, { transform: "translate(" + x + "px, " + window.innerHeight + "px) rotate(360deg)", opacity: 0 }], { duration: 1300 + Math.random() * 800, easing: "cubic-bezier(.37,0,.63,1)" });
         a.onfinish = () => el.remove();
       }
     }
-    go("intro");
+    document.getElementById("cal-prev").onclick = () => {
+      calCursor.m -= 1;
+      if (calCursor.m < 0) { calCursor.m = 11; calCursor.y -= 1; }
+      renderCalendar();
+    };
+    document.getElementById("cal-next").onclick = () => {
+      calCursor.m += 1;
+      if (calCursor.m > 11) { calCursor.m = 0; calCursor.y += 1; }
+      renderCalendar();
+    };
+    go("cal");
   </script>
 </body>
 </html>
