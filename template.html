@@ -9,9 +9,180 @@
   <meta name="theme-color" content="#FFF6EB" />
   <title>채이의 영어 놀이</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Jua&display=swap" rel="stylesheet" />
+  <style>
+    :root{--cream:#FFF6EB;--card:#fff;--ink:#2B2A4C;--muted:#7A7694;--coral:#FF7A59;--teal:#2EC4B6;--sun:#FFD166;--safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:"Jua","Fredoka",sans-serif;overflow:hidden;touch-action:manipulation}
+    body{background:radial-gradient(circle at 12% 0%,#FFE4B8 0%,transparent 34%),radial-gradient(circle at 100% 8%,#D4F1FF 0%,transparent 30%),var(--cream)}
+    button{font-family:inherit}
+    .app{width:100%;max-width:430px;margin:0 auto;height:100dvh;height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:calc(var(--safe-top) + 8px) 16px calc(var(--safe-bot) + 10px);overflow:hidden}
+    .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .brand{font-size:14px;color:var(--muted)}.brand b{color:var(--ink);font-size:16px}
+    .stars{background:#fff;border-radius:999px;padding:5px 11px;box-shadow:0 6px 16px rgba(43,42,76,.08)}
+    .progress-wrap{display:none}.progress-wrap.on{display:block}
+    .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
+    .bar{height:8px;background:#F0E6D6;border-radius:999px;overflow:hidden}.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--coral),var(--sun));transition:width .3s}
+    .stage{min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;margin:10px 0 12px}
+    .card{background:#fff;border-radius:24px;box-shadow:0 10px 24px rgba(43,42,76,.10);padding:16px 14px;min-height:100%}
+    h1{font-size:24px;margin:0 0 6px}h2{font-size:20px;margin:0 0 6px}
+    .sub{color:var(--muted);font-size:15px;line-height:1.45;margin:0 0 12px}
+    .dock{display:flex;flex-direction:column;gap:8px}
+    .btn{border:0;width:100%;min-height:54px;border-radius:16px;font-size:19px;box-shadow:0 5px 0 rgba(0,0,0,.08)}
+    .btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.08)}
+    .btn[disabled]{filter:grayscale(.35) brightness(1.12);pointer-events:none}
+    .btn-primary{background:var(--coral);color:#fff}.btn-teal{background:var(--teal);color:#fff}.btn-sun{background:var(--sun);color:#5C4300}
+    .hidden{display:none!important}
+    .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.cal-head h2{margin:0;font-size:20px}
+    .nav-btn{width:40px;height:40px;border:0;border-radius:12px;background:#FFF1D6;font-size:18px}
+    .dow,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+    .dow span{text-align:center;font-size:12px;color:var(--muted);padding:4px 0}
+    .day{border:0;background:#FFF8F0;border-radius:14px;min-height:48px;padding:4px 0 6px}
+    .day .n{display:block;font-size:13px}.day .mark{display:block;height:18px;font-size:16px}
+    .day.empty{background:transparent;pointer-events:none}.day.future{color:#C9C3B8;background:#F7F1E8}
+    .day.today{outline:3px solid var(--coral);background:#FFE8DF}.day.done{background:#FFF3C4}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 8px}
+    .stat{background:#FFF8F0;border-radius:14px;padding:10px 8px;text-align:center}.stat b{display:block;font-size:20px}.stat span{font-size:12px;color:var(--muted)}
+    .today-card{background:#FFF1D6;border-radius:16px;padding:10px 12px}.today-card .s{font-size:13px;color:#8A6200;margin-top:2px}
+    .flyer-star{position:fixed;z-index:40;font-size:72px;pointer-events:none;left:0;top:0;line-height:1;transition:transform .9s cubic-bezier(.15,.85,.2,1)}
+    .hero{font-size:64px;text-align:center;margin:8px 0}
+    .listen{text-align:center;font-family:"Fredoka",sans-serif;font-size:20px;font-weight:700;margin:0 0 8px}
+    .balloons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .balloon{border:0;border-radius:28px 28px 22px 22px;min-height:110px;background:#FFF1D6;box-shadow:0 8px 0 #E8D4A8;animation:float 1.6s ease-in-out infinite alternate}
+    .balloon:nth-child(2){animation-delay:.2s;background:#D7F6FF;box-shadow:0 8px 0 #B3DDEA}
+    .balloon:nth-child(3){animation-delay:.4s;background:#FFE3DC;box-shadow:0 8px 0 #E8C0B6}
+    .balloon:nth-child(4){animation-delay:.1s;background:#DFF8E8;box-shadow:0 8px 0 #B5DCC4}
+    .balloon .emo{font-size:40px;display:block}.balloon .en{font-family:"Fredoka",sans-serif;font-weight:700;font-size:16px}
+    .balloon.good{background:#D8F8E4!important;transform:scale(1.06)}.balloon.bad{background:#FFD6D0!important;animation:shake .3s}
+    .act-emo{font-size:92px;text-align:center;line-height:1;margin:10px 0}
+    .act-en{font-family:"Fredoka",sans-serif;font-size:32px;font-weight:700;text-align:center}
+    .act-ko{text-align:center;color:var(--muted);font-size:18px;margin-bottom:8px}
+    .mem{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+    .mem-card{border:0;border-radius:16px;min-height:74px;background:#EEE7FF;font-size:28px;box-shadow:0 5px 0 #D4CCF0}
+    .mem-card.back{background:#FFD166;color:#8A6200;font-size:22px}.mem-card.on{background:#FFF8F0}.mem-card.got{background:#D8F8E4;box-shadow:0 5px 0 #A8E0BE}
+    .echo{background:#FFF8F0;border-radius:20px;padding:16px 14px;text-align:center}
+    .echo .who{color:var(--muted);font-size:14px}.echo .en{font-family:"Fredoka",sans-serif;font-size:26px;font-weight:700;margin:8px 0 4px}.echo .ko{color:var(--muted)}
+    .echo.me{background:#FFE8DF}
+    .choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .choice{border:0;background:#FFF8F0;border-radius:18px;min-height:88px;font-size:32px;box-shadow:0 5px 0 #F0E0C8}
+    .choice span{display:block;font-size:14px}.choice.good{background:#D8F8E4}.choice.bad{background:#FFD6D0}
+    .finish{text-align:center}.medal{font-size:72px;animation:bounce 1s ease-in-out infinite alternate}
+    .rotate-warn{display:none;position:fixed;inset:0;z-index:20;background:var(--cream);align-items:center;justify-content:center;text-align:center;padding:24px}
+    @media (orientation:landscape) and (max-height:500px){.app{display:none}.rotate-warn{display:flex;flex-direction:column}}
+    @keyframes float{from{transform:translateY(0)}to{transform:translateY(-7px)}}
+    @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+  </style>
 </head>
 <body>
-<p>placeholder</p>
-<script>const CONTENT=__CONTENT__;</script>
+  <div class="rotate-warn"><div style="font-size:48px">📱</div><h1>세로로 세워 주세요</h1></div>
+  <div class="app">
+    <header>
+      <div class="top"><div class="brand">⭐ <b>채이의 영어 놀이</b></div><div class="stars" id="star-chip">⭐ 0일</div></div>
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-label"><span id="stage-name">시작</span><span id="stage-count">0 / 5</span></div>
+        <div class="bar"><i id="bar"></i></div>
+      </div>
+    </header>
+    <main class="stage" id="stage">
+      <section class="card" id="screen-cal">
+        <div class="cal-head">
+          <button class="nav-btn" id="cal-prev" type="button">‹</button>
+          <h2 id="cal-title">달력</h2>
+          <button class="nav-btn" id="cal-next" type="button">›</button>
+        </div>
+        <div class="dow"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="stats">
+          <div class="stat"><b id="stat-days">0</b><span>별 받은 날</span></div>
+          <div class="stat"><b id="stat-streak">0</b><span>연속 출석</span></div>
+        </div>
+        <div class="today-card"><div id="today-theme">오늘의 놀이</div><div class="s" id="today-sub">몸놀이, 풍선, 짝맞추기!</div></div>
+      </section>
+      <section class="card hidden" id="screen-intro">
+        <div class="hero" id="intro-emo">⭐</div>
+        <h1 id="intro-title">영어 놀이</h1>
+        <p class="sub" id="intro-sub">듣고, 몸을 쓰고, 그림을 골라요.</p>
+        <p class="sub">① 풍선 ② 몸놀이 ③ 짝 맞추기 ④ 따라 말하기 ⑤ 듣기 퀴즈</p>
+      </section>
+      <section class="card hidden" id="screen-pop">
+        <div class="listen" id="pop-listen">듣고 풍선을 눌러요</div>
+        <p class="sub" id="pop-count">1 / 8</p>
+        <div class="balloons" id="pop-box"></div>
+      </section>
+      <section class="card hidden" id="screen-act">
+        <p class="sub" id="act-count">1 / 8</p>
+        <div class="act-emo" id="act-emo">🦘</div>
+        <div class="act-en" id="act-en">Jump!</div>
+        <div class="act-ko" id="act-ko">점프!</div>
+      </section>
+      <section class="card hidden" id="screen-match">
+        <h2>같은 그림 찾기</h2>
+        <p class="sub">카드를 두 장 뒤집어 짝을 맞춰요.</p>
+        <div class="mem" id="match-box"></div>
+      </section>
+      <section class="card hidden" id="screen-echo">
+        <p class="sub" id="echo-count">1 / 6</p>
+        <div class="echo" id="echo-card">
+          <div class="who" id="echo-who">별이</div>
+          <div class="en" id="echo-en"></div>
+          <div class="ko" id="echo-ko"></div>
+        </div>
+      </section>
+      <section class="card hidden" id="screen-quiz">
+        <p class="sub" id="quiz-count">1 / 6</p>
+        <h2>잘 듣고 골라요</h2>
+        <div class="choices" id="quiz-box"></div>
+      </section>
+      <section class="card hidden finish" id="screen-finish">
+        <div class="medal">🥇</div>
+        <h1>최고예요, 채이!</h1>
+        <p class="sub">오늘 놀이를 끝냈어요. 별이 달력으로 날아가요.</p>
+      </section>
+    </main>
+    <footer class="dock" id="dock"></footer>
+  </div>
+  <script>
+    const CONTENT = __CONTENT__;
+    const NAME = "채이";
+    const WORDS = CONTENT.words || [];
+    const ACTIONS = CONTENT.actions || [{en:"Jump!",ko:"점프!",emo:"🦘"},{en:"Clap!",ko:"손벽!",emo:"👏"},{en:"Run!",ko:"달려!",emo:"🏃"},{en:"Wave!",ko:"손 흔들어!",emo:"👋"},{en:"Spin!",ko:"빙글빙글!",emo:"💫"},{en:"Touch your nose!",ko:"코를 만져!",emo:"👃"},{en:"Sit down!",ko:"앉아!",emo:"🪑"},{en:"Stretch!",ko:"팔 쪽!",emo:"🙆"}];
+    const DIALOGUE = CONTENT.dialogue || [];
+    const QUIZZES = CONTENT.quizzes || [];
+    const STORE_KEY = "chaey-english-v1";
+    const TODAY = CONTENT.dateKey || toKey(new Date());
+    let stars=0, audioUnlocked=false, justFinished=false, calCursor=parseKey(TODAY);
+    let popI=0, actI=0, echoI=0, quizI=0, quizLock=false;
+    let matchDeck=[], matchOpen=[], matchGot=0, matchLock=false;
+    function toKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+    function parseKey(key){const [y,m]=(key||TODAY).split("-").map(Number);return {y:y||2026,m:(m||1)-1}}
+    function loadStore(){try{const d=JSON.parse(localStorage.getItem(STORE_KEY)||"null");if(d&&d.days)return d}catch(e){}return {days:{}}}
+    function saveStore(d){localStorage.setItem(STORE_KEY,JSON.stringify(d))}
+    function doneDays(){return loadStore().days}
+    function isDone(k){return !!doneDays()[k]}
+    function countDays(){return Object.keys(doneDays()).length}
+    function streakCount(){const days=doneDays();let n=0;const d=new Date(TODAY+"T12:00:00");if(!days[toKey(d)])d.setDate(d.getDate()-1);while(days[toKey(d)]){n++;d.setDate(d.getDate()-1)}return n}
+    function markTodayDone(){const data=loadStore();const t=CONTENT.theme||{};data.days[TODAY]={theme:t.title||"영어 놀이",emoji:t.emoji||"⭐",stars:stars,doneAt:new Date().toISOString()};saveStore(data)}
+    function unlockAudio(){if(audioUnlocked||!("speechSynthesis"in window))return;audioUnlocked=true;const u=new SpeechSynthesisUtterance(" ");u.volume=0;u.lang="en-US";speechSynthesis.speak(u)}
+    function speak(text,rate){if(!("speechSynthesis"in window))return;unlockAudio();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=rate||0.86;const vs=speechSynthesis.getVoices()||[];const v=vs.find(x=>/en-US/i.test(x.lang)&&/samantha|female|google/i.test(x.name))||vs.find(x=>/en-US/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+    if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}
+    function addStars(n){stars+=n}
+    function setProgress(stage,detail){const map={cal:[0,"달력"],intro:[0,"시작"],pop:[1,"풍선 놀이"],act:[2,"몸놀이"],match:[3,"짝 맞추기"],echo:[4,"따라 말하기"],quiz:[5,"듣기 퀴즈"],finish:[6,"완료"]};const [n,name]=map[stage];document.getElementById("stage-name").textContent=name+(detail?" · "+detail:"");document.getElementById("stage-count").textContent=Math.min(n,5)+" / 5";document.getElementById("bar").style.width=((stage==="finish"?5:n)/5*100)+"%";document.getElementById("progress-wrap").classList.toggle("on",stage!=="cal");document.getElementById("star-chip").textContent=stage==="cal"?("⭐ "+countDays()+"일"):("⭐ "+stars)}
+    function showScreen(id){["cal","intro","pop","act","match","echo","quiz","finish"].forEach(s=>document.getElementById("screen-"+s).classList.toggle("hidden",s!==id));document.getElementById("stage").scrollTop=0}
+    function setDock(buttons){const dock=document.getElementById("dock");dock.innerHTML="";buttons.forEach(b=>{const el=document.createElement("button");el.className="btn "+(b.cls||"btn-primary");el.textContent=b.label;if(b.disabled)el.disabled=true;el.onclick=()=>{unlockAudio();b.fn()};dock.appendChild(el)})}
+    function shuffle(a){return a.slice().sort(()=>Math.random()-0.5)}
+    function renderCalendar(){document.getElementById("cal-title").textContent=calCursor.y+"년 "+(calCursor.m+1)+"월";const grid=document.getElementById("cal-grid");grid.innerHTML="";const start=new Date(calCursor.y,calCursor.m,1).getDay();const last=new Date(calCursor.y,calCursor.m+1,0).getDate();const days=doneDays();for(let i=0;i<start;i++){const e=document.createElement("div");e.className="day empty";grid.appendChild(e)}for(let d=1;d<=last;d++){const key=calCursor.y+"-"+String(calCursor.m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");const rec=days[key];const btn=document.createElement("button");btn.type="button";btn.className="day";btn.dataset.day=key;if(key===TODAY)btn.classList.add("today");if(key>TODAY)btn.classList.add("future");if(rec)btn.classList.add("done");btn.innerHTML="<span class='n'>"+d+"</span><span class='mark'>"+(rec?"⭐":(key===TODAY?"·":""))+"</span>";btn.onclick=()=>{if(key===TODAY)go("intro")};grid.appendChild(btn)}document.getElementById("stat-days").textContent=countDays();document.getElementById("stat-streak").textContent=streakCount();const t=CONTENT.theme||{};document.getElementById("today-theme").textContent=(t.emoji||"⭐")+" "+(t.title||"오늘의 놀이");document.getElementById("today-sub").textContent=isDone(TODAY)?"오늘은 이미 별이 있어요. 또 해도 돼요.":(t.subtitle||"몸놀이, 풍선, 짝맞추기!")}
+    function flyStarTo(dateKey){const cell=document.querySelector('[data-day="'+dateKey+'"]');if(!cell){renderCalendar();return}const flyer=document.createElement("div");flyer.className="flyer-star";flyer.textContent="⭐";flyer.style.transform="translate("+ (innerWidth/2)+"px,"+(innerHeight*0.36)+"px) translate(-50%,-50%) scale(1)";document.body.appendChild(flyer);const r=cell.getBoundingClientRect();requestAnimationFrame(()=>{flyer.style.transform="translate("+(r.left+r.width/2)+"px,"+(r.top+r.height/2)+"px) translate(-50%,-50%) scale(.28)"});setTimeout(()=>{flyer.remove();renderCalendar()},950)}
+    function go(stage){setProgress(stage);showScreen(stage);if(stage==="cal"){renderCalendar();setDock([{label:isDone(TODAY)?"오늘 한 번 더 하기":"오늘 영어 놀이 시작!",cls:isDone(TODAY)?"btn-sun":"btn-primary",fn:()=>go("intro")}]);if(justFinished){justFinished=false;requestAnimationFrame(()=>flyStarTo(TODAY))}}if(stage==="intro"){const t=CONTENT.theme||{};document.getElementById("intro-emo").textContent=t.emoji||"⭐";document.getElementById("intro-title").textContent=t.title||"영어 놀이";document.getElementById("intro-sub").textContent=t.subtitle||"듣고, 몸을 쓰고, 그림을 골라요.";setDock([{label:"풍선부터 시작!",fn:()=>go("pop")}])}if(stage==="pop"){popI=0;loadPop()}if(stage==="act"){actI=0;loadAct()}if(stage==="match"){loadMatch()}if(stage==="echo"){echoI=0;loadEcho()}if(stage==="quiz"){quizI=0;loadQuiz()}if(stage==="finish"){markTodayDone();justFinished=true;setDock([{label:"달력에 별 붙이러 가기 ➜",cls:"btn-sun",fn:()=>go("cal")}])}}
+    function loadPop(){const ans=WORDS[popI];document.getElementById("pop-count").textContent=(popI+1)+" / "+WORDS.length;const others=shuffle(WORDS.filter(w=>w.en!==ans.en)).slice(0,3);const opts=shuffle([ans].concat(others));const box=document.getElementById("pop-box");box.innerHTML="";opts.forEach(w=>{const b=document.createElement("button");b.className="balloon";b.innerHTML="<span class='emo'>"+w.emo+"</span><span class='en'>"+w.en+"</span>";b.onclick=()=>{if(w.en===ans.en){b.classList.add("good");addStars(1);setTimeout(()=>{if(popI<WORDS.length-1){popI++;loadPop()}else go("act")},420)}else{b.classList.add("bad");speak(ans.en,0.8);setTimeout(()=>b.classList.remove("bad"),400)}};box.appendChild(b)});setProgress("pop",(popI+1)+"/"+WORDS.length);setDock([{label:"🔊 다시 듣기",cls:"btn-teal",fn:()=>speak(ans.en,0.8)}]);setTimeout(()=>speak(ans.en,0.8),250)}
+    function loadAct(){const a=ACTIONS[actI];document.getElementById("act-count").textContent=(actI+1)+" / "+ACTIONS.length;document.getElementById("act-emo").textContent=a.emo||"⭐";document.getElementById("act-en").textContent=a.en;document.getElementById("act-ko").textContent=a.ko||"";setProgress("act",(actI+1)+"/"+ACTIONS.length);setDock([{label:"🔊 다시 듣기",cls:"btn-teal",fn:()=>speak(a.en,0.84)},{label:"채이가 했어요!",cls:"btn-sun",fn:()=>{addStars(1);if(actI<ACTIONS.length-1){actI++;loadAct()}else go("match")}}]);setTimeout(()=>speak(a.en,0.84),250)}
+    function loadMatch(){const pairs=WORDS.slice(0,4);matchDeck=shuffle(pairs.map(w=>({k:w.en,show:w.emo,kind:"emo"})).concat(pairs.map(w=>({k:w.en,show:w.en,kind:"en"}))));matchOpen=[];matchGot=0;matchLock=false;drawMatch();setDock([{label:"카드 두 장을 눌러요",cls:"btn-teal",disabled:true,fn:()=>{}}])}
+    function drawMatch(){const box=document.getElementById("match-box");box.innerHTML="";matchDeck.forEach((c,i)=>{const b=document.createElement("button");const open=matchOpen.includes(i)||c.got;b.className="mem-card"+(c.got?" got":(open?" on":" back"));b.textContent=(c.got||open)?c.show:"?";b.onclick=()=>flipMatch(i);box.appendChild(b)})}
+    function flipMatch(i){if(matchLock||matchDeck[i].got||matchOpen.includes(i))return;matchOpen.push(i);drawMatch();if(matchOpen.length<2)return;matchLock=true;const a=matchDeck[matchOpen[0]],b=matchDeck[matchOpen[1]];if(a.k===b.k&&a.kind!==b.kind){a.got=b.got=true;matchGot++;addStars(2);speak(a.k,0.86);matchOpen=[];matchLock=false;drawMatch();if(matchGot>=4)setTimeout(()=>go("echo"),500)}else{setTimeout(()=>{matchOpen=[];matchLock=false;drawMatch()},700)}}
+    function loadEcho(){const line=DIALOGUE[echoI];document.getElementById("echo-count").textContent=(echoI+1)+" / "+DIALOGUE.length;document.getElementById("echo-card").className="echo "+(line.role||"");document.getElementById("echo-who").textContent=line.who||(line.role==="me"?NAME:"별이");document.getElementById("echo-en").textContent=line.en;document.getElementById("echo-ko").textContent=line.ko||"";setProgress("echo",(echoI+1)+"/"+DIALOGUE.length);const mine=line.role==="me";setDock([{label:"🔊 듣기",cls:"btn-teal",fn:()=>speak(line.en,mine?0.78:0.88)},{label:mine?"채이가 말했어요!":"다음 ➜",cls:mine?"btn-sun":"btn-primary",fn:()=>{if(mine)addStars(1);if(echoI<DIALOGUE.length-1){echoI++;loadEcho()}else go("quiz")}}]);setTimeout(()=>speak(line.en,mine?0.78:0.88),280)}
+    function loadQuiz(){quizLock=false;const q=QUIZZES[quizI];document.getElementById("quiz-count").textContent=(quizI+1)+" / "+QUIZZES.length;const box=document.getElementById("quiz-box");box.innerHTML="";q.options.forEach(opt=>{const b=document.createElement("button");b.className="choice";b.innerHTML=opt.emo+"<span>"+opt.label+"</span>";b.onclick=()=>{if(quizLock)return;quizLock=true;const ok=opt.id===q.answer;b.classList.add(ok?"good":"bad");if(ok)addStars(2);else[...box.children].forEach((el,i)=>{if(q.options[i].id===q.answer)el.classList.add("good")});setDock([{label:"🔊 다시 듣기",cls:"btn-teal",fn:()=>speak(q.speak,0.82)},{label:quizI>=QUIZZES.length-1?"끝! 잘했어요 ➜":"다음 ➜",fn:()=>{if(quizI<QUIZZES.length-1){quizI++;loadQuiz()}else go("finish")}}])};box.appendChild(b)});setProgress("quiz",(quizI+1)+"/"+QUIZZES.length);setDock([{label:"🔊 다시 듣기",cls:"btn-teal",fn:()=>speak(q.speak,0.82)}]);setTimeout(()=>speak(q.speak,0.82),250)}
+    document.getElementById("cal-prev").onclick=()=>{calCursor.m--;if(calCursor.m<0){calCursor.m=11;calCursor.y--}renderCalendar()};
+    document.getElementById("cal-next").onclick=()=>{calCursor.m++;if(calCursor.m>11){calCursor.m=0;calCursor.y++}renderCalendar()};
+    go("cal");
+  </script>
 </body>
 </html>
