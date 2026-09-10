@@ -13,9 +13,393 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Jua&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #FFF6EB; --card: #FFFFFF; --ink: #2B2A4C; --muted: #7A7694;
+      --coral: #FF7A59; --teal: #2EC4B6; --sun: #FFD166; --sky: #5EC4FF;
+      --safe-top: env(safe-area-inset-top, 0px); --safe-bot: env(safe-area-inset-bottom, 0px); --side: 16px;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; padding: 0; height: 100%; background: var(--cream); color: var(--ink); font-family: "Jua", "Fredoka", sans-serif; overflow: hidden; touch-action: manipulation; }
+    body { background: radial-gradient(circle at 12% 0%, #FFE4B8 0%, transparent 34%), radial-gradient(circle at 100% 8%, #D4F1FF 0%, transparent 30%), var(--cream); }
+    button { font-family: inherit; }
+    .app { width: 100%; max-width: 430px; margin: 0 auto; height: 100dvh; height: 100svh; display: grid; grid-template-rows: auto 1fr auto; padding: calc(var(--safe-top) + 8px) var(--side) calc(var(--safe-bot) + 10px); overflow: hidden; }
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .brand { font-size: 14px; color: var(--muted); }
+    .brand b { color: var(--ink); font-size: 16px; }
+    .stars { background: #fff; border-radius: 999px; padding: 5px 11px; box-shadow: 0 6px 16px rgba(43,42,76,.08); font-size: 15px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .bar { height: 8px; background: #F0E6D6; border-radius: 999px; overflow: hidden; }
+    .bar > i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width .3s ease; }
+    .stage { min-height: 0; overflow: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; margin: 10px 0 12px; }
+    .card { background: var(--card); border-radius: 24px; box-shadow: 0 10px 24px rgba(43,42,76,.10); padding: 18px 16px 16px; min-height: 100%; }
+    h1 { font-size: 26px; line-height: 1.25; margin: 0 0 6px; }
+    h2 { font-size: 22px; margin: 0 0 6px; }
+    .sub { color: var(--muted); font-size: 15px; line-height: 1.45; margin: 0 0 12px; }
+    .theme-chip { display: inline-flex; gap: 6px; align-items: center; background: #FFF1D6; color: #8A6200; border-radius: 999px; padding: 5px 10px; font-size: 13px; margin-bottom: 10px; }
+    .hero { font-size: 56px; text-align: center; margin: 2px 0 6px; }
+    .tips { background: #F4F0FF; border-radius: 16px; padding: 10px 12px; font-size: 14px; color: #534A80; line-height: 1.45; margin: 0 0 12px; }
+    .steps { margin: 0; padding: 0; display: grid; gap: 6px; }
+    .steps li { list-style: none; background: #FFF8F0; border-radius: 12px; padding: 9px 11px; font-size: 15px; }
+    .dock { display: flex; flex-direction: column; gap: 8px; }
+    .btn { appearance: none; border: 0; cursor: pointer; width: 100%; min-height: 54px; border-radius: 16px; font-size: 19px; box-shadow: 0 5px 0 rgba(0,0,0,.08); }
+    .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.08); }
+    .btn[disabled] { filter: grayscale(.35) brightness(1.12); pointer-events: none; }
+    .btn-primary { background: var(--coral); color: #fff; }
+    .btn-teal { background: var(--teal); color: #fff; }
+    .btn-sun { background: var(--sun); color: #5C4300; }
+    .grid-words { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .word-card { border: 0; background: #FFF8F0; border-radius: 18px; padding: 12px 6px 10px; text-align: center; box-shadow: 0 5px 0 #F0E0C8; }
+    .word-card:active { transform: translateY(2px); }
+    .word-card.heard { background: #E8FFF4; box-shadow: 0 5px 0 #BFEBD3; }
+    .word-card .emo { font-size: 34px; display: block; }
+    .word-card .en { font-family: "Fredoka", sans-serif; font-size: 18px; font-weight: 700; }
+    .word-card .ko { font-size: 13px; color: var(--muted); }
+    .counter { text-align: center; color: var(--muted); font-size: 14px; margin-bottom: 6px; }
+    .sentence { font-family: "Fredoka", sans-serif; font-size: 28px; font-weight: 700; line-height: 1.28; text-align: center; margin: 4px 0 8px; word-break: keep-all; }
+    .ko-line { text-align: center; color: var(--muted); font-size: 17px; min-height: 24px; margin-bottom: 10px; }
+    .chunks { display: flex; flex-direction: column; gap: 8px; }
+    .chunk { display: none; border-radius: 16px; padding: 11px 12px; text-align: center; animation: pop .3s ease; }
+    .chunk.on { display: block; }
+    .chunk .en { font-family: "Fredoka", sans-serif; font-size: 22px; font-weight: 700; }
+    .chunk .ko { display: block; font-size: 14px; opacity: .8; margin-top: 2px; }
+    .c0 { background: #FFE3DC; color: #B33A22; }
+    .c1 { background: #D7F6FF; color: #0B6E8A; }
+    .c2 { background: #DFF8E8; color: #1B7A43; }
+    .c3 { background: #EEE4FF; color: #5A3FA0; }
+    .dialog { display: flex; flex-direction: column; gap: 8px; }
+    .bubble { border: 0; text-align: left; padding: 10px 12px; border-radius: 18px; background: #F6F3EE; }
+    .bubble.me { background: #FFE8DF; align-self: flex-end; width: 92%; }
+    .bubble.you { background: #E4F7FF; align-self: flex-start; width: 92%; }
+    .bubble.active { outline: 3px solid var(--coral); }
+    .bubble .who { font-size: 12px; color: var(--muted); }
+    .bubble .en { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 650; }
+    .bubble .ko { font-size: 13px; color: #6D6884; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .choice { border: 0; background: #FFF8F0; border-radius: 18px; min-height: 84px; font-size: 32px; box-shadow: 0 5px 0 #F0E0C8; }
+    .choice span { display: block; font-size: 14px; color: var(--ink); margin-top: 2px; }
+    .choice.good { background: #D8F8E4; box-shadow: 0 5px 0 #A8E0BE; }
+    .choice.bad { background: #FFD6D0; box-shadow: 0 5px 0 #F0B0A6; }
+    .order-box { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; min-height: 48px; margin-bottom: 8px; }
+    .pill { border: 0; background: #EEE7FF; color: #4B348C; border-radius: 999px; padding: 10px 12px; font-family: "Fredoka", sans-serif; font-size: 16px; font-weight: 650; }
+    .built { min-height: 48px; background: #FFF8F0; border-radius: 14px; padding: 10px; margin-bottom: 10px; text-align: center; font-family: "Fredoka", sans-serif; font-size: 18px; }
+    .finish { text-align: center; }
+    .medal { font-size: 72px; animation: bounce 1s ease-in-out infinite alternate; }
+    .hidden { display: none !important; }
+    .rotate-warn { display: none; position: fixed; inset: 0; z-index: 20; background: var(--cream); align-items: center; justify-content: center; text-align: center; padding: 24px; }
+    @media (orientation: landscape) and (max-height: 500px) { .app { display: none; } .rotate-warn { display: flex; flex-direction: column; } }
+    @keyframes pop { from { transform: scale(.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+  </style>
 </head>
 <body>
-<!-- full template uploaded next if this probe works -->
-const CONTENT = __CONTENT__;
+  <div class="rotate-warn"><div style="font-size:48px;">📱</div><h1>세로로 세워 주세요</h1><p class="sub">아이폰 에어는 세워서 하는 놀이에요.</p></div>
+  <div class="app">
+    <header class="chrome">
+      <div class="top"><div class="brand">⭐ <b>채이의 영어 놀이</b></div><div class="stars">⭐ <span id="star-count">0</span></div></div>
+      <div class="progress-label"><span id="stage-name">시작</span><span id="stage-count">0 / 4</span></div>
+      <div class="bar"><i id="bar"></i></div>
+    </header>
+    <main class="stage" id="stage">
+      <section class="card" id="screen-intro">
+        <div class="theme-chip" id="intro-date">오늘의 영어</div>
+        <div class="hero" id="intro-emo">⭐</div>
+        <h1 id="intro-title">영어 놀이</h1>
+        <p class="sub" id="intro-sub">듣고, 조각을 열고, 따라 말하면 별이 쌓여요.</p>
+        <div class="tips">사파리에서 공유 → 홈 화면에 추가 하면 위·아래 바가 사라져서 더 편해요.</div>
+        <ul class="steps"><li>① 단어 8개</li><li>② 끊어 읽기 12문장</li><li>③ 꼬마 대화</li><li>④ 듣기 퀴즈 6문제</li></ul>
+      </section>
+      <section class="card hidden" id="screen-words">
+        <h2>오늘의 단어</h2>
+        <p class="sub">그림을 눌러 소리를 들어요. 8개 다 들으면 아래 버튼이 켜져요.</p>
+        <div class="grid-words" id="word-grid"></div>
+      </section>
+      <section class="card hidden" id="screen-sentences">
+        <div class="counter" id="sen-counter">1 / 12</div>
+        <div class="sentence" id="sen-en"></div>
+        <div class="ko-line" id="sen-ko"></div>
+        <div class="chunks" id="sen-chunks"></div>
+      </section>
+      <section class="card hidden" id="screen-dialogue">
+        <h2>꼬마 대화</h2>
+        <p class="sub">말풍선을 눌러 듣고, 채이 차례는 따라 말해 보세요.</p>
+        <div class="dialog" id="dialog-box"></div>
+      </section>
+      <section class="card hidden" id="screen-quiz">
+        <div class="counter" id="quiz-counter">1 / 6</div>
+        <h2>잘 듣고 골라요</h2>
+        <p class="sub" id="quiz-q"></p>
+        <div class="built hidden" id="quiz-built"></div>
+        <div class="order-box hidden" id="quiz-order"></div>
+        <div class="choices" id="quiz-choices"></div>
+      </section>
+      <section class="card hidden finish" id="screen-finish">
+        <div class="medal">🥇</div>
+        <h1>최고예요, 채이!</h1>
+        <p class="sub">오늘 놀이를 끝냈어요. 별 <b id="final-stars">0</b>개!</p>
+      </section>
+    </main>
+    <footer class="dock" id="dock"></footer>
+  </div>
+  <script>
+    const CONTENT = __CONTENT__;
+    const WORDS = CONTENT.words;
+    const SENTENCES = CONTENT.sentences;
+    const DIALOGUE = CONTENT.dialogue;
+    const QUIZZES = CONTENT.quizzes;
+    let stars = 0, senIndex = 0, chunkShown = 0, quizIndex = 0, quizLocked = false;
+    let heardWords = new Set();
+    let orderPicked = [];
+    let audioUnlocked = false;
+    function unlockAudio() {
+      if (audioUnlocked || !("speechSynthesis" in window)) return;
+      audioUnlocked = true;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(" ");
+      u.volume = 0; u.lang = "en-US";
+      window.speechSynthesis.speak(u);
+    }
+    function speak(text, rate) {
+      if (!("speechSynthesis" in window)) return;
+      unlockAudio();
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US";
+      u.rate = rate || 0.84;
+      const voices = window.speechSynthesis.getVoices() || [];
+      const v = voices.find(x => /en-US/i.test(x.lang) && /samantha|female|google/i.test(x.name)) || voices.find(x => /en-US/i.test(x.lang)) || voices.find(x => /^en/i.test(x.lang));
+      if (v) u.voice = v;
+      window.speechSynthesis.speak(u);
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+    function addStars(n) { stars += n; document.getElementById("star-count").textContent = stars; }
+    function setProgress(stage, detail) {
+      const map = { intro:[0,"시작"], words:[1,"단어 놀이"], sentences:[2,"끊어 읽기"], dialogue:[3,"꼬마 대화"], quiz:[4,"듣기 퀴즈"], finish:[5,"완료"] };
+      const [n, name] = map[stage];
+      document.getElementById("stage-name").textContent = name + (detail ? " · " + detail : "");
+      document.getElementById("stage-count").textContent = Math.min(n, 4) + " / 4";
+      document.getElementById("bar").style.width = ((stage === "finish" ? 4 : n) / 4 * 100) + "%";
+    }
+    function showScreen(id) {
+      ["intro","words","sentences","dialogue","quiz","finish"].forEach(s => {
+        document.getElementById("screen-" + s).classList.toggle("hidden", s !== id);
+      });
+      document.getElementById("stage").scrollTop = 0;
+    }
+    function setDock(buttons) {
+      const dock = document.getElementById("dock");
+      dock.innerHTML = "";
+      buttons.forEach(b => {
+        const el = document.createElement("button");
+        el.className = "btn " + (b.cls || "btn-primary");
+        el.textContent = b.label;
+        if (b.disabled) el.disabled = true;
+        el.onclick = () => { unlockAudio(); b.fn(); };
+        dock.appendChild(el);
+      });
+    }
+    function fillIntro() {
+      const t = CONTENT.theme || {};
+      document.title = "채이의 영어 놀이 · " + (t.title || "");
+      document.getElementById("intro-date").textContent = (CONTENT.date || "") + " · 아이폰 에어";
+      document.getElementById("intro-emo").textContent = t.emoji || "⭐";
+      document.getElementById("intro-title").textContent = t.title || "영어 놀이";
+      document.getElementById("intro-sub").textContent = t.subtitle || "듣고, 조각을 열고, 따라 말하면 별이 쌓여요.";
+    }
+    function go(stage) {
+      setProgress(stage);
+      showScreen(stage);
+      if (stage === "intro") {
+        fillIntro();
+        setDock([{ label: "시작! " + (CONTENT.theme && CONTENT.theme.title || "영어 놀이"), cls: "btn-primary", fn: () => go("words") }]);
+      }
+      if (stage === "words") renderWords();
+      if (stage === "sentences") loadSentence();
+      if (stage === "dialogue") renderDialogue();
+      if (stage === "quiz") loadQuiz();
+      if (stage === "finish") {
+        document.getElementById("final-stars").textContent = stars;
+        setDock([{ label: "처음부터 한 번 더", cls: "btn-sun", fn: restart }]);
+        fireConfetti();
+      }
+    }
+    function renderWords() {
+      const grid = document.getElementById("word-grid");
+      grid.innerHTML = "";
+      WORDS.forEach(w => {
+        const b = document.createElement("button");
+        b.className = "word-card" + (heardWords.has(w.en) ? " heard" : "");
+        b.innerHTML = `<span class="emo">${w.emo}</span><div class="en">${w.en}</div><div class="ko">${w.ko}</div>`;
+        b.onclick = () => {
+          speak(w.en, 0.8);
+          if (!heardWords.has(w.en)) { heardWords.add(w.en); addStars(1); }
+          b.classList.add("heard");
+          renderWordsDock();
+        };
+        grid.appendChild(b);
+      });
+      renderWordsDock();
+    }
+    function renderWordsDock() {
+      setDock([{ label: heardWords.size < WORDS.length ? `소리 듣기 ${heardWords.size} / ${WORDS.length}` : "다 들었어요! 문장 놀이 ➜", cls: "btn-teal", disabled: heardWords.size < WORDS.length, fn: () => go("sentences") }]);
+    }
+    function loadSentence() {
+      const s = SENTENCES[senIndex];
+      document.getElementById("sen-counter").textContent = (senIndex + 1) + " / " + SENTENCES.length;
+      document.getElementById("sen-en").textContent = s.en;
+      document.getElementById("sen-ko").textContent = "";
+      chunkShown = 0;
+      const box = document.getElementById("sen-chunks");
+      box.innerHTML = "";
+      s.chunks.forEach((c, i) => {
+        const d = document.createElement("div");
+        d.className = "chunk c" + (i % 4);
+        d.id = "chunk-" + i;
+        d.innerHTML = `<span class="en">${c[0]}</span><span class="ko">${c[1]}</span>`;
+        box.appendChild(d);
+      });
+      setProgress("sentences", (senIndex + 1) + "/" + SENTENCES.length);
+      setDock([
+        { label: "🔊 원어민 소리 듣기", cls: "btn-teal", fn: () => speak(s.en, 0.82) },
+        { label: "✂️ 첫 조각 열기", cls: "btn-sun", fn: revealChunk }
+      ]);
+    }
+    function revealChunk() {
+      const s = SENTENCES[senIndex];
+      if (chunkShown < s.chunks.length) {
+        document.getElementById("chunk-" + chunkShown).classList.add("on");
+        speak(s.chunks[chunkShown][0], 0.78);
+        chunkShown++;
+      }
+      if (chunkShown >= s.chunks.length) {
+        document.getElementById("sen-ko").textContent = s.ko;
+        addStars(1);
+        setDock([
+          { label: "🔊 한 번 더 듣기", cls: "btn-teal", fn: () => speak(s.en, 0.82) },
+          { label: senIndex < SENTENCES.length - 1 ? "다음 문장 ➜" : "대화 하러 가기 ➜", cls: "btn-primary", fn: nextSentence }
+        ]);
+      } else {
+        setDock([
+          { label: "🔊 원어민 소리 듣기", cls: "btn-teal", fn: () => speak(s.en, 0.82) },
+          { label: "✂️ 다음 조각 열기", cls: "btn-sun", fn: revealChunk }
+        ]);
+      }
+    }
+    function nextSentence() {
+      if (senIndex < SENTENCES.length - 1) { senIndex++; loadSentence(); }
+      else go("dialogue");
+    }
+    function renderDialogue() {
+      const box = document.getElementById("dialog-box");
+      box.innerHTML = "";
+      DIALOGUE.forEach(line => {
+        const b = document.createElement("button");
+        b.className = "bubble " + line.role;
+        b.innerHTML = `<div class="who">${line.who}</div><div class="en">${line.en}</div><div class="ko">${line.ko}</div>`;
+        b.onclick = () => {
+          document.querySelectorAll(".bubble").forEach(x => x.classList.remove("active"));
+          b.classList.add("active");
+          speak(line.en, 0.86);
+        };
+        box.appendChild(b);
+      });
+      setDock([
+        { label: "🔊 처음부터 듣기", cls: "btn-teal", fn: playDialogueAll },
+        { label: "퀴즈 도전! ➜", cls: "btn-primary", fn: () => go("quiz") }
+      ]);
+    }
+    async function playDialogueAll() {
+      const nodes = document.querySelectorAll(".bubble");
+      for (let i = 0; i < DIALOGUE.length; i++) {
+        nodes.forEach(x => x.classList.remove("active"));
+        nodes[i].classList.add("active");
+        speak(DIALOGUE[i].en, 0.88);
+        await new Promise(r => setTimeout(r, 2200));
+      }
+    }
+    function loadQuiz() {
+      quizLocked = false; orderPicked = [];
+      const q = QUIZZES[quizIndex];
+      document.getElementById("quiz-counter").textContent = (quizIndex + 1) + " / " + QUIZZES.length;
+      document.getElementById("quiz-q").textContent = q.q;
+      const choices = document.getElementById("quiz-choices");
+      const order = document.getElementById("quiz-order");
+      const built = document.getElementById("quiz-built");
+      choices.innerHTML = ""; order.innerHTML = ""; built.textContent = "";
+      choices.classList.add("hidden"); order.classList.add("hidden"); built.classList.add("hidden");
+      built.style.background = "";
+      if (q.type === "order") {
+        order.classList.remove("hidden"); built.classList.remove("hidden");
+        q.pieces.slice().sort(() => Math.random() - 0.5).forEach(p => {
+          const b = document.createElement("button");
+          b.className = "pill"; b.textContent = p;
+          b.onclick = () => {
+            if (quizLocked) return;
+            orderPicked.push(p); b.disabled = true;
+            built.textContent = orderPicked.join(" ");
+            if (orderPicked.length === q.pieces.length) {
+              quizLocked = true;
+              const ok = orderPicked.join(" ") === q.pieces.join(" ");
+              built.style.background = ok ? "#D8F8E4" : "#FFD6D0";
+              if (ok) addStars(2);
+              quizDock(true);
+            }
+          };
+          order.appendChild(b);
+        });
+      } else {
+        choices.classList.remove("hidden");
+        q.options.forEach((opt, idx) => {
+          const b = document.createElement("button");
+          b.className = "choice";
+          b.innerHTML = `${opt.emo}<span>${opt.label}</span>`;
+          b.onclick = () => {
+            if (quizLocked) return;
+            quizLocked = true;
+            const ok = opt.id === q.answer;
+            b.classList.add(ok ? "good" : "bad");
+            if (ok) addStars(2);
+            else [...choices.children].forEach((el, i) => { if (q.options[i].id === q.answer) el.classList.add("good"); });
+            quizDock(true);
+          };
+          choices.appendChild(b);
+        });
+      }
+      setProgress("quiz", (quizIndex + 1) + "/" + QUIZZES.length);
+      quizDock(false);
+      setTimeout(() => speak(q.speak, 0.82), 280);
+    }
+    function quizDock(answered) {
+      const last = quizIndex >= QUIZZES.length - 1;
+      const buttons = [{ label: "🔊 다시 듣기", cls: "btn-teal", fn: () => speak(QUIZZES[quizIndex].speak, 0.82) }];
+      if (answered) buttons.push({ label: last ? "끝! 잘했어요 ➜" : "다음 문제 ➜", cls: "btn-primary", fn: nextQuiz });
+      setDock(buttons);
+    }
+    function nextQuiz() {
+      if (quizIndex < QUIZZES.length - 1) { quizIndex++; loadQuiz(); }
+      else go("finish");
+    }
+    function restart() {
+      stars = 0; heardWords = new Set(); senIndex = 0; chunkShown = 0; quizIndex = 0;
+      document.getElementById("star-count").textContent = "0";
+      go("intro");
+    }
+    function fireConfetti() {
+      for (let i = 0; i < 36; i++) {
+        const el = document.createElement("div");
+        el.style.cssText = "position:fixed;width:10px;height:10px;border-radius:50%;z-index:9;top:-8px;pointer-events:none;";
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.background = ["#FF7A59","#2EC4B6","#FFD166","#5EC4FF","#C9B6FF"][i % 5];
+        document.body.appendChild(el);
+        const x = (Math.random() - .5) * 140;
+        const a = el.animate([{ transform: "translate(0,0)", opacity: 1 }, { transform: `translate(${x}px, ${window.innerHeight}px) rotate(360deg)`, opacity: 0 }], { duration: 1300 + Math.random() * 800, easing: "cubic-bezier(.37,0,.63,1)" });
+        a.onfinish = () => el.remove();
+      }
+    }
+    go("intro");
+  </script>
 </body>
 </html>
