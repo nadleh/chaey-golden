@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 끊어 읽기 🌟</title>
+    <style>
+        body { font-family: 'Comic Sans MS', sans-serif; text-align: center; margin-top: 10vh; background-color: #f4f9f4; }
+        .card { background: white; padding: 50px; border-radius: 25px; display: inline-block; box-shadow: 0 10px 20px rgba(0,0,0,0.05); max-width: 90%; }
+        .sentence { font-size: 2.5em; margin: 30px 0; color: #34495e; font-weight: bold; }
+        .chunked { font-size: 2.5em; display: none; margin-top: 30px; font-weight: bold; }
+        .chunk-1 { color: #e74c3c; } .chunk-2 { color: #2980b9; } .chunk-3 { color: #27ae60; }
+        .slash { color: #bdc3c7; margin: 0 15px; }
+        button { font-size: 1.5em; padding: 15px 30px; background-color: #f39c12; color: white; border: none; border-radius: 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>2026년 09월 10일 오늘의 문장 🌟</h1>
+        <div class="sentence" id="original">I want to watch a movie tonight.</div>
+        <button onclick="document.getElementById('original').style.display='none'; document.getElementById('chunked').style.display='block';">어떻게 끊어 읽을까?</button>
+        <div class="chunked" id="chunked">
+            <span class="chunk-1">I want to</span> <span class="slash">/</span> 
+            <span class="chunk-2">watch a movie</span> <span class="slash">/</span> 
+            <span class="chunk-3">tonight.</span>
+        </div>
+    </div>
+</body>
+</html>
