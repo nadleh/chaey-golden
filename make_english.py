@@ -15,68 +15,30 @@ DATE_KR = NOW.strftime("%Y년 %m월 %d일")
 DATE_KEY = NOW.strftime("%Y-%m-%d")
 
 THEMES = [
-    {
-        "emoji": "🌳",
-        "title": "공원에서 놀자!",
-        "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요.",
-        "hint": "park, slide, swing, ball, run, friend, outside, happy",
-    },
-    {
-        "emoji": "🍎",
-        "title": "맛있는 간식!",
-        "subtitle": "배고파요. 사과, 주스, 쿠키를 먹어요.",
-        "hint": "apple, juice, cookie, hungry, yummy, water, please, thank you",
-    },
-    {
-        "emoji": "🧸",
-        "title": "장난감이랑 놀자!",
-        "subtitle": "곰돌이, 블록, 차. 같이 만들어요.",
-        "hint": "teddy, block, car, toy, share, build, mine, play",
-    },
-    {
-        "emoji": "🏠",
-        "title": "우리 집에서!",
-        "subtitle": "엄마, 아빠, 동생. 집에 있는 말이에요.",
-        "hint": "mom, dad, baby, home, door, wash, sleep, love",
-    },
-    {
-        "emoji": "🐶",
-        "title": "동물 친구들!",
-        "subtitle": "강아지, 고양이, 새. 소리를 내봐요.",
-        "hint": "dog, cat, bird, fish, hop, fly, soft, cute",
-    },
-    {
-        "emoji": "🌅",
-        "title": "아침이에요!",
-        "subtitle": "이 닦기, 옷 입기, 안녕. 하루를 시작해요.",
-        "hint": "morning, teeth, clothes, shoes, hello, breakfast, ready, go",
-    },
-    {
-        "emoji": "☔",
-        "title": "오늘 날씨는?",
-        "subtitle": "비, 해, 바람, 옷. 밖에 나가기 전에 봐요.",
-        "hint": "sun, rain, wind, cold, hot, coat, hat, wow",
-    },
+    {"emoji": "\U0001f333", "title": "공원에서 놀자!", "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요.", "hint": "park, slide, swing, ball, run, friend, outside, happy"},
+    {"emoji": "\U0001f34e", "title": "맛있는 간식!", "subtitle": "배고파요. 사과, 주스, 쿠키를 먹어요.", "hint": "apple, juice, cookie, hungry, yummy, water, please, thank you"},
+    {"emoji": "\U0001f9f8", "title": "장난감이랑 놀자!", "subtitle": "곰돌이, 블록, 차. 같이 만들어요.", "hint": "teddy, block, car, toy, share, build, mine, play"},
+    {"emoji": "\U0001f3e0", "title": "우리 집에서!", "subtitle": "엄마, 아빨, 동생. 집에 있는 말이에요.", "hint": "mom, dad, baby, home, door, wash, sleep, love"},
+    {"emoji": "\U0001f436", "title": "동물 친구들!", "subtitle": "강아지, 고양이, 새. 소리를 내봐요.", "hint": "dog, cat, bird, fish, hop, fly, soft, cute"},
+    {"emoji": "\U0001f305", "title": "아침이에요!", "subtitle": "이 닥기, 옷 입기, 안녕. 하루를 시작해요.", "hint": "morning, teeth, clothes, shoes, hello, breakfast, ready, go"},
+    {"emoji": "\u2614", "title": "오늘 날씨는?", "subtitle": "비, 해, 바람, 옷. 밖에 나가기 전에 봐요.", "hint": "sun, rain, wind, cold, hot, coat, hat, wow"},
 ]
 
 THEME = THEMES[NOW.timetuple().tm_yday % len(THEMES)]
 
 FALLBACK = {
     "date": DATE_KR,
-    "theme": {
-        "emoji": "🌳",
-        "title": "공원에서 놀자!",
-        "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요.",
-    },
+    "dateKey": DATE_KEY,
+    "theme": {"emoji": "\U0001f333", "title": "공원에서 놀자!", "subtitle": "미끄럼틀, 그네, 공. 밖에서 뛰어놀아요."},
     "words": [
-        {"en": "park", "ko": "공원", "emo": "🌳"},
-        {"en": "slide", "ko": "미끄럼틀", "emo": "🛝"},
-        {"en": "swing", "ko": "그네", "emo": "🎠"},
-        {"en": "ball", "ko": "공", "emo": "⚽"},
-        {"en": "run", "ko": "달리다", "emo": "🏃"},
-        {"en": "friend", "ko": "친구", "emo": "👧"},
-        {"en": "water", "ko": "물", "emo": "💧"},
-        {"en": "happy", "ko": "기뻐요", "emo": "😄"},
+        {"en": "park", "ko": "공원", "emo": "\U0001f333"},
+        {"en": "slide", "ko": "미끄럼틀", "emo": "\U0001f6dd"},
+        {"en": "swing", "ko": "그네", "emo": "\U0001f3a0"},
+        {"en": "ball", "ko": "공", "emo": "\u26bd"},
+        {"en": "run", "ko": "달리다", "emo": "\U0001f3c3"},
+        {"en": "friend", "ko": "친구", "emo": "\U0001f467"},
+        {"en": "water", "ko": "물", "emo": "\U0001f4a7"},
+        {"en": "happy", "ko": "기뻘요", "emo": "\U0001f604"},
     ],
     "sentences": [
         {"en": "Let's go to the park!", "ko": "공원에 가자!", "chunks": [["Let's go", "가자"], ["to the park!", "공원에!"]]},
@@ -90,28 +52,28 @@ FALLBACK = {
         {"en": "I can run so fast!", "ko": "나 진짜 빨리 달릴 수 있어요!", "chunks": [["I can run", "나는 달릴 수 있어요"], ["so fast!", "아주 빨리!"]]},
         {"en": "This is my friend.", "ko": "이 아이는 내 친구예요.", "chunks": [["This is", "이 아이는"], ["my friend.", "내 친구예요."]]},
         {"en": "I'm thirsty. I want water.", "ko": "목말라요. 물 먹고 싶어요.", "chunks": [["I'm thirsty.", "목말라요."], ["I want water.", "물 먹고 싶어요."]]},
-        {"en": "I'm so happy today!", "ko": "오늘 정말 기뻐요!", "chunks": [["I'm so happy", "정말 기뻐요"], ["today!", "오늘!"]]},
+        {"en": "I'm so happy today!", "ko": "오늘 정말 기뻘요!", "chunks": [["I'm so happy", "정말 기뻘요"], ["today!", "오늘!"]]},
     ],
     "dialogue": [
         {"who": "별이", "role": "you", "en": "Let's go to the park!", "ko": "공원에 가자!"},
-        {"who": "채이", "role": "me", "en": "Yay! I want to play.", "ko": "예이! 나 놀고 싶어."},
+        {"who": "쳄이", "role": "me", "en": "Yay! I want to play.", "ko": "예이! 나 놀고 싶어."},
         {"who": "별이", "role": "you", "en": "Slide or swing?", "ko": "미끄럼틀이야, 그네야?"},
-        {"who": "채이", "role": "me", "en": "The slide! It's so big!", "ko": "미끄럼틀! 진짜 크다!"},
+        {"who": "쳄이", "role": "me", "en": "The slide! It's so big!", "ko": "미끄럼틀! 진짜 크다!"},
         {"who": "별이", "role": "you", "en": "Come on. Let's run!", "ko": "자, 달려가자!"},
-        {"who": "채이", "role": "me", "en": "I'm so happy!", "ko": "나 너무 기뻐!"},
+        {"who": "쳄이", "role": "me", "en": "I'm so happy!", "ko": "나 너무 기뻘!"},
     ],
     "quizzes": [
         {"type": "listen-pick", "q": "이 단어는 무엇일까요?", "speak": "slide", "answer": "slide",
-         "options": [{"id": "slide", "emo": "🛝", "label": "slide"}, {"id": "ball", "emo": "⚽", "label": "ball"}, {"id": "water", "emo": "💧", "label": "water"}]},
+         "options": [{"id": "slide", "emo": "\U0001f6dd", "label": "slide"}, {"id": "ball", "emo": "\u26bd", "label": "ball"}, {"id": "water", "emo": "\U0001f4a7", "label": "water"}]},
         {"type": "listen-pick", "q": "지금 들린 말은 어떤 그림일까요?", "speak": "I like the swing.", "answer": "swing",
-         "options": [{"id": "slide", "emo": "🛝", "label": "slide"}, {"id": "swing", "emo": "🎠", "label": "swing"}, {"id": "park", "emo": "🌳", "label": "park"}]},
+         "options": [{"id": "slide", "emo": "\U0001f6dd", "label": "slide"}, {"id": "swing", "emo": "\U0001f3a0", "label": "swing"}, {"id": "park", "emo": "\U0001f333", "label": "park"}]},
         {"type": "meaning", "q": "I'm thirsty. 는 무슨 뜻일까요?", "speak": "I'm thirsty.", "answer": "thirsty",
-         "options": [{"id": "thirsty", "emo": "💧", "label": "목말라요"}, {"id": "sleepy", "emo": "😴", "label": "졸려요"}, {"id": "cold", "emo": "🥶", "label": "추워요"}]},
+         "options": [{"id": "thirsty", "emo": "\U0001f4a7", "label": "목말라요"}, {"id": "sleepy", "emo": "\U0001f634", "label": "졸려요"}, {"id": "cold", "emo": "\U0001f976", "label": "추워요"}]},
         {"type": "listen-pick", "q": "공을 달라고 하는 말은?", "speak": "Throw the ball to me!", "answer": "ball",
-         "options": [{"id": "friend", "emo": "👧", "label": "friend"}, {"id": "ball", "emo": "⚽", "label": "ball"}, {"id": "happy", "emo": "😄", "label": "happy"}]},
+         "options": [{"id": "friend", "emo": "\U0001f467", "label": "friend"}, {"id": "ball", "emo": "\u26bd", "label": "ball"}, {"id": "happy", "emo": "\U0001f604", "label": "happy"}]},
         {"type": "order", "q": "조각을 순서대로 눌러 문장을 만들어요.", "speak": "Let's go to the park!", "pieces": ["Let's go", "to the park!"]},
         {"type": "meaning", "q": "I'm so happy today! 는 무슨 느낌일까요?", "speak": "I'm so happy today!", "answer": "happy",
-         "options": [{"id": "sad", "emo": "😢", "label": "슬퍼요"}, {"id": "happy", "emo": "😄", "label": "기뻐요"}, {"id": "mad", "emo": "😠", "label": "화나요"}]},
+         "options": [{"id": "sad", "emo": "\U0001f622", "label": "슬퍼요"}, {"id": "happy", "emo": "\U0001f604", "label": "기뻘요"}, {"id": "mad", "emo": "\U0001f620", "label": "화나요"}]},
     ],
 }
 
@@ -153,7 +115,7 @@ def validate(data):
     for line in dialogue[:6]:
         if not line.get("en"):
             raise ValueError("bad dialogue")
-        line["who"] = line.get("who") or ("채이" if line.get("role") == "me" else "별이")
+        line["who"] = line.get("who") or ("쳄이" if line.get("role") == "me" else "별이")
         line["role"] = line.get("role") if line.get("role") in ("me", "you") else "you"
         line["ko"] = line.get("ko") or ""
     data["words"] = words[:8]
@@ -161,6 +123,7 @@ def validate(data):
     data["dialogue"] = dialogue[:6]
     data["quizzes"] = quizzes[:6]
     data["date"] = DATE_KR
+    data["dateKey"] = DATE_KEY
     data["theme"] = {
         "emoji": (data.get("theme") or {}).get("emoji") or THEME["emoji"],
         "title": (data.get("theme") or {}).get("title") or THEME["title"],
@@ -179,47 +142,14 @@ def ask_gemini(api_key):
 Let's / I want / Can I / Look / This is / I'm 위주.
 
 반드시 JSON 객체만 출력. 마크다운 금지.
-
-{{
-  "theme": {{"emoji": "{THEME['emoji']}", "title": "{THEME['title']}", "subtitle": "한 줄 설명"}},
-  "words": [ {{"en": "park", "ko": "공원", "emo": "🌳"}}, ... 정확히 8개 ],
-  "sentences": [
-    {{"en": "Let's go to the park!", "ko": "공원에 가자!", "chunks": [["Let's go", "가자"], ["to the park!", "공원에!"]]}},
-    ... 정확히 12개. chunks는 2~4개, 각 항목은 [영어조각, 한국어]
-  ],
-  "dialogue": [
-    {{"who": "별이", "role": "you", "en": "Let's go!", "ko": "가자!"}},
-    {{"who": "채이", "role": "me", "en": "Yay!", "ko": "예이!"}},
-    ... 정확히 6줄. role은 you 또는 me. 채이 차례는 me.
-  ],
-  "quizzes": [
-    {{"type": "listen-pick", "q": "이 단어는 무엇일까요?", "speak": "slide", "answer": "slide",
-      "options": [{{"id": "slide", "emo": "🛝", "label": "slide"}}, {{"id": "ball", "emo": "⚽", "label": "ball"}}, {{"id": "water", "emo": "💧", "label": "water"}}]}},
-    {{"type": "meaning", "q": "I'm thirsty. 는 무슨 뜻?", "speak": "I'm thirsty.", "answer": "thirsty",
-      "options": [{{"id": "thirsty", "emo": "💧", "label": "목말라요"}}, {{"id": "sleepy", "emo": "😴", "label": "졸려요"}}, {{"id": "cold", "emo": "🥶", "label": "추워요"}}]}},
-    {{"type": "order", "q": "조각을 순서대로 누르세요.", "speak": "Let's go to the park!", "pieces": ["Let's go", "to the park!"]}}
-  ]
-}}
-
-quizzes는 정확히 6개. listen-pick 3, meaning 2, order 1.
-answer는 options.id 중 하나. speak는 실제로 읽어줄 영어.
-이모지는 그 단어를 바로 알 수 있는 것만.
-오늘의 테마와 다른 날 문장을 복사하지 말 것. 날짜 {DATE_KEY} 기준으로 새로 쓸 것.
 """
-    models = [
-        "gemini-3.5-flash",
-        "gemini-2.5-flash",
-        "gemini-2.0-flash",
-    ]
+    models = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.0-flash"]
     last_err = None
     for model in models:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
         body = {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {
-                "temperature": 0.9,
-                "responseMimeType": "application/json",
-            },
+            "generationConfig": {"temperature": 0.9, "responseMimeType": "application/json"},
         }
         try:
             res = requests.post(url, json=body, timeout=90)
@@ -267,6 +197,7 @@ def main():
     if content is None:
         content = FALLBACK
         content["date"] = DATE_KR
+        content["dateKey"] = DATE_KEY
     render(content)
 
 
