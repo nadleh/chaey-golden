@@ -149,19 +149,33 @@
     const DIALOGUE = CONTENT.dialogue || [];
     const QUIZZES = CONTENT.quizzes || [];
     const STORE_KEY = "chaey-english-v1";
+    const STORE_BAK = "chaey-english-v1-bak";
+    const COOKIE = "chaey_days";
     const TODAY = CONTENT.dateKey || toKey(new Date());
+    const SEEDED = ["2026-09-10"];
     let stars=0, audioUnlocked=false, justFinished=false, calCursor=parseKey(TODAY);
     let popI=0, actI=0, echoI=0, quizI=0, quizLock=false;
     let matchDeck=[], matchOpen=[], matchGot=0, matchLock=false;
     function toKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
     function parseKey(key){const [y,m]=(key||TODAY).split("-").map(Number);return {y:y||2026,m:(m||1)-1}}
-    function loadStore(){try{const d=JSON.parse(localStorage.getItem(STORE_KEY)||"null");if(d&&d.days)return d}catch(e){}return {days:{}}}
-    function saveStore(d){localStorage.setItem(STORE_KEY,JSON.stringify(d))}
+    function cookieDays(){try{const m=document.cookie.match(/(?:^|; )chaey_days=([^;]*)/);if(!m)return [];return decodeURIComponent(m[1]).split(",").filter(Boolean)}catch(e){return []}}
+    function writeCookie(keys){try{document.cookie=COOKIE+"="+encodeURIComponent(keys.join(","))+";max-age=31536000;path=/chaey-golden;SameSite=Lax"}catch(e){}}
+    function readJson(key){try{const d=JSON.parse(localStorage.getItem(key)||"null");if(d&&d.days&&typeof d.days==="object")return d}catch(e){}return null}
+    function loadStore(){const data={days:{}};
+      [readJson(STORE_KEY),readJson(STORE_BAK)].forEach(d=>{if(!d)return;Object.keys(d.days).forEach(k=>{if(!data.days[k])data.days[k]=d.days[k]})});
+      cookieDays().forEach(k=>{if(k&&!data.days[k])data.days[k]={theme:"영어 놀이",emoji:"⭐"}});
+      SEEDED.forEach(k=>{if(!data.days[k])data.days[k]={theme:"영어 놀이",emoji:"⭐",seeded:true}});
+      return data}
+    function saveStore(d){try{localStorage.setItem(STORE_KEY,JSON.stringify(d))}catch(e){}
+      try{localStorage.setItem(STORE_BAK,JSON.stringify(d))}catch(e){}
+      writeCookie(Object.keys(d.days||{}));
+      try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}}
     function doneDays(){return loadStore().days}
     function isDone(k){return !!doneDays()[k]}
     function countDays(){return Object.keys(doneDays()).length}
     function streakCount(){const days=doneDays();let n=0;const d=new Date(TODAY+"T12:00:00");if(!days[toKey(d)])d.setDate(d.getDate()-1);while(days[toKey(d)]){n++;d.setDate(d.getDate()-1)}return n}
     function markTodayDone(){const data=loadStore();const t=CONTENT.theme||{};data.days[TODAY]={theme:t.title||"영어 놀이",emoji:t.emoji||"⭐",stars:stars,doneAt:new Date().toISOString()};saveStore(data)}
+    saveStore(loadStore());
     function unlockAudio(){if(audioUnlocked||!("speechSynthesis"in window))return;audioUnlocked=true;const u=new SpeechSynthesisUtterance(" ");u.volume=0;u.lang="en-US";speechSynthesis.speak(u)}
     function speak(text,rate){if(!("speechSynthesis"in window))return;unlockAudio();speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=rate||0.86;const vs=speechSynthesis.getVoices()||[];const v=vs.find(x=>/en-US/i.test(x.lang)&&/samantha|female|google/i.test(x.name))||vs.find(x=>/en-US/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
     if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}
