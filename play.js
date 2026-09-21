@@ -5,7 +5,7 @@ const QUIZZES = CONTENT.quizzes || [];
 const STORE_KEY = "chaey-english-v1";
 const STORE_BAK = "chaey-english-v1-bak";
 const TODAY = CONTENT.dateKey || toKey(new Date());
-const SEEDED = ["2026-09-10"];
+const SEEDED = ["2026-09-10","2026-09-11","2026-09-12","2026-09-13","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-19","2026-09-20"];
 let stars=0, audioUnlocked=false, justFinished=false, calCursor=parseKey(TODAY);
 let heard=new Set(), popI=0, echoI=0, quizI=0, quizLock=false;
 let matchDeck=[], matchOpen=[], matchGot=0, matchLock=false;
@@ -13,7 +13,7 @@ let curAudio=null;
 function toKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function parseKey(key){const [y,m]=(key||TODAY).split("-").map(Number);return {y:y||2026,m:(m||1)-1}}
 function cookieDays(){try{const m=document.cookie.match(/(?:^|; )chaey_days=([^;]*)/);if(!m)return [];return decodeURIComponent(m[1]).split(",").filter(Boolean)}catch(e){return []}}
-function writeCookie(keys){try{document.cookie="chaey_days="+encodeURIComponent(keys.join(","))+";max-age=31536000;path=/chaey-golden;SameSite=Lax"}catch(e){}}
+function writeCookie(keys){const v=encodeURIComponent(keys.join(","));const max=";max-age=31536000;SameSite=Lax";try{document.cookie="chaey_days="+v+max+";path=/"}catch(e){}try{document.cookie="chaey_days="+v+max+";path=/chaey-golden"}catch(e){}}
 function readJson(key){try{const d=JSON.parse(localStorage.getItem(key)||"null");if(d&&d.days&&typeof d.days==="object")return d}catch(e){}return null}
 function loadStore(){const data={days:{}};
   [readJson(STORE_KEY),readJson(STORE_BAK)].forEach(d=>{if(!d)return;Object.keys(d.days).forEach(k=>{if(!data.days[k])data.days[k]=d.days[k]})});
